@@ -1,0 +1,344 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>SPA example</title>
+<script src="https://unpkg.com/react@%5E16.8.4/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@%5E16.8.4/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/react-router-dom/umd/react-router-dom.min.js"></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<script src="https://unpkg.com/react-transition-group/dist/react-transition-group.js"></script>
+
+<style>
+:root {
+  --neutral-1: hsl(42, 15%, 13%);
+  --neutral-2: hsl(40, 13%, 23%);
+  --neutral-3: hsl(37, 11%, 28%);
+  --neutral-4: hsl(41, 9%, 35%);
+  --neutral-5: hsl(41, 8%, 48%);
+  --neutral-6: hsl(41, 8%, 61%);
+  --neutral-7: hsl(39, 11%, 69%);
+  --neutral-8: hsl(40, 15%, 80%);
+  --neutral-9: hsl(43, 13%, 90%);
+  --neutral-10: hsl(40, 23%, 97%);
+
+  --yellow-background: hsl(54, 100%, 90.2%);
+}
+
+* {
+  box-sizing: border-box;
+}
+html, body {
+  padding: 0;
+  margin: 0;
+  color: var(--neutral-1);
+}
+
+#container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.app > .screens {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  transform: translate(0px);
+}
+.app > .screens > * {
+  background: var(--neutral-10);
+  height: 100%;
+}
+
+.tab-bar {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  height: 3em;
+}
+.tab-panel {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--neutral-10);
+}
+.slide-enter {
+  transform: translate(100%);
+  z-index: 1;
+}
+.slide-enter.slide-enter-active {
+  transform: none;
+  transition: transform 300ms ease;
+}
+.tab-panel > p {
+  padding: 0 1em;
+}
+
+.card-grid {
+  padding: 1em;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  grid-gap: 10px;
+}
+.card {
+  height: 200px;
+  border: 1px solid var(--neutral-7);
+  border-radius: 10px;
+  background: white;
+  background-size: cover;
+  background-repeat: no-repeat;
+  box-shadow: 2px 2px 2px var(--neutral-8);
+  overflow: hidden;
+}
+.card > .label {
+  font-weight: bold;
+  padding: .7em 1em 3em;
+  margin-top: 150px;
+  background: white;
+}
+
+.story-summary {
+  padding: 1em;
+  margin: 1em;
+  background: white;
+  border: 1px solid var(--neutral-7);
+  border-radius: 10px;
+  box-shadow: 2px 2px 2px var(--neutral-8);
+}
+.story-summary > .header {
+  font-size: large;
+  margin-bottom: .5em;
+}
+.story-summary > .header .title {
+  font-weight: bold;
+  margin-right: 1em;
+}
+.story-summary > .header .author {
+  display: inline-block;
+  color: var(--neutral-4);
+}
+
+.note-list {
+  padding: 1em;
+}
+.note {
+  box-sizing: border-box;
+  box-shadow: 0px 1px 3px var(--neutral-8);
+}
+.note > .content {
+  background: var(--yellow-background);
+  padding-left: .5rem;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+}
+.note > .content > textarea {
+  font-family: sans-serif;
+  background: transparent;
+  border: none;
+  min-height: 150px;
+  width: 100%;
+  resize: vertical;
+}
+
+@supports (display: grid) {
+  .note {
+    display: grid;
+    grid-template-columns: auto 1rem;
+    grid-template-rows: 1rem;
+    border-radius: 0 1.6rem 0 0;
+  }
+
+  .note > .cornerfiller {
+    background: var(--yellow-background);
+  }
+
+  .note > .corner {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .note > .content {
+    grid-row-end: span 2;
+  }
+}
+
+@supports not (display: grid) {
+  .note {
+    background: var(--yellow-background);
+  }
+
+  .note > .corner, .note > .cornerfiller {
+    display: none;
+  }
+}
+</style>
+<div id=container></div>
+<script type="text/babel">
+const { HashRouter, Link, Route, Switch } = ReactRouterDOM;
+const { CSSTransition, TransitionGroup } = ReactTransitionGroup;
+
+function Card(props) {
+  return (
+    <div className="card" style={{ backgroundImage: `url(${props.src})` }}>
+      <p className="label">{props.label}</p>
+    </div>
+  );
+}
+
+function Photos() {
+  return (
+    <div className="tab-panel">
+      <div className="card-grid">
+        <Card src="https://placebear.com/200/300" label="Unbearable" />
+        <Card src="https://placebear.com/200/200" label="Bearly noticed" />
+        <Card src="https://placebear.com/g/200/200" label="Bearing all" />
+        <Card src="https://placebear.com/300/300" label="Bear-ed bandit" />
+        <Card src="https://placebear.com/400/400" label="Beary good" />
+        <Card src="https://placebear.com/150/150" label="Bear-d papa" />
+      </div>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
+        mollit anim id est laborum.
+      </p>
+      <p>
+        Sed ut perspiciatis unde omnis iste natus error sit voluptatem
+        accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
+        illo inventore veritatis et quasi architecto beatae vitae dicta sunt
+        explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
+        odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
+        voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum
+        quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam
+        eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat
+        voluptatem.
+      </p>
+      <p>
+        Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
+        suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis
+        autem vel eum iure reprehenderit qui in ea voluptate velit esse quam
+        nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo
+        voluptas nulla pariatur?
+      </p>
+    </div>
+  );
+}
+
+function StorySummary(props) {
+  return (
+    <div className="story-summary">
+      <div className="header">
+        <span className="title">{props.title}</span>
+        <span className="author">{props.author}</span>
+      </div>
+      {props.children}
+    </div>
+  );
+}
+
+function Stories() {
+  return (
+    <div className="tab-panel">
+      <StorySummary title="Winnie the Pooh" author="A. A. Milne">
+        Likes hunny 🍯. Not too bright. Friends include a little pig and big
+        donkey.
+      </StorySummary>
+      <StorySummary
+        title="Goldilocks and the Three bears"
+        author="Robert Southey">
+        A story of <em>forced entry</em>, <em>theft</em>, and{' '}
+        <em>destruction of property</em>. The inspiration for Firefox's choice
+        of content processes.
+      </StorySummary>
+      <StorySummary title="Yogi bear" author="Hanna-Barbera">
+        A tale of habitual <em>petty theft</em> at Jellystone park.
+      </StorySummary>
+      <StorySummary title="Paddington bear" author="Michael Bond">
+        Escapee from Peru, found in London. Likes Marmalade.
+      </StorySummary>
+      <StorySummary title="Jungle book" author="Rudyard Kipling">
+        More of a boy story than a bear story, but Baloo who is probably a sloth
+        bear.
+      </StorySummary>
+    </div>
+  );
+}
+
+function NoteCorner() {
+  return (
+    <svg className="corner" viewBox="0 0 100 100" role="presentation">
+      <polygon fill="#FEFACF" points="0,0 100,100 0,100" />
+      <path
+        fill="#CCB92D"
+        d="M0,0l100,100c0,0-69.5-4.5-78.4-7.09S8.9,85.5,7.2,78.76S0,0,0,0"
+      />
+      <path
+        fill="#FCFBF1"
+        d="M0,0l100,100c0,0-62.2-10.3-71-12.8s-12.7-7.4-14.4-14.1S0,0,0,0"
+      />
+    </svg>
+  );
+}
+
+function Note() {
+  return (
+    <form className="note" autoComplete="off">
+      <div className="content">
+        <textarea defaultValue="Notes go here" />
+      </div>
+      <NoteCorner />
+      <div className="cornerfiller" />
+    </form>
+  );
+}
+
+function Notes() {
+  return (
+    <div className="tab-panel">
+      <div className="note-list">
+        <Note />
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.render(
+  <HashRouter hashType="noslash">
+    <Route
+      render={({ location }) => (
+        <div className="app">
+          <div className="screens">
+            <TransitionGroup>
+              <CSSTransition
+                key={location.pathname}
+                timeout={400}
+                classNames="slide">
+                <Switch location={location}>
+                  <Route exact path="/" component={Photos} />
+                  <Route path="/stories" component={Stories} />
+                  <Route path="/notes" component={Notes} />
+                </Switch>
+              </CSSTransition>
+            </TransitionGroup>
+          </div>
+          <nav className="tab-bar">
+            <Link to="">Photos</Link>
+            <Link to="/stories">Stories</Link>
+            <Link to="/notes">Notes</Link>
+          </nav>
+        </div>
+      )}
+    />
+  </HashRouter>,
+  document.getElementById('container')
+);
+</script>
