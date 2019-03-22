@@ -485,6 +485,18 @@ function NoteList(props) {
           duration: fillDuration,
         }
       );
+
+      // Stretch in add note button
+      addNoteButtonRef.current.elem.animate(
+        {
+          transform: ['scale(0)', 'scale(0)', 'scale(0.6, 0.5)', 'scale(1)'],
+        },
+        {
+          duration,
+          easing,
+          delay: duration + fillDuration,
+        }
+      );
     },
     [notes, prevButtonPosition]
   );
