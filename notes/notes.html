@@ -1,0 +1,301 @@
+<!doctype html>
+<meta charset=utf-8>
+<title>Notes example</title>
+<script src="https://unpkg.com/react@%5E16.5.0/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@%5E16.5.0/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/prop-types@%5E15.6/prop-types.js"></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+<style>
+:root {
+  --yellow-10: hsl(55, 100%, 99%);
+  --yellow-9-5: hsl(53.3, 100%, 97%);
+  --yellow-9: hsl(55.7, 100%, 94%);
+  --yellow-8: hsl(53.8, 100%, 91.2%);
+  --yellow-7: hsl(54.8, 90%, 85.1%);
+  --yellow-6: hsl(53.2, 74%, 65.3%);
+  --yellow-5: hsl(52.6, 70%, 59.4%);
+  --yellow-4: hsl(50.9, 68.5%, 47.3%);
+  --yellow-3: hsl(48.5, 79.9%, 37.1%);
+  --yellow-2: hsl(45.3, 85.1%, 26.3%);
+  --yellow-1: hsl(42.3, 85.9%, 13.9%);
+  --shadow-color: hsl(39, 11%, 69%);
+  --border-width: 2px;
+}
+
+.addnote-button {
+  color: var(--yellow-4);
+  border-color: transparent;
+  border-width: var(--border-width);
+  padding: 0;
+  background: transparent;
+  position: relative;
+  will-change: transform, opacity;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.addnote-button > .front > .toprow > .top,
+.addnote-button > .front > .body {
+  background: var(--yellow-8);
+}
+
+.addnote-button > .front > .toprow {
+  width: 100%;
+  display: flex;
+}
+
+.addnote-button > .front > .toprow > .top {
+  flex: 1;
+  will-change: transform;
+}
+
+.addnote-button > .front > .toprow > .corner {
+  width: 1em;
+  height: 1em;
+  will-change: transform;
+}
+
+.addnote-button > .front > .body {
+  display: flex;
+  align-items: center;
+  padding-left: 2em;
+  padding-right: 2em;
+  padding-bottom: 1em;
+}
+
+.addnote-button > .front > .body > .plus {
+  width: 1em;
+  height: 1em;
+  margin-right: .5em;
+}
+
+.addnote-button > .shadow {
+  position: absolute;
+  z-index: -1;
+
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0 1.7rem 0 0;
+
+  background: rgba(0, 0, 30, 0.1);
+  box-shadow: 0px 1px 3px var(--shadow-color);
+}
+
+.addnote-button > .shadow.topright {
+  box-shadow: none;
+}
+
+.addnote-button:focus, .addnote-button:active {
+  color: var(--yellow-5);
+}
+
+.addnote-button:focus > .front > .toprow > .top,
+.addnote-button:focus > .front > .body,
+.addnote-button:active > .front > .toprow > .top,
+.addnote-button:active > .front > .body {
+  background-color: var(--yellow-9);
+}
+
+.addnote-button:hover {
+  color: var(--yellow-6);
+}
+
+.addnote-button:hover > .front > .toprow > .top,
+.addnote-button:hover > .front > .body {
+  background-color: var(--yellow-9);
+}
+
+.addnote-button:focus {
+  outline: none;
+}
+.addnote-button:-moz-focusring {
+  border: var(--border-width) dotted var(--yellow-4);
+}
+.addnote-button:focus-visible {
+  border: var(--border-width) dotted var(--yellow-4);
+}
+
+.addnote-button:active > .front {
+  transform: translateY(1px);
+}
+
+.note {
+  box-sizing: border-box;
+  box-shadow: 0px 1px 3px var(--shadow-color);
+}
+
+.note > .content {
+  background: var(--yellow-8);
+  padding-left: .5rem;
+  padding-top: .5rem;
+  padding-bottom: .5rem;
+}
+
+.note > .content > textarea {
+  font-family: sans-serif;
+  background: transparent;
+  border: none;
+  width: 100%;
+  resize: vertical;
+}
+
+@supports (display: grid) {
+  .note {
+    display: grid;
+    grid-template-columns: auto 1rem;
+    grid-template-rows: 1rem;
+    border-radius: 0 1.6rem 0 0;
+  }
+
+  .note > .cornerfiller {
+    background: var(--yellow-8);
+  }
+
+  .note > .corner {
+    width: 1rem;
+    height: 1rem;
+  }
+
+  .note > .content {
+    grid-row-end: span 2;
+  }
+}
+
+@supports not (display: grid) {
+  .note {
+    background: var(--yellow-8);
+  }
+
+  .note > .corner, .note > .cornerfiller {
+    display: none;
+  }
+}
+
+.note-list {
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.note-list > .notes > .note {
+  margin-bottom: .5rem;
+}
+
+.note-list > .addnote-button {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1rem;
+}
+</style>
+<div id=container>
+</div>
+<script type="text/babel">
+function NoteCorner() {
+  return (
+    <svg className="corner" viewBox="0 0 100 100" role="presentation">
+      <polygon fill="#FEFACF" points="0,0 100,100 0,100" />
+      <path
+        fill="#CCB92D"
+        d="M0,0l100,100c0,0-69.5-4.5-78.4-7.09S8.9,85.5,7.2,78.76S0,0,0,0"
+      />
+      <path
+        fill="#FCFBF1"
+        d="M0,0l100,100c0,0-62.2-10.3-71-12.8s-12.7-7.4-14.4-14.1S0,0,0,0"
+      />
+    </svg>
+  );
+}
+
+function PlusSign() {
+  return (
+    <svg className="plus" viewBox="0 0 100 100" role="presentation">
+      <g fill="currentColor">
+        <rect x="40" y="10" width="20" height="80" rx="3" ry="3"/>
+        <rect x="10" y="40" width="80" height="20" rx="3" ry="3"/>
+      </g>
+    </svg>
+  );
+}
+
+const AddNoteButton = React.forwardRef((props, ref) => (
+  <button
+    className="addnote-button"
+    tabIndex={0}
+    ref={ref}
+    {...props}
+  >
+    <div className="shadow" />
+    <div className="front">
+      <div className="toprow">
+        <div className="top" />
+        <NoteCorner />
+      </div>
+      <div className="body">
+        <PlusSign />
+        <span className="label">Add note</span>
+      </div>
+    </div>
+  </button>
+));
+
+function Note(props) {
+  const [content, setContent] = React.useState(props.initialContent);
+
+  return (
+    <form
+      className="note"
+      autoComplete="off">
+      <div className="content">
+        <textarea onChange={evt => setContent(evt.target.value)}
+          value={content} />
+      </div>
+      <NoteCorner />
+      <div className="cornerfiller" />
+    </form>
+  );
+}
+
+Note.propTypes = {
+  initialContent: PropTypes.string.isRequired,
+};
+
+function NoteList(props) {
+  const [notes, setNotes] = React.useState(() => {
+    let nextNoteId = 0;
+    return props.initialNotes.map
+    ? props.initialNotes.map(note => ({
+        key: nextNoteId++,
+        content: note,
+      })) : [];
+  });
+
+  const addNote = React.useCallback(() => {
+    const key = notes.length ? notes[notes.length - 1].key + 1 : 0;
+    setNotes([...notes, { key, content: '' }]);
+  });
+
+  return (
+    <div className="note-list">
+      <div className="notes">
+        {notes.map(note => (
+          <Note key={note.key} initialContent={note.content} />
+        ))}
+      </div>
+      <AddNoteButton onClick={addNote} />
+    </div>
+  );
+}
+
+NoteList.propTypes = {
+  initialNotes: PropTypes.arrayOf(PropTypes.string),
+};
+
+ReactDOM.render(
+  <NoteList initialNotes={['This is a note']} />,
+  document.getElementById('container')
+);
+</script>
