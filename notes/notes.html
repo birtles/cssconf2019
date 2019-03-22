@@ -22,6 +22,10 @@
   --border-width: 2px;
 }
 
+body, html {
+  font-size: 20px;
+}
+
 .addnote-button {
   color: var(--yellow-4);
   border-color: transparent;
@@ -470,6 +474,16 @@ function NoteList(props) {
           },
         ],
         { duration: duration + fillDuration }
+      );
+
+      // Fade in the actual note
+      newNote.animate(
+        { opacity: [0, 1] },
+        {
+          delay: duration * 0.6,
+          fill: 'backwards',
+          duration: fillDuration,
+        }
       );
     },
     [notes, prevButtonPosition]
