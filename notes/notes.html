@@ -192,14 +192,13 @@ body, html {
 }
 
 .note-list > .notes > .note {
-  margin-bottom: .5rem;
+  margin-bottom: 1rem;
 }
 
 .note-list > .addnote-button {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 1rem;
 }
 </style>
 <div id=container>
@@ -449,12 +448,10 @@ function NoteList(props) {
 
       // Shift the button up from its new position so that it lines up with the
       // note.
-      console.log(buttonPosition);
-      console.log(prevButtonPosition.current);
       const initialYShift = prevButtonPosition.current.top - buttonPosition.top;
       const finalYShift =
         initialYShift +
-        (buttonPosition.height - prevButtonPosition.current.height) / 2;
+        (newNotePosition.height - prevButtonPosition.current.height) / 2;
       const fillOffset = duration / (duration + fillDuration);
       addNoteButtonRef.current.elem.animate(
         [
