@@ -226,8 +226,8 @@ function PlusSign() {
   return (
     <svg className="plus" viewBox="0 0 100 100" role="presentation">
       <g fill="currentColor">
-        <rect x="40" y="10" width="20" height="80" rx="3" ry="3"/>
-        <rect x="10" y="40" width="80" height="20" rx="3" ry="3"/>
+        <rect x="40" y="10" width="20" height="80" rx="3" ry="3" />
+        <rect x="10" y="40" width="80" height="20" rx="3" ry="3" />
       </g>
     </svg>
   );
@@ -237,7 +237,9 @@ function AddNoteButton(props, ref) {
   const buttonRef = React.useRef();
 
   React.useImperativeHandle(ref, () => ({
-    get elem() { return buttonRef.current; },
+    get elem() {
+      return buttonRef.current;
+    },
     growTo: params => {
       // Set up the common timing
       const totalDuration = params.duration + params.fillDuration;
@@ -367,12 +369,12 @@ function Note(props) {
   const [content, setContent] = React.useState(props.initialContent);
 
   return (
-    <form
-      className="note"
-      autoComplete="off">
+    <form className="note" autoComplete="off">
       <div className="content">
-        <textarea onChange={evt => setContent(evt.target.value)}
-          value={content} />
+        <textarea
+          onChange={evt => setContent(evt.target.value)}
+          value={content}
+        />
       </div>
       <NoteCorner />
       <div className="cornerfiller" />
