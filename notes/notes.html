@@ -232,6 +232,7 @@ function AddNoteButton(props, ref) {
   const buttonRef = React.useRef();
 
   React.useImperativeHandle(ref, () => ({
+    get elem() { return buttonRef.current; },
     growTo: params => {
       // Set up the common timing
       const totalDuration = params.duration + params.fillDuration;
@@ -389,14 +390,19 @@ function NoteList(props) {
       : [];
   });
 
+  // React hooks doesn't have a getSnapshotBeforeUpdate equivalent yet, so we
+  // just store the bbox for the add note button at the point where we are about
+  // to update the set of notes.
   const addNoteButtonRef = React.useRef(null);
+  const prevButtonPosition = React.useRef(null);
 
   const addNote = React.useCallback(() => {
     const key = notes.length ? notes[notes.length - 1].key + 1 : 0;
     setNotes([...notes, { key, content: '' }]);
+    prevButtonPosition.current = addNoteButtonRef.current.elem.getBoundingClientRect();
   });
 
-  const notesContainerRef = React.useRef();
+  const notesContainerRef = React.useRef(null);
 
   React.useLayoutEffect(
     () => {
@@ -413,6 +419,18 @@ function NoteList(props) {
       const newNote = notes[notes.length - 1];
       const newNotePosition = newNote.getBoundingClientRect();
 
+      // Get the position of the button
+      const buttonPosition = addNoteButtonRef.current.elem.getBoundingClientRect();
+      if (!prevButtonPosition.current) {
+        // This is likely our first run, in which case we shouldn't animate
+        // anyway.
+        return;
+      }
+
+      const duration = 300;
+      const fillDuration = 300;
+      const easing = 'cubic-bezier(.43,1.17,.88,1.1)';
+
       // Stretch the button to the size of the new note.
       //
       // (Note this currently assumes that both notes and the add note are
@@ -420,12 +438,41 @@ function NoteList(props) {
       addNoteButtonRef.current.growTo({
         width: newNotePosition.width,
         height: newNotePosition.height,
-        duration: 300,
-        fillDuration: 300,
-        easing: 'cubic-bezier(.43,1.17,.88,1.1)',
+        duration,
+        fillDuration,
+        easing,
       });
+
+      // Shift the button up from its new position so that it lines up with the
+      // note.
+      console.log(buttonPosition);
+      console.log(prevButtonPosition.current);
+      const initialYShift = prevButtonPosition.current.top - buttonPosition.top;
+      const finalYShift =
+        initialYShift +
+        (buttonPosition.height - prevButtonPosition.current.height) / 2;
+      const fillOffset = duration / (duration + fillDuration);
+      addNoteButtonRef.current.elem.animate(
+        [
+          {
+            transform: `translateY(${initialYShift}px)`,
+            opacity: 1,
+            easing,
+          },
+          {
+            transform: `translateY(${finalYShift}px)`,
+            opacity: 1,
+            offset: fillOffset,
+          },
+          {
+            transform: `translateY(${finalYShift}px)`,
+            opacity: 0,
+          },
+        ],
+        { duration: duration + fillDuration }
+      );
     },
-    [notes]
+    [notes, prevButtonPosition]
   );
 
   return (
