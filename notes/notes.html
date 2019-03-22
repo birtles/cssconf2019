@@ -232,7 +232,7 @@ function AddNoteButton(props, ref) {
   const buttonRef = React.useRef();
 
   React.useImperativeHandle(ref, () => ({
-    growTo: (params) => {
+    growTo: params => {
       // Set up the common timing
       const totalDuration = params.duration + params.fillDuration;
       const offset = params.duration / totalDuration;
@@ -253,8 +253,8 @@ function AddNoteButton(props, ref) {
       const cornerTranslateX = (params.width - paddingBox.width) / 2;
       const cornerTranslateY = (params.height - paddingBox.height) / -2;
       const cornerTransform = `translate(${cornerTranslateX}px, ${cornerTranslateY}px)`;
-      // (There are more compact ways of writing this but this format should have
-      // the best backwards compatibility with old versions of Firefox and
+      // (There are more compact ways of writing this but this format should
+      // have the best backwards compatibility with old versions of Firefox and
       // Chrome.)
       corner.animate(
         [
@@ -394,17 +394,43 @@ function NoteList(props) {
   const addNote = React.useCallback(() => {
     const key = notes.length ? notes[notes.length - 1].key + 1 : 0;
     setNotes([...notes, { key, content: '' }]);
-    addNoteButtonRef.current.growTo({
-      width: 500,
-      height: 400,
-      duration: 300,
-      fillDuration: 300,
-    });
   });
+
+  const notesContainerRef = React.useRef();
+
+  React.useLayoutEffect(
+    () => {
+      // This is only run when `notes` changes, and we can currently only add to
+      // notes, so just assume a new note was added.
+
+      // Get the position of the new note.
+      const notes = Array.from(
+        notesContainerRef.current.querySelectorAll('.note')
+      );
+      if (!notes.length) {
+        return;
+      }
+      const newNote = notes[notes.length - 1];
+      const newNotePosition = newNote.getBoundingClientRect();
+
+      // Stretch the button to the size of the new note.
+      //
+      // (Note this currently assumes that both notes and the add note are
+      // centered.)
+      addNoteButtonRef.current.growTo({
+        width: newNotePosition.width,
+        height: newNotePosition.height,
+        duration: 300,
+        fillDuration: 300,
+        easing: 'cubic-bezier(.43,1.17,.88,1.1)',
+      });
+    },
+    [notes]
+  );
 
   return (
     <div className="note-list">
-      <div className="notes">
+      <div className="notes" ref={notesContainerRef}>
         {notes.map(note => (
           <Note key={note.key} initialContent={note.content} />
         ))}
