@@ -57,14 +57,17 @@
 }
 
 .addnote-button > .front > .body {
-  display: flex;
-  align-items: center;
   padding-left: 2em;
   padding-right: 2em;
   padding-bottom: 1em;
 }
 
-.addnote-button > .front > .body > .plus {
+.addnote-button > .front > .body > .label {
+  display: flex;
+  align-items: center;
+}
+
+.addnote-button > .front > .body > .label > .plus {
   width: 1em;
   height: 1em;
   margin-right: .5em;
@@ -110,6 +113,10 @@
 
 .addnote-button:focus {
   outline: none;
+}
+.addnote-button::-moz-focus-inner {
+  border: 0;
+  padding: 0;
 }
 .addnote-button:-moz-focusring {
   border: var(--border-width) dotted var(--yellow-4);
@@ -221,26 +228,134 @@ function PlusSign() {
   );
 }
 
-const AddNoteButton = React.forwardRef((props, ref) => (
-  <button
-    className="addnote-button"
-    tabIndex={0}
-    ref={ref}
-    {...props}
-  >
-    <div className="shadow" />
-    <div className="front">
-      <div className="toprow">
-        <div className="top" />
-        <NoteCorner />
+function AddNoteButton(props, ref) {
+  const buttonRef = React.useRef();
+
+  React.useImperativeHandle(ref, () => ({
+    growTo: (params) => {
+      // Set up the common timing
+      const totalDuration = params.duration + params.fillDuration;
+      const offset = params.duration / totalDuration;
+      const timing = { duration: totalDuration };
+
+      // Calculate a few useful numbers
+      const paddingBox = getPaddingBox(buttonRef.current);
+
+      const scaleX = params.width / paddingBox.width;
+      const scaleY = params.height / paddingBox.height;
+
+      // Animate the corner
+      //
+      // We do this first because we need to know its size to position the other
+      // elements.
+      const corner = buttonRef.current.querySelector('.corner');
+      const oneEm = corner.getBoundingClientRect().width;
+      const cornerTranslateX = (params.width - paddingBox.width) / 2;
+      const cornerTranslateY = (params.height - paddingBox.height) / -2;
+      const cornerTransform = `translate(${cornerTranslateX}px, ${cornerTranslateY}px)`;
+      // (There are more compact ways of writing this but this format should have
+      // the best backwards compatibility with old versions of Firefox and
+      // Chrome.)
+      corner.animate(
+        [
+          { transform: 'none', easing: params.easing },
+          { transform: cornerTransform, offset },
+          { transform: cornerTransform, offset: 1 },
+        ],
+        timing
+      );
+
+      // Animate the top row
+      const topBit = buttonRef.current.querySelector('.top');
+      const topScaleX = (params.width - oneEm) / (paddingBox.width - oneEm);
+      const topTransform = `translateY(${cornerTranslateY}px) scaleX(${topScaleX})`;
+      topBit.animate(
+        [
+          { transform: 'none', easing: params.easing },
+          { transform: topTransform, offset },
+          { transform: topTransform, offset: 1 },
+        ],
+        timing
+      );
+
+      // Animate the body
+      const body = buttonRef.current.querySelector('.body');
+      const bodyScaleY = (params.height - oneEm) / (paddingBox.height - oneEm);
+      const bodyTransform = `scale(${scaleX}, ${bodyScaleY})`;
+      body.animate(
+        [
+          { transform: 'none', easing: params.easing },
+          { transform: bodyTransform, offset },
+          { transform: bodyTransform, offset: 1 },
+        ],
+        timing
+      );
+
+      // Animate the shadow
+      const shadow = buttonRef.current.querySelector('.shadow');
+      const shadowTransform = `scale(${scaleX}, ${scaleY})`;
+      shadow.animate(
+        [
+          { transform: 'none', easing: params.easing },
+          { transform: shadowTransform, offset },
+          { transform: shadowTransform, offset: 1 },
+        ],
+        timing
+      );
+
+      // Fade out the label
+      const label = body.querySelector('.label');
+      label.animate(
+        [
+          { opacity: 1, offset: 0 },
+          { opacity: 0, offset: 0.2 * offset },
+          { opacity: 0, offset: 1 },
+        ],
+        timing
+      );
+    },
+  }));
+
+  return (
+    <button className="addnote-button" tabIndex={0} ref={buttonRef} {...props}>
+      <div className="shadow" />
+      <div className="front">
+        <div className="toprow">
+          <div className="top" />
+          <NoteCorner />
+        </div>
+        <div className="body">
+          <div className="label">
+            <PlusSign />
+            <span>Add note</span>
+          </div>
+        </div>
       </div>
-      <div className="body">
-        <PlusSign />
-        <span className="label">Add note</span>
-      </div>
-    </div>
-  </button>
-));
+    </button>
+  );
+}
+AddNoteButton = React.forwardRef(AddNoteButton);
+
+function getPaddingBox(elem) {
+  const bbox = elem.getBoundingClientRect();
+
+  // The bbox returned by getBoundingClientRect will include any border
+  // specified on the button so we need to subtract that.
+  const gCS = getComputedStyle(elem);
+  const borderWidth = {
+    left: parseFloat(gCS.borderLeftWidth),
+    right: parseFloat(gCS.borderRightWidth),
+    top: parseFloat(gCS.borderTopWidth),
+    bottom: parseFloat(gCS.borderBottomWidth),
+  };
+
+  return {
+    left: bbox.left + borderWidth.left,
+    width: bbox.width - borderWidth.left - borderWidth.right,
+    top: bbox.top + borderWidth.top,
+    height: bbox.height - borderWidth.top - borderWidth.bottom,
+  };
+}
 
 function Note(props) {
   const [content, setContent] = React.useState(props.initialContent);
@@ -267,15 +382,24 @@ function NoteList(props) {
   const [notes, setNotes] = React.useState(() => {
     let nextNoteId = 0;
     return props.initialNotes.map
-    ? props.initialNotes.map(note => ({
-        key: nextNoteId++,
-        content: note,
-      })) : [];
+      ? props.initialNotes.map(note => ({
+          key: nextNoteId++,
+          content: note,
+        }))
+      : [];
   });
+
+  const addNoteButtonRef = React.useRef(null);
 
   const addNote = React.useCallback(() => {
     const key = notes.length ? notes[notes.length - 1].key + 1 : 0;
     setNotes([...notes, { key, content: '' }]);
+    addNoteButtonRef.current.growTo({
+      width: 500,
+      height: 400,
+      duration: 300,
+      fillDuration: 300,
+    });
   });
 
   return (
@@ -285,7 +409,7 @@ function NoteList(props) {
           <Note key={note.key} initialContent={note.content} />
         ))}
       </div>
-      <AddNoteButton onClick={addNote} />
+      <AddNoteButton onClick={addNote} ref={addNoteButtonRef} />
     </div>
   );
 }
