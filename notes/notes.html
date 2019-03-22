@@ -416,7 +416,7 @@ function NoteList(props) {
       // This is only run when `notes` changes, and we can currently only add to
       // notes, so just assume a new note was added.
 
-      // Get the position of the new note.
+      // Get the new note
       const notes = Array.from(
         notesContainerRef.current.querySelectorAll('.note')
       );
@@ -424,6 +424,26 @@ function NoteList(props) {
         return;
       }
       const newNote = notes[notes.length - 1];
+
+      // Focus it and scroll into view
+      const textArea = newNote.querySelector('textarea');
+      textArea.focus();
+      newNote.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+      });
+
+      // Check for animation support
+      if (!('animate' in HTMLElement.prototype)) {
+        return;
+      }
+
+      // Check user preference
+      if (matchMedia('(prefers-reduced-motion)').matches) {
+        return;
+      }
+
+      // Get the position of the new note
       const newNotePosition = newNote.getBoundingClientRect();
 
       // Get the position of the button
