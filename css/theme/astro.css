@@ -1,0 +1,692 @@
+/**
+ * Black theme for reveal.js. This is the opposite of the 'white' theme.
+ *
+ * Copyright (C) 2015 Hakim El Hattab, http://hakim.se
+ */
+
+/*********************************************
+ * FONTS
+ *********************************************/
+
+@font-face {
+  font-family: 'GN キリゴUかなNA';
+  src: local(GN-キリゴUかなNA),
+       url(../../fonts/GN-KillGothic-U-KanaNA.ttf);
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'GN キリゴUかなNB';
+  src: local(GN-キリゴUかなNB),
+       url(../../fonts/GN-KillGothic-U-KanaNB.ttf);
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'GN キリゴUかなO';
+  src: local(GN-キリゴUかなO),
+       url(../../fonts/GN-KillGothic-U-KanaO.ttf);
+  font-weight: 600;
+  font-style: normal;
+}
+
+/*********************************************
+ * GLOBAL STYLES
+ *********************************************/
+
+body {
+  background: #222;
+  background-color: #222; }
+
+.reveal {
+  font-family: "Source Sans Pro", Helvetica, sans-serif;
+  font-size: 38px;
+  font-weight: normal;
+  color: lightgrey;
+}
+
+/* Chrome set the font on form controls to Arial which looks horrible on
+ * Japanese systems. */
+.reveal button,
+.reveal textarea,
+.reveal input,
+.reveal select {
+  font-family: "Source Sans Pro", Helvetica, sans-serif;
+}
+
+::selection {
+  color: lightgrey;
+  background: #bee4fd;
+  text-shadow: none; }
+
+.reveal .slides > section,
+.reveal .slides > section > section {
+  line-height: 1.3;
+  font-weight: inherit; }
+
+/*********************************************
+ * HEADERS
+ *********************************************/
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4,
+.reveal h5,
+.reveal h6 {
+  margin: 0 0 20px 0;
+  color: #e80000;
+  font-family: 'GN キリゴUかなNA', '小塚ゴシック Pr6N', sans-serif;
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: normal;
+  text-transform: uppercase;
+  word-wrap: break-word; }
+
+.reveal h1 {
+  font-size: 2.5em; }
+
+.reveal h1 {
+  font-size: 2.5em; }
+
+.reveal h2 {
+  font-size: 1.6em; }
+
+.reveal h3 {
+  font-size: 1.3em; }
+
+.reveal h4 {
+  font-size: 1em; }
+
+/*********************************************
+ * SVG HEADINGS
+ *********************************************/
+
+/* The font we're using is really hard to read without an outline and since
+ * CSS doesn't let you do outlines nicely (i.e. ones that overlap the glyph
+ * itself, we use SVG's stroking instead. */
+
+h2.svg {
+  text-shadow: none;
+}
+h2 svg {
+  width: 100%;
+  height: 100px;
+}
+h2 svg text {
+  fill: #e80000;
+  stroke: #f76600;
+  stroke-width: 3px;
+  font-size: 80px;
+  font-family: 'GN キリゴUかなNA', sans-serif;
+  font-weight: 400;
+}
+h2.center svg text {
+  text-anchor: middle;
+}
+
+th svg {
+  width: 400px;
+  height: 40px;
+  text-transform: uppercase;
+  overflow: visible;
+}
+th svg text {
+  fill: #e80000;
+  stroke: #f76600;
+  stroke-width: 3px;
+  font-size: 40px;
+  font-family: 'GN キリゴUかなNA', sans-serif;
+  font-weight: 400;
+  text-anchor: middle;
+}
+
+/*********************************************
+ * PERFORMANCE TWEAKS
+ *********************************************/
+
+.reveal .slides > section.future,
+.reveal .slides > section.present {
+  will-change: transform, opacity;
+}
+.reveal .slides > section.future {
+  opacity: 0.01;
+}
+.reveal .slides > section,
+.reveal .slides > section > section {
+  transform-style: none;
+}
+
+.reveal .slides section.present .fragment {
+  will-change: opacity;
+  visibility: visible;
+}
+.reveal .slides section.present .fragment.zoom-in {
+  will-change: transform;
+}
+.reveal .slides section .fragment.visible {
+  will-change: none;
+}
+
+/*********************************************
+ * OTHER
+ *********************************************/
+
+.reveal p {
+  margin: 20px 0;
+  line-height: 1.3; }
+
+/* Ensure certain elements are never larger than the slide itself */
+.reveal img,
+.reveal video,
+.reveal iframe {
+  max-width: 95%;
+  max-height: 95%; }
+
+.reveal strong,
+.reveal b {
+  font-weight: bold; }
+
+.reveal em {
+  font-style: italic; }
+
+.reveal ol,
+.reveal dl,
+.reveal ul {
+  display: inline-block;
+  text-align: left;
+  margin: 0 0 0 1em; }
+
+.reveal ol {
+  list-style-type: decimal; }
+
+.reveal ul {
+  list-style-type: disc; }
+
+.reveal ul ul {
+  list-style-type: square; }
+
+.reveal ul ul ul {
+  list-style-type: circle; }
+
+.reveal ul ul,
+.reveal ul ol,
+.reveal ol ol,
+.reveal ol ul {
+  display: block;
+  margin-left: 40px; }
+
+.reveal dt {
+  font-weight: bold; }
+
+.reveal dd {
+  margin-left: 40px; }
+
+.reveal q,
+.reveal blockquote {
+  quotes: none; }
+
+.reveal blockquote {
+  display: block;
+  position: relative;
+  width: 70%;
+  margin: 20px auto;
+  padding: 5px;
+  font-style: italic;
+  background: rgba(255, 255, 255, 0.05);
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2); }
+
+.reveal blockquote p:first-child,
+.reveal blockquote p:last-child {
+  display: inline-block; }
+
+.reveal q {
+  font-style: italic; }
+
+.reveal pre {
+  display: block;
+  position: relative;
+  width: 90%;
+  margin: 20px auto;
+  text-align: left;
+  font-size: 0.55em;
+  font-family: monospace;
+  line-height: 1.2em;
+  word-wrap: break-word;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3); }
+
+.reveal code {
+  font-family: monospace;
+  font-weight: bold;
+  background: lightgrey;
+  color: maroon;
+  padding: 5px 15px;
+  margin-left: 5px;
+  margin-right: 5px;
+  border-radius: 10px;
+}
+
+.reveal pre code {
+  display: block;
+  padding: 5px;
+  overflow: auto;
+  max-height: 400px;
+  word-wrap: normal; }
+
+.reveal table {
+  margin: auto;
+  border-collapse: collapse;
+  border-spacing: 0; }
+
+.reveal table th {
+  font-weight: bold; }
+
+.reveal table th,
+.reveal table td {
+  text-align: left;
+  padding: 0.2em 0.5em 0.2em 0.5em;
+  border-bottom: 1px solid; }
+
+.reveal table th[align="center"],
+.reveal table td[align="center"] {
+  text-align: center; }
+
+.reveal table th[align="right"],
+.reveal table td[align="right"] {
+  text-align: right; }
+
+.reveal table tr:last-child td {
+  border-bottom: none; }
+
+.reveal sup {
+  vertical-align: super; }
+
+.reveal sub {
+  vertical-align: sub; }
+
+.reveal small {
+  display: inline-block;
+  font-size: 0.6em;
+  line-height: 1.2em;
+  vertical-align: top; }
+
+.reveal small * {
+  vertical-align: top; }
+
+/*********************************************
+ * LINKS
+ *********************************************/
+
+.reveal a {
+  color: #42affa;
+  text-decoration: none;
+  -webkit-transition: color 0.15s ease;
+  transition: color 0.15s ease; }
+
+.reveal a:hover {
+  color: #8dcffc;
+  text-shadow: none;
+  border: none; }
+
+.reveal .roll span:after {
+  color: #fff;
+  background: #068de9; }
+
+/*********************************************
+ * IMAGES
+ *********************************************/
+
+.reveal section img {
+  margin: 15px 0px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 4px solid #fff;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+
+.reveal section img.plain {
+  background: none;
+  border: 0;
+  box-shadow: none;
+}
+
+.reveal a img {
+  -webkit-transition: all 0.15s linear;
+  transition: all 0.15s linear; }
+
+.reveal a:hover img {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #42affa;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.55); }
+
+/*********************************************
+ * NAVIGATION CONTROLS
+ *********************************************/
+
+.reveal .controls .navigate-left,
+.reveal .controls .navigate-left.enabled {
+  border-right-color: #42affa; }
+
+.reveal .controls .navigate-right,
+.reveal .controls .navigate-right.enabled {
+  border-left-color: #42affa; }
+
+.reveal .controls .navigate-up,
+.reveal .controls .navigate-up.enabled {
+  border-bottom-color: #42affa; }
+
+.reveal .controls .navigate-down,
+.reveal .controls .navigate-down.enabled {
+  border-top-color: #42affa; }
+
+.reveal .controls .navigate-left.enabled:hover {
+  border-right-color: #8dcffc; }
+
+.reveal .controls .navigate-right.enabled:hover {
+  border-left-color: #8dcffc; }
+
+.reveal .controls .navigate-up.enabled:hover {
+  border-bottom-color: #8dcffc; }
+
+.reveal .controls .navigate-down.enabled:hover {
+  border-top-color: #8dcffc; }
+
+/*********************************************
+ * PROGRESS BAR
+ *********************************************/
+
+.reveal .progress {
+  background: rgba(0, 0, 0, 0.2); }
+
+.reveal .progress span {
+  background: #42affa;
+  -webkit-transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985);
+  transition: width 800ms cubic-bezier(0.26, 0.86, 0.44, 0.985); }
+
+/*********************************************
+ * FIGURES
+ *********************************************/
+
+.reveal section figcaption {
+  margin-top: 0;
+  font-size: 14px;
+}
+
+.reveal section figure > img {
+  margin-bottom: 0;
+}
+
+/*********************************************
+ * CANVAS
+ *********************************************/
+
+.reveal .slides .canvas {
+  margin: 0;
+  width: 960px;
+  position: relative;
+}
+.reveal .slides section.canvas {
+  height: 700px;
+}
+.reveal .canvas > * {
+  position: absolute;
+}
+.reveal .canvas img {
+  background: none;
+  border: none;
+  box-shadow: none;
+  margin: 0;
+}
+.reveal .canvas .label {
+  font-family: '小塚ゴシック Pr6N', sans-serif;
+  display: block;
+  font-weight: 900;
+}
+.reveal .canvas .label.big {
+  font-size: 70px;
+}
+.reveal .canvas .label.medium {
+  font-size: 50px;
+}
+.reveal .canvas .label.small {
+  font-size: 20px;
+}
+
+/*********************************************
+ * CELS
+ *********************************************/
+
+.reveal .slides section .cel {
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 2px;
+  background-color: rgba(255, 255, 255, 0.1);
+  background-image:
+    repeating-linear-gradient(-70deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0) 30%,
+      rgba(255, 255, 255, 0.25) 36%,
+      rgba(255, 255, 255, 0.3) 38%,
+      rgba(255, 255, 255, 0) 46%,
+      rgba(255, 255, 255, 0) 50%,
+      rgba(255, 255, 255, 0.1) 55%,
+      rgba(255, 255, 255, 0) 60%,
+      rgba(255, 255, 255, 0) 100%);
+}
+
+/*********************************************
+ * SPEECH BUBBLES
+ *********************************************/
+
+.reveal .slides section .speech {
+  padding: 20px;
+  text-align: start;
+  -webkit-writing-mode: vertical-rl;
+  writing-mode: vertical-rl;
+
+  background-color: #fff;
+  color: black;
+  border: 2px solid black;
+  border-radius: 20px;
+
+  font-family: 'Yu Gothic';
+  font-weight: 500;
+}
+
+/*********************************************
+ * ADDTIONAL FRAGMENT TRANSITIONS
+ *********************************************/
+
+.reveal .slides section .fragment.zoom-out {
+  transform: none;
+  visibility: visible;
+  opacity: 1;
+  transition: transform 0.2s, visibility 0.2s 0s, opacity 0.2s 0s;
+}
+.reveal .slides section .fragment.zoom-out.visible {
+  transform: scale(0.1);
+  opacity: 0;
+  visibility: visible;
+}
+
+/*********************************************
+ * BUTTON CHECKBOX
+ *********************************************/
+
+.reveal .slides section input[type=checkbox].button-checkbox {
+  margin-top: 60px;
+  z-index: 100;
+  opacity: 0;
+  cursor: pointer;
+  width: 0;
+  height: 0;
+}
+.reveal .slides section label.button-checkbox {
+  padding: 10px 40px 10px 30px;
+  display: inline-block;
+
+  font-size: 45px;
+  font-weight: bold;
+
+  color: white;
+  background-color: #e80000;
+  border-radius: 15px;
+  box-shadow: 0 5px #9e0000;
+
+  transition: all 0.3s;
+
+  /* Avoid fumbling when presenting */
+  -moz-user-select: none;
+  user-select: none;
+}
+.reveal .slides section label.buttoncheckbox::before {
+  font-weight: bold;
+  content: "×";
+  padding-right: 15px;
+
+  /* Use a fixed-width so the following text doesn't shift when the
+      content changes. */
+  display: inline-block;
+  width: 0.5em;
+}
+.reveal .slides section input:checked ~ label.button-checkbox {
+  transform: translate(0px, 5px);
+  background: #17aa56;
+  box-shadow: 0 -5px #0e8340;
+}
+.reveal .slides section input:checked ~ label.button-checkbox::before {
+  content: "○";
+}
+
+/*********************************************
+ * BUTTON
+ *********************************************/
+
+.reveal .slides section button {
+  padding: 10px 30px;
+  display: inline-block;
+
+  font-size: 35px;
+  font-weight: bold;
+
+  color: white;
+  background-color: #e80000;
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 5px #9e0000;
+
+  transition: all 0.1s;
+}
+.reveal .slides section button:active {
+  box-shadow: 0 2px #9e0000;
+  transform: translate(0, 3px);
+  color: lightgrey;
+}
+
+/*********************************************
+ * CODE CHECKBOX
+ *********************************************/
+
+.reveal .slides section code input[type=checkbox] {
+  width: 30px;
+  height: 30px;
+  margin-right: 20px;
+  vertical-align: middle;
+}
+.reveal .slides section code input:checked ~ label {
+  -webkit-filter: none;
+  filter: none;
+}
+.reveal .slides section code input ~ label {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
+
+/*********************************************
+ * PROBLEM INTRO SLIDES
+ *********************************************/
+
+.reveal .slides section.problem .problem-label {
+  color: #111;
+  background: yellow;
+  font-weight: bold;
+  font-size: 50px;
+  transform: translate(-1200px) rotate(-35deg) translate(-50px);
+  box-shadow: 0 4px 3px #111;
+  width: 3000px;
+}
+.reveal .slides section.problem h2.svg {
+  margin-top: 30px;
+}
+.reveal .slides section.problem .earth {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: -10px;
+  width: 400px;
+}
+.reveal .slides section.problem .shadow {
+  position: relative;
+  margin-top: -120px;
+  width: 400px;
+  z-index: -1;
+  -webkit-filter: blur(5px);
+  filter: blur(5px);
+}
+
+.reveal .slides section.problem .fragment {
+  transition-delay: 0.3s;
+  transition-duration: 0.5s;
+}
+.reveal .slides section.problem .earth {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(0.01);
+  will-change: transform;
+}
+.reveal .slides section.problem .earth.visible {
+  animation: spring-in 1s linear both;
+}
+
+@keyframes spring-in {
+  0% { transform: scale(0) }
+  5.61% { transform: scale(0.541) }
+  8.41% { transform: scale(0.803) }
+  11.11% { transform: scale(1) }
+  14.91% { transform: scale(0.835) }
+  18.72% { transform: scale(0.788) }
+  26.03% { transform: scale(0.881) }
+  33.33% { transform: scale(1) }
+  41.04% { transform: scale(0.961) }
+  55.66% { transform: scale(1) }
+  63.26% { transform: scale(0.993) }
+  77.88% { transform: scale(1) }
+  85.49% { transform: scale(0.999) }
+  100% { transform: scale(1) }
+}
+
+/*********************************************
+ * COMPAT NOTE
+ *********************************************/
+
+.reveal .slides section .compat-note {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100%;
+}
+.reveal .slides section .compat-note div {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+
+  padding: 20px;
+  font-size: 20px;
+  max-width: 400px;
+
+  background: lemonchiffon;
+  color: black;
+  border: 3px solid black;
+  box-shadow: 3px 3px 3px black;
+}
