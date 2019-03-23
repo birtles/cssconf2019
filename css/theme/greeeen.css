@@ -6,6 +6,14 @@
  * FONTS
  *********************************************/
 
+@font-face {
+  font-family: "Baloo Chettan";
+  src: local("Baloo Chettan Regular"),
+       url(../../fonts/Baloo_Chettan/BalooChettan-Regular.ttf);
+  font-weight: 800;
+  font-style: normal;
+}
+
 /*********************************************
  * VARIABLES
  *********************************************/
@@ -60,8 +68,8 @@ body {
 .reveal h6 {
   margin: 0 0 20px 0;
   color: var(--pink);
-  font-family: "Source Sans Pro", Helvetica, sans-serif;
-  font-weight: 600;
+  font-family: 'Baloo Chettan', sans-serif;
+  font-weight: 800;
   line-height: 1.2;
   letter-spacing: normal;
   text-transform: uppercase;
