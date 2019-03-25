@@ -54,14 +54,47 @@ document.getElementsByTagName('head')[0].appendChild(link);
 <div class="reveal">
 <div class="slides">
 
-<section id="title-slide">
-<h1>10 things I wish you knew about animation</h1>
+<section id="title-slide" class="title-slide"
+  data-background="#5ab041">
+<h1>
+  <svg width="900px"
+    viewBox="0 0 670 350" font-size="100px"
+    stroke="#222" stroke-width="4">
+    <text y=".9em" x="50%" text-anchor="middle"
+      ><tspan fill="var(--pink)">10 things</tspan><tspan
+      dy="1.4em" x="50%" fill="white" font-size="70px">I wish people<tspan
+      dy="1em" x="50%">knew about<tspan dy="1em"
+      x="50%">Web animation</tspan></tspan></text></svg>
+</h1>
 </section>
 
-<section id="title-slide">
-<h2 class="svg">
-  <svg><text y="1em" x="3px">10 things about me ...</text></svg>
+<section id="about-me-slide">
+<h2 class="svg smaller">
+  <svg><text y="1em" x="3px">A few things about me&hellip;</text></svg>
 </h2>
+<ul class="grid">
+  <li class="fragment fade-in"><figure><span
+            class="emoji">🐨</span><figcaption></figcaption></figure></li>
+  <li class="fragment fade-in"><figure><span
+            class="emoji">🗼</span><figcaption></figcaption></figure></li>
+  <li class="fragment fade-in"><figure><img
+      src="img/firefox-logo.svg"><figcaption>2004~</figcaption></figure></li>
+  <li class="fragment fade-in"><figure><img src="img/csswg-2.jpg" width="250"><figcaption>W3C CSS Working Group 2015~</figcaption></figure></li>
+  <li class="fragment fade-in" style="font-size: 90px">🏊,🏄</li>
+  <li class="fragment fade-in"><span class="emoji">🍣</span></li>
+</ul>
+</section>
+
+<section id="about-meat-pie-slide" data-background-image="img/punk-doily-1.jpg">
+  <p class="full-page-source">Source: <a
+    href="https://twitter.com/PDoily/status/1104208565290467328">@PDoily</a></p>
+</section>
+
+<section id="css-transitions-section" class="section-title"
+  data-background="#5ab041">
+<h1 class="svg">
+  <svg><text y="1em" x="50%">CSS Transitions</text></svg>
+</h1>
 </section>
 
 </div> <!-- end slides -->
@@ -82,6 +115,7 @@ Reveal.initialize({
       },
     },
   ],
+  history: true,
 });
 </script>
 </body>

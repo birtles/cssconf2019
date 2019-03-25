@@ -5,7 +5,6 @@
 /*********************************************
  * FONTS
  *********************************************/
-
 @font-face {
   font-family: "Baloo Chettan";
   src: local("Baloo Chettan Regular"),
@@ -14,29 +13,52 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: "Sniglet";
+  src: local("Sniglet Regular"),
+       url(../../fonts/Sniglet/Sniglet-Regular.ttf);
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Sniglet";
+  src: local("Sniglet ExtraBold"),
+       url(../../fonts/Sniglet/Sniglet-ExtraBold.ttf);
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Varela Round";
+  src: local("Varela Round Regular"),
+       url(../../fonts/Varela_Round/VarelaRound-Regular.ttf);
+  font-weight: 400;
+  font-style: normal;
+}
+
 /*********************************************
  * VARIABLES
  *********************************************/
-
 :root {
-  --green-3: hsl(100, 89%, 31%);
-  --green-4: hsl(92, 89%, 38%);
-  --bg-green: #5ab041;
-  --pink: #da2e73;
+  --green: #5ab041;
+  --pink: hsl(335.9, 69.9%, 51.8%);
+  --pink-highlight: hsl(335.9, 80%, 90%);
+  --black: #222;
 }
 
 /*********************************************
  * GLOBAL STYLES
  *********************************************/
 body {
-  background-color: var(--bg-green);
+  background-color: white;
 }
 
 .reveal {
   font-family: "Source Sans Pro", Helvetica, sans-serif;
   font-size: 42px;
   font-weight: normal;
-  color: white;
+  color: var(--black);
 }
 
 ::selection {
@@ -57,6 +79,15 @@ body {
   font-weight: inherit;
 }
 
+/* Chrome set the font on form controls to Arial which looks horrible on
+ * Japanese systems. */
+.reveal button,
+.reveal textarea,
+.reveal input,
+.reveal select {
+  font-family: "Source Sans Pro", Helvetica, sans-serif;
+}
+
 /*********************************************
  * HEADERS
  *********************************************/
@@ -67,9 +98,9 @@ body {
 .reveal h5,
 .reveal h6 {
   margin: 0 0 20px 0;
-  color: var(--pink);
-  font-family: 'Baloo Chettan', sans-serif;
-  font-weight: 800;
+  color: var(--green);
+  font-family: Sniglet, sans-serif;
+  font-weight: 600;
   line-height: 1.2;
   letter-spacing: normal;
   text-transform: uppercase;
@@ -90,6 +121,77 @@ body {
 
 .reveal h1 {
   text-shadow: none; }
+
+/*********************************************
+ * SVG HEADINGS
+ *********************************************/
+/* Use SVG's stroking since it's just generally better */
+
+h2.svg {
+  text-shadow: none;
+}
+h2 svg {
+  width: 100%;
+  height: 100px;
+}
+h2 svg text {
+  fill: var(--green);
+  stroke: var(--black);
+  stroke-width: 3px;
+  font-size: 80px;
+  font-family: Sniglet, sans-serif;
+  font-weight: 800;
+}
+h2.smaller svg text {
+  font-size: 60px;
+}
+h2.center svg text {
+  text-anchor: middle;
+}
+
+/*********************************************
+ * TITLE SLIDES
+ *********************************************/
+.reveal .section-title h1.svg > svg {
+  width: 100%;
+  height: 100px;
+}
+
+.reveal .section-title h1.svg > svg > text {
+  fill: var(--pink);
+  stroke: var(--black);
+  stroke-width: 3px;
+  font-size: 90px;
+  font-family: Sniglet, sans-serif;
+  font-weight: 800;
+  text-anchor: middle;
+}
+
+/*********************************************
+ * PERFORMANCE TWEAKS
+ *********************************************/
+.reveal .slides > section.future,
+.reveal .slides > section.present {
+  will-change: transform, opacity;
+}
+.reveal .slides > section.future {
+  opacity: 0.01;
+}
+.reveal .slides > section,
+.reveal .slides > section > section {
+  transform-style: flat;
+}
+
+.reveal .slides section.present .fragment {
+  will-change: opacity;
+  visibility: visible;
+}
+.reveal .slides section.present .fragment.zoom-in {
+  will-change: transform;
+}
+.reveal .slides section .fragment.visible {
+  will-change: unset;
+}
 
 /*********************************************
  * OTHER
@@ -266,6 +368,69 @@ body {
   background: rgba(255, 255, 255, 0.2);
   border-color: #2a76dd;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.55); }
+
+/*********************************************
+ * LIST GRID
+ *********************************************/
+.reveal ul.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(160px, auto);
+  width: 100%;
+  margin: 0;
+}
+
+.reveal ul.grid li {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  border-radius: 40px;
+  padding: 10px;
+}
+.reveal ul.grid li.fragment.current-fragment {
+  background: var(--pink-highlight);
+}
+
+.reveal ul.grid li .emoji {
+  font-size: 160px;
+}
+
+.reveal ul.grid li > figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+}
+
+.reveal ul.grid li > figure > img {
+  flex: 1;
+  border: none;
+  margin: 0;
+  height: 140px;
+  box-shadow: none;
+  background: transparent;
+}
+
+.reveal ul.grid li > figure > figcaption {
+  font-size: 25px;
+  margin-top: 15px;
+}
+
+/*********************************************
+ * ATTRIBUTION
+ *********************************************/
+.reveal .full-page-source {
+  display: flex;
+  align-items: end;
+  height: 700px;
+  text-align: left;
+  font-size: 23px;
+  color: white;
+  text-shadow: 1px 1px 2px #222;
+}
 
 /*********************************************
  * NAVIGATION CONTROLS
