@@ -2,6 +2,7 @@
 <meta charset=utf-8>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Meet pie</title>
+<script src="js/prop-types.js"></script>
 <script src="js/react.development.js"></script>
 <script src="js/react-dom.development.js"></script>
 <script src="js/react-router-dom.min.js"></script>
@@ -335,6 +336,163 @@ html, body {
   color: var(--neutral-6);
   line-height: 1.5;
 }
+
+.addnote-button {
+  color: var(--green-dark);
+  border-color: transparent;
+  border-width: 2px;
+  padding: 0;
+  background: transparent;
+  position: relative;
+  will-change: transform, opacity;
+  -webkit-tap-highlight-color: transparent;
+  cursor: pointer;
+  font-family: Sniglet;
+  font-size: 18px;
+}
+.addnote-button > .front > .toprow > .top,
+.addnote-button > .front > .body {
+  background: var(--green-light);
+}
+.addnote-button > .front > .toprow {
+  width: 100%;
+  display: flex;
+}
+.addnote-button > .front > .toprow > .top {
+  flex: 1;
+  will-change: transform;
+}
+.addnote-button > .front > .toprow > .corner {
+  width: 1em;
+  height: 1em;
+  will-change: transform;
+}
+.addnote-button > .front > .body {
+  padding-left: 2em;
+  padding-right: 2em;
+  padding-bottom: 1em;
+}
+.addnote-button > .front > .body > .label {
+  display: flex;
+  align-items: center;
+}
+.addnote-button > .front > .body > .label > .plus {
+  width: 1em;
+  height: 1em;
+  margin-right: .5em;
+}
+.addnote-button > .shadow {
+  position: absolute;
+  z-index: -1;
+
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0 1.7rem 0 0;
+
+  background: rgba(0, 0, 30, 0.1);
+  box-shadow: 0px 1px 3px var(--neutral-6);
+}
+.addnote-button > .shadow.topright {
+  box-shadow: none;
+}
+.addnote-button:focus, .addnote-button:active {
+  color: var(--green-light);
+}
+.addnote-button:focus > .front > .toprow > .top,
+.addnote-button:focus > .front > .body,
+.addnote-button:active > .front > .toprow > .top,
+.addnote-button:active > .front > .body {
+  background-color: var(--green-light);
+}
+.addnote-button:hover {
+  color: var(--green);
+}
+.addnote-button:hover > .front > .toprow > .top,
+.addnote-button:hover > .front > .body {
+  background-color: var(--green-light);
+}
+.addnote-button:focus {
+  outline: none;
+}
+.addnote-button::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+.addnote-button:-moz-focusring {
+  border: 2px dotted var(--green-dark);
+}
+.addnote-button:focus-visible {
+  border: 2px dotted var(--green-dark);
+}
+.addnote-button:active > .front {
+  transform: translateY(1px);
+}
+
+.note {
+  box-sizing: border-box;
+  box-shadow: 0px 1px 3px var(--neutral-6);
+}
+.note > .content {
+  background: var(--green-light);
+  padding-left: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+.note > .content > textarea {
+  font-family: Sniglet;
+  font-size: 18px;
+  color: var(--green-dark);
+  background: transparent;
+  border: none;
+  width: 100%;
+  min-height: 50px;
+  resize: none;
+  outline: none;
+}
+
+@supports (display: grid) {
+  .note {
+    display: grid;
+    grid-template-columns: auto 1rem;
+    grid-template-rows: 1rem;
+    border-radius: 0 1.6rem 0 0;
+  }
+  .note > .cornerfiller {
+    background: var(--green-light);
+  }
+  .note > .corner {
+    width: 1rem;
+    height: 1rem;
+  }
+  .note > .content {
+    grid-row-end: span 2;
+  }
+}
+
+@supports not (display: grid) {
+  .note {
+    background: var(--green-light);
+  }
+  .note > .corner, .note > .cornerfiller {
+    display: none;
+  }
+}
+
+.note-list {
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.note-list > .notes > .note {
+  margin-bottom: 1rem;
+}
+.note-list > .addnote-button {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 </style>
 <div id=container></div>
 <script type="text/babel">
@@ -439,6 +597,7 @@ function Polls(props) {
         </div>
         <div className="explanation">Voting for this poll has closed.</div>
       </div>
+      <NoteList initialNotes={['There\'s always one...']} />
     </TabPanel>
   );
 }
@@ -510,6 +669,341 @@ function TabBar(props) {
     </nav>
   );
 }
+
+function NoteCorner() {
+  return (
+    <svg className="corner" viewBox="0 0 100 100" role="presentation">
+      <polygon
+        style={{ fill: 'var(--green-light)' }}
+        points="0,0 100,100 0,100"
+      />
+      <path
+        style={{ fill: 'var(--green)' }}
+        d="M0,0l100,100c0,0-69.5-4.5-78.4-7.09S8.9,85.5,7.2,78.76S0,0,0,0"
+      />
+      <path
+        style={{ fill: 'var(--green-light)' }}
+        d="M0,0l100,100c0,0-62.2-10.3-71-12.8s-12.7-7.4-14.4-14.1S0,0,0,0"
+      />
+    </svg>
+  );
+}
+
+function PlusSign() {
+  return (
+    <svg className="plus" viewBox="0 0 100 100" role="presentation">
+      <g fill="currentColor">
+        <rect x="40" y="10" width="20" height="80" rx="3" ry="3" />
+        <rect x="10" y="40" width="80" height="20" rx="3" ry="3" />
+      </g>
+    </svg>
+  );
+}
+
+function AddNoteButton(props, ref) {
+  const buttonRef = React.useRef();
+
+  React.useImperativeHandle(ref, () => ({
+    get elem() {
+      return buttonRef.current;
+    },
+    growTo: params => {
+      // Set up the common timing
+      const totalDuration = params.duration + params.fillDuration;
+      const offset = params.duration / totalDuration;
+      const timing = { duration: totalDuration };
+
+      // Calculate a few useful numbers
+      const paddingBox = getPaddingBox(buttonRef.current);
+
+      const scaleX = params.width / paddingBox.width;
+      const scaleY = params.height / paddingBox.height;
+
+      // Animate the corner
+      //
+      // We do this first because we need to know its size to position the other
+      // elements.
+      const corner = buttonRef.current.querySelector('.corner');
+      const oneEm = corner.getBoundingClientRect().width;
+      const cornerTranslateX = (params.width - paddingBox.width) / 2;
+      const cornerTranslateY = (params.height - paddingBox.height) / -2;
+      const cornerTransform = `translate(${cornerTranslateX}px, ${cornerTranslateY}px)`;
+      // (There are more compact ways of writing this but this format should
+      // have the best backwards compatibility with old versions of Firefox and
+      // Chrome.)
+      corner.animate(
+        [
+          { transform: 'none', easing: params.easing },
+          { transform: cornerTransform, offset },
+          { transform: cornerTransform, offset: 1 },
+        ],
+        timing
+      );
+
+      // Animate the top row
+      const topBit = buttonRef.current.querySelector('.top');
+      const topScaleX = (params.width - oneEm) / (paddingBox.width - oneEm);
+      const topTransform = `translateY(${cornerTranslateY}px) scaleX(${topScaleX})`;
+      topBit.animate(
+        [
+          { transform: 'none', easing: params.easing },
+          { transform: topTransform, offset },
+          { transform: topTransform, offset: 1 },
+        ],
+        timing
+      );
+
+      // Animate the body
+      const body = buttonRef.current.querySelector('.body');
+      const bodyScaleY = (params.height - oneEm) / (paddingBox.height - oneEm);
+      const bodyTransform = `scale(${scaleX}, ${bodyScaleY})`;
+      body.animate(
+        [
+          { transform: 'none', easing: params.easing },
+          { transform: bodyTransform, offset },
+          { transform: bodyTransform, offset: 1 },
+        ],
+        timing
+      );
+
+      // Animate the shadow
+      const shadow = buttonRef.current.querySelector('.shadow');
+      const shadowTransform = `scale(${scaleX}, ${scaleY})`;
+      shadow.animate(
+        [
+          { transform: 'none', easing: params.easing },
+          { transform: shadowTransform, offset },
+          { transform: shadowTransform, offset: 1 },
+        ],
+        timing
+      );
+
+      // Fade out the label
+      const label = body.querySelector('.label');
+      label.animate(
+        [
+          { opacity: 1, offset: 0 },
+          { opacity: 0, offset: 0.2 * offset },
+          { opacity: 0, offset: 1 },
+        ],
+        timing
+      );
+    },
+  }));
+
+  return (
+    <button className="addnote-button" tabIndex={0} ref={buttonRef} {...props}>
+      <div className="shadow" />
+      <div className="front">
+        <div className="toprow">
+          <div className="top" />
+          <NoteCorner />
+        </div>
+        <div className="body">
+          <div className="label">
+            <PlusSign />
+            <span>Add a comment</span>
+          </div>
+        </div>
+      </div>
+    </button>
+  );
+}
+AddNoteButton = React.forwardRef(AddNoteButton);
+
+function getPaddingBox(elem) {
+  const bbox = elem.getBoundingClientRect();
+
+  // The bbox returned by getBoundingClientRect will include any border
+  // specified on the button so we need to subtract that.
+  const gCS = getComputedStyle(elem);
+  const borderWidth = {
+    left: parseFloat(gCS.borderLeftWidth),
+    right: parseFloat(gCS.borderRightWidth),
+    top: parseFloat(gCS.borderTopWidth),
+    bottom: parseFloat(gCS.borderBottomWidth),
+  };
+
+  return {
+    left: bbox.left + borderWidth.left,
+    width: bbox.width - borderWidth.left - borderWidth.right,
+    top: bbox.top + borderWidth.top,
+    height: bbox.height - borderWidth.top - borderWidth.bottom,
+  };
+}
+
+function Note(props) {
+  const [content, setContent] = React.useState(props.initialContent);
+
+  return (
+    <form className="note" autoComplete="off">
+      <div className="content">
+        <textarea
+          onChange={evt => setContent(evt.target.value)}
+          value={content}
+        />
+      </div>
+      <NoteCorner />
+      <div className="cornerfiller" />
+    </form>
+  );
+}
+
+Note.propTypes = {
+  initialContent: PropTypes.string.isRequired,
+};
+
+function NoteList(props) {
+  const [notes, setNotes] = React.useState(() => {
+    let nextNoteId = 0;
+    return props.initialNotes.map
+      ? props.initialNotes.map(note => ({
+          key: nextNoteId++,
+          content: note,
+        }))
+      : [];
+  });
+
+  // React hooks doesn't have a getSnapshotBeforeUpdate equivalent yet, so we
+  // just store the bbox for the add note button at the point where we are about
+  // to update the set of notes.
+  const addNoteButtonRef = React.useRef(null);
+  const prevButtonPosition = React.useRef(null);
+
+  const addNote = React.useCallback(() => {
+    const key = notes.length ? notes[notes.length - 1].key + 1 : 0;
+    setNotes([...notes, { key, content: '' }]);
+    prevButtonPosition.current = addNoteButtonRef.current.elem.getBoundingClientRect();
+  });
+
+  const notesContainerRef = React.useRef(null);
+
+  React.useLayoutEffect(
+    () => {
+      // This is only run when `notes` changes, and we can currently only add to
+      // notes, so just assume a new note was added.
+
+      // Get the new note
+      const notes = Array.from(
+        notesContainerRef.current.querySelectorAll('.note')
+      );
+      if (!notes.length) {
+        return;
+      }
+      const newNote = notes[notes.length - 1];
+
+      // Focus it and scroll into view
+      const textArea = newNote.querySelector('textarea');
+      textArea.focus();
+      newNote.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+      });
+
+      // Check for animation support
+      if (!('animate' in HTMLElement.prototype)) {
+        return;
+      }
+
+      // Check user preference
+      if (matchMedia('(prefers-reduced-motion)').matches) {
+        return;
+      }
+
+      // Get the position of the new note
+      const newNotePosition = newNote.getBoundingClientRect();
+
+      // Get the position of the button
+      const buttonPosition = addNoteButtonRef.current.elem.getBoundingClientRect();
+      if (!prevButtonPosition.current) {
+        // This is likely our first run, in which case we shouldn't animate
+        // anyway.
+        return;
+      }
+
+      const duration = 300;
+      const fillDuration = 300;
+      const easing = 'cubic-bezier(.43,1.17,.88,1.1)';
+
+      // Stretch the button to the size of the new note.
+      //
+      // (Note this currently assumes that both notes and the add note are
+      // centered.)
+      addNoteButtonRef.current.growTo({
+        width: newNotePosition.width,
+        height: newNotePosition.height,
+        duration,
+        fillDuration,
+        easing,
+      });
+
+      // Shift the button up from its new position so that it lines up with the
+      // note.
+      const initialYShift = prevButtonPosition.current.top - buttonPosition.top;
+      const finalYShift =
+        initialYShift +
+        (newNotePosition.height - prevButtonPosition.current.height) / 2;
+      const fillOffset = duration / (duration + fillDuration);
+      addNoteButtonRef.current.elem.animate(
+        [
+          {
+            transform: `translateY(${initialYShift}px)`,
+            opacity: 1,
+            easing,
+          },
+          {
+            transform: `translateY(${finalYShift}px)`,
+            opacity: 1,
+            offset: fillOffset,
+          },
+          {
+            transform: `translateY(${finalYShift}px)`,
+            opacity: 0,
+          },
+        ],
+        { duration: duration + fillDuration }
+      );
+
+      // Fade in the actual note
+      newNote.animate(
+        { opacity: [0, 1] },
+        {
+          delay: duration * 0.6,
+          fill: 'backwards',
+          duration: fillDuration,
+        }
+      );
+
+      // Stretch in add note button
+      addNoteButtonRef.current.elem.animate(
+        {
+          transform: ['scale(0)', 'scale(0)', 'scale(0.6, 0.5)', 'scale(1)'],
+        },
+        {
+          duration,
+          easing,
+          delay: duration + fillDuration,
+        }
+      );
+    },
+    [notes, prevButtonPosition]
+  );
+
+  return (
+    <div className="note-list">
+      <div className="notes" ref={notesContainerRef}>
+        {notes.map(note => (
+          <Note key={note.key} initialContent={note.content} />
+        ))}
+      </div>
+      <AddNoteButton onClick={addNote} ref={addNoteButtonRef} />
+    </div>
+  );
+}
+
+NoteList.propTypes = {
+  initialNotes: PropTypes.arrayOf(PropTypes.string),
+};
 
 ReactDOM.render(
   <HashRouter hashType="noslash">
