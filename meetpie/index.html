@@ -82,8 +82,12 @@ html, body {
   box-shadow: 0px -2px 2px 0px var(--neutral-9);
   z-index: 1;
   position: relative;
+  /* This stop the scrollbar from flashing on while the animation is in progress */
+  overflow: hidden;
 }
 .tab-bar a {
+  position: relative;
+
   flex: 0 0 33.3%;
   font-family: Sniglet;
   color: var(--green-dark);
@@ -120,25 +124,23 @@ html, body {
 .tab-bar a.finder::before {
   background-image: url(img/piender.svg);
 }
-.tab-bar > .highlight-block {
-  position: absolute;
-  left: 0;
-  right: 0;
-  width: calc(100% / 3);
-  height: 2em;
-  transition: transform 0.15s;
-  transform: translate(0%);
-  will-change: transform;
-  z-index: 1;
-}
-.tab-bar > .highlight-block::before {
+.tab-bar a::after {
   content: "";
-  display: block;
+  position: absolute;
   width: 90%;
   height: 100%;
+  z-index: -1;
+
   background: var(--green-light);
-  margin-left: 5%;
   border-radius: .25em;
+
+  transition: opacity .15s, transform cubic-bezier(.13,.27,.59,1.59) .2s;
+  opacity: 0;
+  transform: scale(0);
+}
+.tab-bar a[aria-selected=true]::after {
+  opacity: 1;
+  transform: scale(1);
 }
 
 .tab-panel {
@@ -164,27 +166,50 @@ html, body {
   padding: 0 1em;
 }
 
-.card-grid {
+.photo-list {
+  max-width: 500px;
+  margin: 0 auto;
+}
+.photo {
+  border: 1px solid var(--neutral-6);
+  margin-bottom: 1em;
+}
+.photo > .header {
+  display: flex;
+  align-items: center;
+  min-height: 3em;
   padding: 1em;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  grid-gap: 10px;
-}
-.card {
-  height: 200px;
-  border: 1px solid var(--neutral-7);
-  border-radius: 10px;
+
   background: white;
-  background-size: cover;
-  background-repeat: no-repeat;
-  box-shadow: 2px 2px 2px var(--neutral-8);
-  overflow: hidden;
 }
-.card > .label {
+.photo > .header > .author {
   font-weight: bold;
-  padding: .7em 1em 3em;
-  margin-top: 150px;
+  margin-right: .5em;
+}
+.photo > .header > .date {
+  color: var(--neutral-6);
+}
+.photo > img {
+  width: 100%;
+}
+.photo > .footer {
   background: white;
+  padding: 1em;
+}
+.photo > .footer > .comments > .comment {
+  margin-top: .5em;
+}
+.photo > .footer > .comments > .comment > .author,
+.photo > .footer > .comments > .comment > .comment {
+  display: inline;
+}
+.photo > .footer > .comments > .comment > .author {
+  font-weight: bold;
+  margin-right: .5em;
+}
+.photo > .footer > .comment-link {
+  margin-top: .5em;
+  color: var(--neutral-6);
 }
 
 .story-summary {
@@ -266,14 +291,6 @@ html, body {
 <script type="text/babel">
 const { HashRouter, Link, Route, Switch } = ReactRouterDOM;
 
-function Card(props) {
-  return (
-    <div className="card" style={{ backgroundImage: `url(${props.src})` }}>
-      <p className="label">{props.label}</p>
-    </div>
-  );
-}
-
 function TabPanel(props) {
   let className = 'tab-panel';
   if (props.active) {
@@ -283,45 +300,69 @@ function TabPanel(props) {
   return <div className={className}>{props.children}</div>;
 }
 
+function Photo(props) {
+  return (
+    <article className="photo">
+      <div className="header">
+        <span className="author">{props.author}</span>
+        <span className="date">{props.date}</span>
+      </div>
+      <img src={props.src} />
+      <div className="footer">
+        <div className="description">{props.description}</div>
+        <div className="comments">
+          {props.comments.map(comment => (
+            <div className="comment">
+              <div className="author">{comment.author}</div>
+              <div className="comment">{comment.comment}</div>
+            </div>
+          ))}
+        </div>
+        <div className="comment-link">Comment...</div>
+      </div>
+    </article>
+  );
+}
 
 function Photos(props) {
   return (
     <TabPanel active={props.active}>
-      <div className="card-grid">
-        <Card src="https://placebear.com/200/300" label="Unbearable" />
-        <Card src="https://placebear.com/200/200" label="Bearly noticed" />
-        <Card src="https://placebear.com/g/200/200" label="Bearing all" />
-        <Card src="https://placebear.com/300/300" label="Bear-ed bandit" />
-        <Card src="https://placebear.com/400/400" label="Beary good" />
-        <Card src="https://placebear.com/150/150" label="Bear-d papa" />
+      <div className="photo-list">
+        <Photo author="Bristol bandit"
+          date="30 Mar 2019"
+          description="The best meat pie in the universe 🇬🇧"
+          src="img/pieminister-1.jpg"
+          comments={[
+            { author: 'Jessie', comment: '🤤' }
+          ]}/>
+        <Photo author="Pied piper"
+          date="29 Mar 2019"
+          description="Ozzie ozzie ozzie!"
+          src="img/oji-pie.jpg"
+          comments={[
+            { author: 'Bogan', comment: 'Oi oi oi!' }
+          ]}/>
+        <Photo author="Japan man"
+          date="29 Mar 2019"
+          description="Best meat pies in Tokyo are at Punk Doily 🗼"
+          src="img/punk-doily-3.jpg"
+          comments={[]}/>
+        <Photo author="Pie fan"
+          date="28 Mar 2019"
+          description="Still life with pie"
+          src="img/still-life.jpg"
+          comments={[
+            { author: 'Jessie', comment: 'It\'s beautiful 😢' },
+            { author: 'steaklover', comment: 'What\'s the salad for?' },
+            { author: 'Pie fan', comment: 'Aesthetic value' },
+            { author: 'steaklover', comment: '👍' },
+          ]}/>
+        <Photo author="Bristol bandit"
+          date="27 Mar 2019"
+          description="Pie minister does it again"
+          src="img/pieminister-2.jpg"
+          comments={[]}/>
       </div>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
-      </p>
-      <p>
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem
-        accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
-        illo inventore veritatis et quasi architecto beatae vitae dicta sunt
-        explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut
-        odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
-        voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum
-        quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam
-        eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat
-        voluptatem.
-      </p>
-      <p>
-        Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis
-        suscipit laboriosam, nisi ut aliquid ex ea commodi consequatur? Quis
-        autem vel eum iure reprehenderit qui in ea voluptate velit esse quam
-        nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo
-        voluptas nulla pariatur?
-      </p>
     </TabPanel>
   );
 }
@@ -404,6 +445,19 @@ function Notes(props) {
   );
 }
 
+function TabBar(props) {
+  return (
+    <nav className="tab-bar" role="tablist">
+      {React.Children.map(props.children, (child, index) =>
+        React.cloneElement(child, {
+          role: 'tab',
+          'aria-selected': index === props.position,
+        })
+      )}
+    </nav>
+  );
+}
+
 ReactDOM.render(
   <HashRouter hashType="noslash">
     <Route
@@ -415,10 +469,6 @@ ReactDOM.render(
           position = 2;
         }
 
-        const highlightStyle = {
-          transform: `translate(${100 * position}%)`,
-        };
-
         return (
           <div className="app">
             <div className="screens">
@@ -426,7 +476,7 @@ ReactDOM.render(
               <Stories active={position === 1} />
               <Notes active={position === 2} />
             </div>
-            <nav className="tab-bar" role="tablist">
+            <TabBar position={position}>
               <Link to="" className="pictures">
                 Piectures
               </Link>
@@ -436,12 +486,7 @@ ReactDOM.render(
               <Link to="/finder" className="finder">
                 Piender
               </Link>
-              <div
-                className="highlight-block"
-                style={highlightStyle}
-                role="presentation"
-              />
-            </nav>
+            </TabBar>
           </div>
         );
       }}
