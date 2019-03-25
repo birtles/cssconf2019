@@ -37,6 +37,86 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: Rubik;
+  src: local("Rubik Light"),
+       url(../../fonts/Rubik/Rubik-Light.ttf);
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Rubik;
+  src: local("Rubik"),
+       url(../../fonts/Rubik/Rubik-Regular.ttf);
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Rubik;
+  src: local("Rubik Medium"),
+       url(../../fonts/Rubik/Rubik-Medium.ttf);
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Rubik;
+  src: local("Rubik Bold"),
+       url(../../fonts/Rubik/Rubik-Bold.ttf);
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Rubik;
+  src: local("Rubik Black"),
+       url(../../fonts/Rubik/Rubik-Black.ttf);
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: Rubik;
+  src: local("Rubik Light Italic"),
+       url(../../fonts/Rubik/Rubik-LightItalic.ttf);
+  font-weight: 300;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: Rubik;
+  src: local("Rubik Italic"),
+       url(../../fonts/Rubik/Rubik-Italic.ttf);
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: Rubik;
+  src: local("Rubik Medium Italic"),
+       url(../../fonts/Rubik/Rubik-MediumItalic.ttf);
+  font-weight: 500;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: Rubik;
+  src: local("Rubik Bold Italic"),
+       url(../../fonts/Rubik/Rubik-BoldItalic.ttf);
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: Rubik;
+  src: local("Rubik Black Italic"),
+       url(../../fonts/Rubik/Rubik-BlackItalic.ttf);
+  font-weight: 900;
+  font-style: italic;
+}
+
 /*********************************************
  * VARIABLES
  *********************************************/
@@ -57,7 +137,7 @@ body {
 }
 
 .reveal {
-  font-family: "Source Sans Pro", Helvetica, sans-serif;
+  font-family: Rubik, Helvetica, sans-serif;
   font-size: 42px;
   font-weight: normal;
   color: var(--black);
@@ -147,8 +227,14 @@ h2 svg text {
 h2.smaller svg text {
   font-size: 60px;
 }
+h2.smallerer svg text {
+  font-size: 50px;
+}
 h2.center svg text {
   text-anchor: middle;
+}
+h2.pink svg text {
+  fill: var(--pink);
 }
 
 /*********************************************
@@ -434,6 +520,20 @@ h2.center svg text {
   font-size: 23px;
   color: white;
   text-shadow: 1px 1px 2px #222;
+}
+
+/*********************************************
+ * SORT OF FULL-SCREEN PICTURE, but not cropped
+ *********************************************/
+.reveal .slides > section.fit-picture {
+  padding: 0;
+  margin: 0;
+}
+
+.reveal .fit-picture > img {
+  height: 700px;
+  border: 0;
+  margin: 0;
 }
 
 /*********************************************
