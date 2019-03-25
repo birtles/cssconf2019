@@ -290,7 +290,6 @@ html, body {
   position: absolute;
   margin: 1em;
   width: calc(100% - 2em);
-  height: calc(100% - 3em);
   z-index: 10;
   background: white;
   border: 1px solid var(--neutral-6);
@@ -649,7 +648,7 @@ function Finder(props) {
           </div>
           <div className="description">
             We have all the meat pies you could ever want. Please come and visit
-            us.
+            us!
           </div>
         </div>
       </div>
@@ -894,11 +893,13 @@ function NoteList(props) {
 
       // Focus it and scroll into view
       const textArea = newNote.querySelector('textarea');
+      /*
       textArea.focus();
       newNote.scrollIntoView({
         behavior: 'smooth',
         block: 'nearest',
       });
+      */
 
       // Check for animation support
       if (!('animate' in HTMLElement.prototype)) {
