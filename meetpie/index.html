@@ -20,7 +20,6 @@
   --neutral-9: hsl(43, 13%, 90%);
   --neutral-10: hsl(40, 23%, 97%);
 
-  --yellow-background: hsl(54, 100%, 90.2%);
   --green-dark: hsl(106.5, 40%, 30%);
   --green: hsl(106.5, 46.1%, 47.3%);
   --green-light: hsl(106.5, 66.1%, 87%);
@@ -253,58 +252,88 @@ html, body {
   color: var(--neutral-6);
 }
 
-.note-list {
-  padding: 1em;
+.finder-tab {
+  position: relative;
+  height: 100%;
 }
-.note {
-  box-sizing: border-box;
-  box-shadow: 0px 1px 3px var(--neutral-8);
-}
-.note > .content {
-  background: var(--yellow-background);
-  padding-left: .5rem;
-  padding-top: .5rem;
-  padding-bottom: .5rem;
-}
-.note > .content > textarea {
-  font-family: sans-serif;
-  background: transparent;
-  border: none;
-  min-height: 150px;
+.finder-tab > .map {
   width: 100%;
-  resize: vertical;
+  height: calc(100% - 1px);
+  background: url(img/map.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 1px solid var(--neutral-6);
 }
-
-@supports (display: grid) {
-  .note {
-    display: grid;
-    grid-template-columns: auto 1rem;
-    grid-template-rows: 1rem;
-    border-radius: 0 1.6rem 0 0;
-  }
-
-  .note > .cornerfiller {
-    background: var(--yellow-background);
-  }
-
-  .note > .corner {
-    width: 1rem;
-    height: 1rem;
-  }
-
-  .note > .content {
-    grid-row-end: span 2;
-  }
+.finder-tab > .marker {
+  position: absolute;
+  top: 200px;
+  left: 55%;
+  cursor: pointer;
 }
-
-@supports not (display: grid) {
-  .note {
-    background: var(--yellow-background);
-  }
-
-  .note > .corner, .note > .cornerfiller {
-    display: none;
-  }
+.finder-tab > .marker svg {
+  width: 50px;
+  filter: drop-shadow(2px 1px 3px var(--neutral-4));
+  transition: filter .2s;
+}
+.finder-tab > .marker svg > path {
+  transition: fill .2s;
+}
+.finder-tab > .marker a:hover svg {
+  filter: drop-shadow(2px 1px 3px var(--neutral-2));
+}
+.finder-tab > .marker a:hover svg > path {
+  fill: red;
+}
+.finder-tab .popup {
+  position: absolute;
+  margin: 1em;
+  width: calc(100% - 2em);
+  height: calc(100% - 3em);
+  z-index: 10;
+  background: white;
+  border: 1px solid var(--neutral-6);
+  border-radius: 20px;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  box-shadow: 3px 3px 5px var(--neutral-6);
+  overflow-x: hidden;
+  transition: opacity .2s;
+}
+.finder-tab .popup:not(.active) {
+  opacity: 0;
+  pointer-events: none;
+}
+.finder-tab .popup > .title {
+  padding: 30px;
+  font-family: Sniglet;
+  font-size: 30px;
+}
+.finder-tab .popup > .close svg {
+  position: absolute;
+  top: 40px;
+  right: 30px;
+  width: 20px;
+  height: 20px;
+  transition: color .15s;
+  color: var(--neutral-6);
+}
+.finder-tab .popup > .close:hover svg {
+  color: var(--neutral-4);
+}
+.finder-tab .popup > .gallery {
+  height: 200px;
+  width: 200%;
+}
+.finder-tab .popup > .gallery > img {
+  height: 200px;
+  margin-right: .5em;
+}
+.finder-tab .popup > .description {
+  padding: 30px;
+  color: var(--neutral-6);
+  line-height: 1.5;
 }
 </style>
 <div id=container></div>
@@ -410,45 +439,60 @@ function Polls(props) {
         </div>
         <div className="explanation">Voting for this poll has closed.</div>
       </div>
-      <div className="notes">
-      </div>
     </TabPanel>
   );
 }
 
-function NoteCorner() {
-  return (
-    <svg className="corner" viewBox="0 0 100 100" role="presentation">
-      <polygon fill="#FEFACF" points="0,0 100,100 0,100" />
-      <path
-        fill="#CCB92D"
-        d="M0,0l100,100c0,0-69.5-4.5-78.4-7.09S8.9,85.5,7.2,78.76S0,0,0,0"
-      />
-      <path
-        fill="#FCFBF1"
-        d="M0,0l100,100c0,0-62.2-10.3-71-12.8s-12.7-7.4-14.4-14.1S0,0,0,0"
-      />
-    </svg>
-  );
-}
+function Finder(props) {
+  const [popupActive, setPopupActive] = React.useState(false);
 
-function Note() {
-  return (
-    <form className="note" autoComplete="off">
-      <div className="content">
-        <textarea defaultValue="Notes go here" />
-      </div>
-      <NoteCorner />
-      <div className="cornerfiller" />
-    </form>
-  );
-}
+  let popupClassName = 'popup';
+  if (popupActive) {
+    popupClassName += ' active';
+  }
 
-function Notes(props) {
+  const onClickMarker = React.useCallback(evt => {
+    evt.preventDefault();
+    setPopupActive(true);
+  });
+
+  const onClickClose = React.useCallback(evt => {
+    evt.preventDefault();
+    setPopupActive(false);
+  });
+
   return (
     <TabPanel active={props.active}>
-      <div className="note-list">
-        <Note />
+      <div className="finder-tab">
+        <div className="map" />
+        <div className="marker">
+          <a href="#" onClick={onClickMarker}>
+            <svg viewBox="0 0 10 10">
+              <path d="M5 0c7 0 0 10 0 10s-7-10 0-10z" fill="crimson"/>
+            </svg>
+          </a>
+        </div>
+        <div className={popupClassName}>
+          <div className="title" role="heading">Shenzhen Pie Shop</div>
+          <div className="close" onClick={onClickClose}>
+            <a href="#">
+              <svg viewBox="0 0 100 100">
+                <path fill="none" stroke="currentColor" strokeWidth="20"
+                  strokeLinecap="round" d="M85 15L15 85M15 15l70 70"/>
+              </svg>
+            </a>
+          </div>
+          <div className="gallery">
+            <img src="img/pieminister-2.jpg" />
+            <img src="img/punk-doily-2.jpg" />
+            <img src="img/punk-doily-3.jpg" />
+            <img src="img/pieminister-1.jpg" />
+          </div>
+          <div className="description">
+            We have all the meat pies you could ever want. Please come and visit
+            us.
+          </div>
+        </div>
       </div>
     </TabPanel>
   );
@@ -483,7 +527,7 @@ ReactDOM.render(
             <div className="screens">
               <Photos active={position === 0} />
               <Polls active={position === 1} />
-              <Notes active={position === 2} />
+              <Finder active={position === 2} />
             </div>
             <TabBar position={position}>
               <Link to="" className="pictures">
