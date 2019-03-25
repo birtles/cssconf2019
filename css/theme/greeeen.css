@@ -406,7 +406,8 @@ h2.center svg text {
 }
 
 .reveal ul.grid li > figure > img {
-  flex: 1;
+  /* If I use flex: 1, Chrome does something awful */
+  flex: 1 0 auto;
   border: none;
   margin: 0;
   height: 140px;
@@ -424,7 +425,8 @@ h2.center svg text {
  *********************************************/
 .reveal .full-page-source {
   display: flex;
-  align-items: end;
+  /* Chrome doesn't seem to support align-items: end */
+  align-items: flex-end;
   height: 700px;
   text-align: left;
   font-size: 23px;
