@@ -24,6 +24,8 @@
   --green-dark: hsl(106.5, 40%, 30%);
   --green: hsl(106.5, 46.1%, 47.3%);
   --green-light: hsl(106.5, 66.1%, 87%);
+  --brown: #ba7f31;
+  --pink: hsl(335.9, 69.9%, 51.8%);
 }
 
 @font-face {
@@ -212,25 +214,43 @@ html, body {
   color: var(--neutral-6);
 }
 
-.story-summary {
+.poll {
   padding: 1em;
-  margin: 1em;
+  max-width: 500px;
+  margin: 0 auto;
   background: white;
-  border: 1px solid var(--neutral-7);
-  border-radius: 10px;
-  box-shadow: 2px 2px 2px var(--neutral-8);
+  border: 1px solid var(--neutral-6);
+  margin-bottom: 1em;
 }
-.story-summary > .header {
-  font-size: large;
-  margin-bottom: .5em;
+.poll > .title {
+  font-family: Sniglet;
+  font-size: 30px;
+  text-align: center;
 }
-.story-summary > .header .title {
-  font-weight: bold;
-  margin-right: 1em;
+.poll > .chart {
+  position: relative;
+  padding: 2em 1em;
 }
-.story-summary > .header .author {
-  display: inline-block;
-  color: var(--neutral-4);
+.poll > .chart > img {
+  width: 70%;
+}
+.poll > .chart > .label {
+  position: absolute;
+  font-family: Sniglet;
+  font-size: 30px;
+}
+.poll > .chart > .label.yes {
+  color: var(--green);
+  top: 40px;
+  right: 40px;
+}
+.poll > .chart > .label.no {
+  color: var(--brown);
+  top: 250px;
+  right: 40px;
+}
+.poll > .explanation {
+  color: var(--neutral-6);
 }
 
 .note-list {
@@ -312,7 +332,7 @@ function Photo(props) {
         <div className="description">{props.description}</div>
         <div className="comments">
           {props.comments.map(comment => (
-            <div className="comment">
+            <div className="comment" key={comment.comment}>
               <div className="author">{comment.author}</div>
               <div className="comment">{comment.comment}</div>
             </div>
@@ -328,81 +348,70 @@ function Photos(props) {
   return (
     <TabPanel active={props.active}>
       <div className="photo-list">
-        <Photo author="Bristol bandit"
+        <Photo
+          key={1}
+          author="Bristol bandit"
           date="30 Mar 2019"
           description="The best meat pie in the universe 🇬🇧"
           src="img/pieminister-1.jpg"
-          comments={[
-            { author: 'Jessie', comment: '🤤' }
-          ]}/>
-        <Photo author="Pied piper"
+          comments={[{ author: 'Jessie', comment: '🤤' }]}
+        />
+        <Photo
+          key={2}
+          author="Pied piper"
           date="29 Mar 2019"
           description="Ozzie ozzie ozzie!"
           src="img/oji-pie.jpg"
-          comments={[
-            { author: 'Bogan', comment: 'Oi oi oi!' }
-          ]}/>
-        <Photo author="Japan man"
+          comments={[{ author: 'Bogan', comment: 'Oi oi oi!' }]}
+        />
+        <Photo
+          key={3}
+          author="Japan man"
           date="29 Mar 2019"
           description="Best meat pies in Tokyo are at Punk Doily 🗼"
           src="img/punk-doily-3.jpg"
-          comments={[]}/>
-        <Photo author="Pie fan"
+          comments={[]}
+        />
+        <Photo
+          key={4}
+          author="Pie fan"
           date="28 Mar 2019"
           description="Still life with pie"
           src="img/still-life.jpg"
           comments={[
-            { author: 'Jessie', comment: 'It\'s beautiful 😢' },
-            { author: 'steaklover', comment: 'What\'s the salad for?' },
+            { author: 'Jessie', comment: "It's beautiful 😢" },
+            { author: 'steaklover', comment: "What's the salad for?" },
             { author: 'Pie fan', comment: 'Aesthetic value' },
             { author: 'steaklover', comment: '👍' },
-          ]}/>
-        <Photo author="Bristol bandit"
+          ]}
+        />
+        <Photo
+          key={5}
+          author="Bristol bandit"
           date="27 Mar 2019"
           description="Pie minister does it again"
           src="img/pieminister-2.jpg"
-          comments={[]}/>
+          comments={[]}
+        />
       </div>
     </TabPanel>
   );
 }
 
-function StorySummary(props) {
-  return (
-    <div className="story-summary">
-      <div className="header">
-        <span className="title">{props.title}</span>
-        <span className="author">{props.author}</span>
-      </div>
-      {props.children}
-    </div>
-  );
-}
-
-function Stories(props) {
+function Polls(props) {
   return (
     <TabPanel active={props.active}>
-      <StorySummary title="Winnie the Pooh" author="A. A. Milne">
-        Likes hunny 🍯. Not too bright. Friends include a little pig and big
-        donkey.
-      </StorySummary>
-      <StorySummary
-        title="Goldilocks and the Three bears"
-        author="Robert Southey">
-        A story of <em>forced entry</em>, <em>theft</em>, and{' '}
-        <em>destruction of property</em>. The inspiration for Firefox's choice
-        of content processes.
-      </StorySummary>
-      <StorySummary title="Yogi bear" author="Hanna-Barbera">
-        A tale of habitual <em>petty theft</em> at Jellystone park.
-      </StorySummary>
-      <StorySummary title="Paddington bear" author="Michael Bond">
-        Escapee from Peru, found in London. Likes Marmalade.
-      </StorySummary>
-      <StorySummary title="Jungle book" author="Rudyard Kipling">
-        More of a boy story than a bear story, but Baloo who is probably a sloth
-        bear.
-      </StorySummary>
+      <div className="poll">
+        <div className="title" role="heading">Is a chicken pie a meat pie?</div>
+        <div className="chart">
+          <img src="img/poll.svg" />
+          <span className="label yes">Yes (1%)</span>
+          <span className="label no">No (99%)</span>
+        </div>
+        <div className="explanation">Voting for this poll has closed.</div>
+      </div>
+      <div className="notes">
+      </div>
     </TabPanel>
   );
 }
@@ -473,7 +482,7 @@ ReactDOM.render(
           <div className="app">
             <div className="screens">
               <Photos active={position === 0} />
-              <Stories active={position === 1} />
+              <Polls active={position === 1} />
               <Notes active={position === 2} />
             </div>
             <TabBar position={position}>
