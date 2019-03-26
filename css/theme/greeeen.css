@@ -127,13 +127,30 @@
   --pink: hsl(335.9, 69.9%, 51.8%);
   --pink-highlight: hsl(335.9, 80%, 90%);
   --black: #222;
+
+  --neutral-1: hsl(42, 15%, 13%);
+  --neutral-2: hsl(40, 13%, 23%);
+  --neutral-3: hsl(37, 11%, 28%);
+  --neutral-4: hsl(41, 9%, 35%);
+  --neutral-5: hsl(41, 8%, 48%);
+  --neutral-6: hsl(41, 8%, 61%);
+  --neutral-7: hsl(39, 11%, 69%);
+  --neutral-8: hsl(40, 15%, 80%);
+  --neutral-9: hsl(43, 13%, 90%);
+  --neutral-10: hsl(40, 23%, 97%);
+
+  --style-purple: hsl(261, 54%, 68%);
+  --style-purple-dark: hsl(262, 60%, 38%);
+
+  --script-yellow: hsl(48, 95%, 76%);
+  --script-yellow-dark: hsl(44, 92%, 63%);
 }
 
 /*********************************************
  * GLOBAL STYLES
  *********************************************/
 body {
-  background-color: white;
+  background-color: var(--neutral-10);
 }
 
 .reveal {

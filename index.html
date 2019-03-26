@@ -49,7 +49,7 @@ document.getElementsByTagName('head')[0].appendChild(link);
 }
 
 .reveal pre code .highlight {
-  background-color: hsl(53.8, 100%, 91.2%);
+  background-color: var(--green-light);
 }
 
 /*********************************************
@@ -325,7 +325,7 @@ document.getElementsByTagName('head')[0].appendChild(link);
 }
 </style>
 
-<section id="css-transitions-render-code-slide">
+<section id="css-transitions-render-code-slide" class="panel-example">
 <div class="side-by-side">
   <pre><code class="hljs js" data-trim data-noescape>
 button.onclick = () => {
@@ -337,7 +337,7 @@ button.onclick = () => {
 
 <span class="highlight">  // Fade it in
   panel.style.opacity = '0';
-  panel.style.transition = 'opacity .3s';
+  panel.style.transition = 'opacity .5s';
   panel.style.opacity = '1';</span>
 };
   </code></pre>
@@ -370,13 +370,13 @@ button.onclick = () => {
 
     // Fade in
     panel.style.opacity = '0';
-    panel.style.transition = 'opacity .3s';
+    panel.style.transition = 'opacity .5s';
     panel.style.opacity = '1';
   };
 })();
 </script>
 <style>
-#css-transitions-render-code-slide .panel {
+.panel-example .panel {
   position: absolute;
   width: 10em;
   top: 0;
@@ -389,9 +389,801 @@ button.onclick = () => {
   box-shadow: 3px 3px 5px hsl(41, 8%, 61%);
   padding: 1em;
 }
-#css-transitions-render-code-slide .button {
+.panel-example .button {
   font-size: 30px;
   margin: 2em;
+}
+</style>
+</section>
+
+<section id="css-transitions-frame-timing" data-transition="fade">
+<svg width="800" viewBox="0 0 960 700" class="frame-timing">
+  <defs>
+    <marker id="arrow-neutral-4" viewBox="0 -5 10 10" orient="auto"
+      markerWidth="5" markerHeight="5">
+      <path d="M0-5l10 5l-10 5z" style="fill: var(--neutral-4)"/>
+    </marker>
+    <marker id="arrow-neutral-4-reverse" viewBox="-10 -5 10 10" orient="auto"
+      markerWidth="5" markerHeight="5">
+      <path d="M0-5l-10 5l10 5z" style="fill: var(--neutral-4)"/>
+    </marker>
+  </defs>
+  <g class="frame-outline">
+    <rect x="40" y="250" width="400" height="200" />
+    <rect x="520" y="250" width="400" height="200" />
+  </g>
+  <g class="frame-label fragment">
+    <text x="240" y="490">Frame 1</text>
+    <text x="720" y="490">Frame 2</text>
+  </g>
+  <g class="fragment">
+    <rect x="40" y="250" width="50" height="200" class="style"/>
+    <text x="63" y="265" class="vertical-label">Style</text>
+    <rect x="520" y="250" width="50" height="200" class="style"/>
+    <text x="543" y="265" class="vertical-label">Style</text>
+    <g class="hide">
+      <line x1="80" x2="65" y1="190" y2="250" class="connecting-line" />
+      <rect x="65" y="70" width="220" height="120" rx="10" ry="10"
+        class="callout" />
+      <text x="80" y="110" class="code">display: block;
+        <tspan x="80" dy="1.3em">opacity: 1;</tspan>
+        <tspan x="80" dy="1.3em">transform: none;</tspan></text>
+    </g>
+    <g class="hide">
+      <line x1="560" x2="545" y1="190" y2="250" class="connecting-line" />
+      <rect x="545" y="70" width="300" height="120" rx="10" ry="10"
+        class="callout" />
+      <text x="560" y="110" class="code">display: block;
+        <tspan x="560" dy="1.3em">opacity: 1;</tspan>
+        <tspan x="560" dy="1.3em">transform: scale(1.5);</tspan></text>
+    </g>
+  </g>
+  <g class="fragment">
+    <rect x="91" y="250" width="50" height="200" class="layout"/>
+    <text x="114" y="265" class="vertical-label">Layout</text>
+    <rect x="571" y="250" width="50" height="200" class="layout"/>
+    <text x="594" y="265" class="vertical-label">Layout</text>
+    <g class="hide">
+      <line x1="130" x2="116" y1="210" y2="250" class="connecting-line" />
+      <g transform="translate(115 50)">
+        <rect width="180" height="160" rx="10" ry="10" class="callout" />
+        <rect x="20" y="30" width="100" height="100" class="element-outline" />
+        <line x1="135" x2="135" y1="40" y2="120" class="element-dimension"/>
+        <text x="155" y="80" class="dimension-label"
+          style="writing-mode: vertical-rl">120px</text>
+      </g>
+    </g>
+    <g class="hide">
+      <line x1="610" x2="596" y1="210" y2="250" class="connecting-line" />
+      <g transform="translate(595 50)">
+        <rect width="180" height="160" rx="10" ry="10" class="callout" />
+        <rect x="20" y="30" width="100" height="100" class="element-outline" />
+        <line x1="135" x2="135" y1="40" y2="120" class="element-dimension"/>
+        <text x="155" y="80" class="dimension-label"
+          style="writing-mode: vertical-rl">120px</text>
+      </g>
+    </g>
+  </g>
+  <g class="fragment">
+    <rect x="142" y="250" width="50" height="200" class="painting"/>
+    <text x="165" y="265" class="vertical-label">Painting</text>
+    <line x1="180" x2="167" y1="200" y2="250" class="connecting-line" />
+    <rect x="165" y="50" width="150" height="150" rx="10" ry="10"
+      class="callout"/>
+    <use href="#pie" x="210" y="100" width="60" height="60"/>
+
+    <rect x="622" y="250" width="50" height="200" class="painting"/>
+    <text x="645" y="265" class="vertical-label">Painting</text>
+    <line x1="660" x2="647" y1="200" y2="250" class="connecting-line" />
+    <rect x="645" y="50" width="150" height="150" rx="10" ry="10"
+      class="callout"/>
+    <use href="#pie" x="670" y="80" width="100" height="100"/>
+  </g>
+</svg>
+<style>
+.frame-timing .frame-outline {
+  fill: var(--neutral-8);
+  stroke: var(--neutral-6);
+  stroke-width: 2;
+}
+.frame-timing .frame-label {
+  fill: var(--neutral-5);
+  font-size: 30px;
+  text-anchor: middle;
+}
+.frame-timing .callout {
+  fill: white;
+  stroke: var(--neutral-4);
+  stroke-width: 2px;
+  stroke-dasharray: 3px 7px;
+  stroke-linecap: round;
+}
+.frame-timing .connecting-line {
+  stroke: var(--neutral-4);
+  stroke-width: 2px;
+  stroke-dasharray: 3px 7px;
+  stroke-linecap: round;
+  fill: none;
+}
+.frame-timing .style,
+.frame-timing .layout {
+  fill: var(--style-purple);
+  stroke: var(--style-purple-dark);
+  stroke-width: 2px;
+}
+.frame-timing .painting {
+  fill: var(--green);
+  stroke: var(--green-dark);
+  stroke-width: 2px;
+}
+.frame-timing .vertical-label {
+  writing-mode: vertical-rl;
+  fill: var(--neutral-1);
+  font-size: 30px;
+}
+.frame-timing .code {
+  fill: var(--neutral-1);
+  font-size: 20px;
+  font-family: "Courier New", monospace;
+}
+.frame-timing .element-outline {
+  stroke: var(--neutral-4);
+  fill: none;
+}
+.frame-timing .element-dimension {
+  stroke: var(--neutral-4);
+  stroke-width: 2px;
+  marker-start: url(#arrow-neutral-4-reverse);
+  marker-end: url(#arrow-neutral-4);
+}
+.frame-timing .dimension-label {
+  fill: var(--neutral-4);
+  text-anchor: middle;
+  font-size: 20px;
+}
+
+#css-transitions-frame-timing .fragment .hide {
+  transition: opacity .3s;
+}
+#css-transitions-frame-timing .fragment:not(.current-fragment) .hide {
+  opacity: 0;
+}
+</style>
+</section>
+
+<section id="css-transitions-transition-creation" class="frame-explanation"
+  data-transition="fade">
+<svg width="800" viewBox="0 0 960 700" class="frame-timing">
+  <g class="frame-outline">
+    <rect x="40" y="250" width="400" height="200" />
+    <rect x="520" y="250" width="400" height="200" />
+  </g>
+  <g class="frame-label">
+    <text x="240" y="490">Frame 1</text>
+    <text x="720" y="490">Frame 2</text>
+  </g>
+  <g>
+    <rect x="40" y="250" width="50" height="200" class="style"/>
+    <text x="63" y="265" class="vertical-label">Style</text>
+    <rect x="520" y="250" width="50" height="200" class="style"/>
+    <text x="543" y="265" class="vertical-label">Style</text>
+    <g>
+      <line x1="80" x2="65" y1="190" y2="250" class="connecting-line" />
+      <rect x="65" y="70" width="220" height="120" rx="10" ry="10"
+        class="callout" />
+      <text x="80" y="110" class="code">display: block;
+        <tspan x="80" dy="1.3em">opacity: 1;</tspan>
+        <tspan x="80" dy="1.3em"
+          class="highlight">transform: none;</tspan></text>
+    </g>
+    <g>
+      <line x1="560" x2="545" y1="190" y2="250" class="connecting-line" />
+      <rect x="545" y="70" width="300" height="120" rx="10" ry="10"
+        class="callout" />
+      <text x="560" y="110" class="code">display: block;
+        <tspan x="560" dy="1.3em">opacity: 1;</tspan>
+        <tspan x="560" dy="1.3em"
+          class="highlight">transform: scale(1.5);</tspan></text>
+    </g>
+  </g>
+  <g>
+    <rect x="91" y="250" width="50" height="200" class="layout"/>
+    <text x="114" y="265" class="vertical-label">Layout</text>
+    <rect x="571" y="250" width="50" height="200" class="layout"/>
+    <text x="594" y="265" class="vertical-label">Layout</text>
+  </g>
+  <g>
+    <rect x="142" y="250" width="50" height="200" class="painting"/>
+    <text x="165" y="265" class="vertical-label">Painting</text>
+    <rect x="622" y="250" width="50" height="200" class="painting"/>
+    <text x="645" y="265" class="vertical-label">Painting</text>
+  </g>
+</svg>
+<div class="popup fragment">
+  <ul>
+    <li><span class="prop-name">transform</span> changed
+      <span class="prop-value">none</span> &rarr;
+      <span class="prop-value">scale(1.5)</span>!
+    <li><span class="prop-name">transition</span> specifies
+      a transition time for <span class="prop-name">transform</span>
+    <li><span class="action">&rArr; Make a new transition!</span>
+  </ul>
+</div>
+<style>
+.frame-timing .code .highlight {
+  fill: var(--style-purple-dark);
+  font-weight: bold;
+}
+.frame-explanation .popup {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  top: -150px;
+  font-size: 25px;
+  background: white;
+  border: 1px solid var(--neutral-6);
+  border-radius: 20px;
+  box-sizing: border-box;
+  box-shadow: 3px 3px 5px var(--neutral-8);
+  padding: 1em;
+}
+.frame-explanation .popup .prop-name {
+  color: var(--green-dark);
+}
+.frame-explanation .popup .prop-value {
+  color: var(--pink);
+}
+.frame-explanation .action {
+  color: var(--style-purple-dark);
+  font-weight: 500;
+}
+</style>
+</section>
+
+<section id="css-transitions-creation-problem" class="frame-explanation"
+  data-transition="fade">
+<svg width="800" viewBox="0 0 960 700" class="frame-timing">
+  <g class="frame-outline">
+    <rect x="40" y="250" width="400" height="200" />
+    <rect x="520" y="250" width="400" height="200" />
+  </g>
+  <g class="frame-label">
+    <text x="240" y="490">Frame 1</text>
+    <text x="720" y="490">Frame 2</text>
+  </g>
+  <g>
+    <rect x="40" y="250" width="50" height="200" class="style"/>
+    <text x="63" y="265" class="vertical-label">Style</text>
+    <rect x="91" y="250" width="50" height="200" class="layout"/>
+    <text x="114" y="265" class="vertical-label">Layout</text>
+    <rect x="142" y="250" width="50" height="200" class="painting"/>
+    <text x="165" y="265" class="vertical-label">Painting</text>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <line x1="233" x2="233" y1="210" y2="250" class="connecting-line" />
+  </g>
+  <g class="fragment" data-fragment-index="0">
+    <rect x="193" y="250" width="80" height="200" class="script"/>
+    <text x="245" y="265" class="vertical-label">Script
+      <tspan dx="-1em" y="265">(onclick)</tspan></text>
+  </g>
+  <g class="fragment" data-fragment-index="3">
+    <line x1="545" x2="545" y1="450" y2="540" class="connecting-line" />
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <rect x="520" y="250" width="50" height="200" class="style"/>
+    <text x="543" y="265" class="vertical-label">Style</text>
+  </g>
+</svg>
+<div class="code-block fragment" data-fragment-index="1">
+  <pre><code class="hljs js" data-trim>
+  button.onclick = () => {
+    const panel = document.createElement('div');
+    ...
+    panel.style.opacity = '0';
+    panel.style.transition = 'opacity .5s';
+    panel.style.opacity = '1';
+  };
+  </code></pre>
+</div>
+<div class="popup fragment" data-fragment-index="3">
+  <ul>
+    <li><span class="prop-name">opacity</span> is <span
+              class="prop-value">1</span>.
+    <li>Previous <span class="prop-name">opacity</span> is... empty.
+  </ul>
+</div>
+<style>
+.frame-timing .script {
+  fill: var(--script-yellow);
+  stroke: var(--script-yellow-dark);
+  stroke-width: 2px;
+}
+#css-transitions-creation-problem > .code-block {
+  display: flex;
+  position: absolute;
+  top: 20px;
+  width: 100%;
+}
+#css-transitions-creation-problem > .code-block > pre {
+  font-size: 15px;
+  flex: 0 1 50%;
+}
+</style>
+</section>
+
+<section id="css-transitions-panel-fix-attempt-one-slide" class="panel-example">
+<div class="side-by-side">
+  <pre><code class="hljs js" data-trim data-noescape>
+button.onclick = () => {
+  // Make the panel
+  const panel = document.createElement('div');
+  ...
+
+  // Fade it in
+  panel.style.opacity = '0';
+  panel.style.transition = 'opacity .5s';
+<span class="highlight">  requestAnimationFrame(() => {
+    panel.style.opacity = '1';
+  });</span>
+};
+  </code></pre>
+  <div>
+    <button class="button">Button</button>
+  </div>
+</div>
+<script>
+(() => {
+  const button = document.querySelector(
+    '#css-transitions-panel-fix-attempt-one-slide .button'
+  );
+  const parent
+    = document.querySelector('#css-transitions-panel-fix-attempt-one-slide');
+
+  button.onclick = () => {
+    // If there is an existing panel, remove it
+    const existingPanel = document.querySelector(
+      '#css-transitions-panel-fix-attempt-one-slide .panel'
+    );
+    if (existingPanel) {
+      existingPanel.remove();
+      return;
+    }
+
+    // Create the panel
+    const panel = document.createElement('div');
+    panel.classList.add('panel');
+    panel.textContent = 'Hello!';
+    parent.appendChild(panel);
+
+    // Fade in
+    panel.style.opacity = '0';
+    // There is something very buggy with Chrome here. If you move the following
+    // line _inside_ the rAF you actually DO get a transition (but you
+    // shouldn't).
+    panel.style.transition = 'opacity .5s';
+    requestAnimationFrame(() => {
+      panel.style.opacity = '1';
+    });
+  };
+})();
+</script>
+</section>
+
+<section id="css-transitions-first-attempt-explanation"
+  class="frame-explanation" data-transition="fade">
+<svg width="800" viewBox="0 0 960 700" class="frame-timing">
+  <g class="frame-outline">
+    <rect x="40" y="250" width="400" height="200" />
+    <rect x="520" y="250" width="400" height="200" />
+  </g>
+  <g class="frame-label">
+    <text x="240" y="490">Frame 1</text>
+    <text x="720" y="490">Frame 2</text>
+  </g>
+  <g>
+    <rect x="40" y="250" width="50" height="200" class="style"/>
+    <text x="63" y="265" class="vertical-label">Style</text>
+    <rect x="91" y="250" width="50" height="200" class="layout"/>
+    <text x="114" y="265" class="vertical-label">Layout</text>
+    <rect x="142" y="250" width="50" height="200" class="painting"/>
+    <text x="165" y="265" class="vertical-label">Painting</text>
+  </g>
+  <line x1="233" x2="233" y1="210" y2="250" class="connecting-line" />
+  <rect x="193" y="250" width="80" height="200" class="script"/>
+  <text x="245" y="265" class="vertical-label">Script
+    <tspan dx="-1em" y="265">(onclick)</tspan></text>
+  <g class="fragment" data-fragment-index="1">
+    <rect x="520" y="250" width="60" height="200" class="script"/>
+    <text x="560" y="265" class="vertical-label" style="font-size: 22px"
+      >request-<tspan dx="-1em" y="265">AnimationFrame</tspan></text>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <line x1="605" x2="605" y1="450" y2="540" class="connecting-line" />
+    <rect x="582" y="250" width="50" height="200" class="style"/>
+    <text x="604" y="265" class="vertical-label">Style</text>
+  </g>
+</svg>
+<div class="code-block">
+  <pre><code class="hljs js" data-trim>
+  button.onclick = () => {
+    const panel = document.createElement('div');
+    ...
+    panel.style.opacity = '0';
+    requestAnimationFrame(() => {
+      panel.style.opacity = '1';
+    });
+  };
+  </code></pre>
+</div>
+<div class="popup fragment" data-fragment-index="2">
+  <ul>
+    <li><span class="prop-name">opacity</span> is <span
+              class="prop-value">1</span>.
+    <li>Previous <span class="prop-name">opacity</span> is... still empty.
+  </ul>
+</div>
+<style>
+#css-transitions-first-attempt-explanation > .code-block {
+  display: flex;
+  position: absolute;
+  top: 20px;
+  width: 100%;
+}
+#css-transitions-first-attempt-explanation > .code-block > pre {
+  font-size: 15px;
+  flex: 0 1 50%;
+}
+</style>
+</section>
+
+<section id="css-transitions-panel-fix-attempt-two-slide" class="panel-example">
+<div class="side-by-side">
+  <pre><code class="hljs js" data-trim data-noescape>
+button.onclick = () => {
+  // Make the panel
+  const panel = document.createElement('div');
+  ...
+
+  // Fade it in
+  panel.style.opacity = '0';
+  panel.style.transition = 'opacity .5s';
+<span class="highlight">  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      panel.style.opacity = '1';
+    });
+  });</span>
+};
+  </code></pre>
+  <div>
+    <button class="button">Button</button>
+  </div>
+</div>
+<script>
+(() => {
+  const button = document.querySelector(
+    '#css-transitions-panel-fix-attempt-two-slide .button'
+  );
+  const parent
+    = document.querySelector('#css-transitions-panel-fix-attempt-two-slide');
+
+  button.onclick = () => {
+    // If there is an existing panel, remove it
+    const existingPanel = document.querySelector(
+      '#css-transitions-panel-fix-attempt-two-slide .panel'
+    );
+    if (existingPanel) {
+      existingPanel.remove();
+      return;
+    }
+
+    // Create the panel
+    const panel = document.createElement('div');
+    panel.classList.add('panel');
+    panel.textContent = 'Hello!';
+    parent.appendChild(panel);
+
+    // Fade in
+    panel.style.opacity = '0';
+    panel.style.transition = 'opacity .5s';
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        panel.style.opacity = '1';
+      });
+    });
+  };
+})();
+</script>
+</section>
+
+<section id="css-transitions-second-attempt-explanation"
+  class="frame-explanation" data-transition="fade">
+<svg width="800" viewBox="39 100 1362 700" class="frame-timing">
+  <g class="frame-outline">
+    <rect x="40" y="250" width="400" height="200" />
+    <rect x="520" y="250" width="400" height="200" />
+    <rect x="1000" y="250" width="400" height="200" />
+  </g>
+  <g class="frame-label">
+    <text x="240" y="490">Frame 1</text>
+    <text x="720" y="490">Frame 2</text>
+    <text x="1200" y="490">Frame 3</text>
+  </g>
+  <g>
+    <rect x="40" y="250" width="50" height="200" class="style"/>
+    <text x="63" y="265" class="vertical-label">Style</text>
+    <rect x="91" y="250" width="50" height="200" class="layout"/>
+    <text x="114" y="265" class="vertical-label">Layout</text>
+    <rect x="142" y="250" width="50" height="200" class="painting"/>
+    <text x="165" y="265" class="vertical-label">Painting</text>
+  </g>
+  <rect x="193" y="250" width="80" height="200" class="script"/>
+  <text x="245" y="265" class="vertical-label">Script
+    <tspan dx="-1em" y="265">(onclick)</tspan></text>
+  <g class="fragment">
+    <rect x="520" y="250" width="60" height="200" class="script"/>
+    <text x="560" y="265" class="vertical-label" style="font-size: 22px"
+      >request-<tspan dx="-1em" y="265">AnimationFrame</tspan></text>
+  </g>
+  <g class="fragment">
+    <line x1="605" x2="605" y1="450" y2="510" class="connecting-line" />
+    <rect x="582" y="250" width="50" height="200" class="style"/>
+    <text x="604" y="265" class="vertical-label">Style</text>
+    <text x="605" y="530" class="inline-note">Resolve<tspan
+      x="605" dy="1.2em">opacity as &lsquo;0&rsquo;</tspan></text>
+  </g>
+  <g class="fragment">
+    <rect x="1000" y="250" width="60" height="200" class="script"/>
+    <text x="1040" y="265" class="vertical-label" style="font-size: 22px"
+      >request-<tspan dx="-1em" y="265">AnimationFrame</tspan></text>
+  </g>
+  <g class="fragment">
+    <line x1="1084" x2="1084" y1="450" y2="510" class="connecting-line" />
+    <rect x="1062" y="250" width="50" height="200" class="style"/>
+    <text x="1085" y="265" class="vertical-label">Style</text>
+    <text x="1084" y="530" class="inline-note">Resolve<tspan
+      x="1084" dy="1.2em">opacity as &lsquo;1&rsquo;</tspan></text>
+  </g>
+</svg>
+<div class="code-block">
+  <pre><code class="hljs js" data-trim>
+  button.onclick = () => {
+    ...
+    panel.style.opacity = '0';
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        panel.style.opacity = '1';
+      });
+    });
+  };
+  </code></pre>
+</div>
+<div class="popup fragment">
+  <ul>
+    <li><span class="prop-name">opacity</span> is <span
+              class="prop-value">1</span>.
+    <li>Previous <span class="prop-name">opacity</span> is
+        <span class="prop-value">0</span>.
+    <li><span class="action">&rArr; Make transition!</span>
+  </ul>
+</div>
+<style>
+.frame-timing .inline-note {
+  text-anchor: middle;
+  fill: var(--neutral-4);
+  font-size: 25px;
+}
+#css-transitions-second-attempt-explanation > svg {
+  margin-top: 180px;
+}
+#css-transitions-second-attempt-explanation > .code-block {
+  display: flex;
+  position: absolute;
+  top: 10px;
+  width: 100%;
+}
+#css-transitions-second-attempt-explanation > .code-block > pre {
+  font-size: 15px;
+  flex: 0 1 50%;
+}
+#css-transitions-second-attempt-explanation > .popup {
+  top: -100px;
+}
+</style>
+</section>
+
+<section id="css-transitions-panel-fix-attempt-three-slide" class="panel-example">
+<div class="side-by-side">
+  <pre><code class="hljs js" data-trim data-noescape>
+button.onclick = () => {
+  // Make the panel
+  const panel = document.createElement('div');
+  ...
+
+  // Fade it in
+  panel.style.opacity = '0';
+<span class="highlight">  getComputedStyle(panel).opacity;</span>
+  panel.style.transition = 'opacity .5s';
+  panel.style.opacity = '1';</span>
+};
+  </code></pre>
+  <div>
+    <button class="button">Button</button>
+  </div>
+</div>
+<script>
+(() => {
+  const button = document.querySelector(
+    '#css-transitions-panel-fix-attempt-three-slide .button'
+  );
+  const parent
+    = document.querySelector('#css-transitions-panel-fix-attempt-three-slide');
+
+  button.onclick = () => {
+    // If there is an existing panel, remove it
+    const existingPanel = document.querySelector(
+      '#css-transitions-panel-fix-attempt-three-slide .panel'
+    );
+    if (existingPanel) {
+      existingPanel.remove();
+      return;
+    }
+
+    // Create the panel
+    const panel = document.createElement('div');
+    panel.classList.add('panel');
+    panel.textContent = 'Hello!';
+    parent.appendChild(panel);
+
+    // Fade in
+    panel.style.opacity = '0';
+    getComputedStyle(panel).opacity;
+    panel.style.transition = 'opacity .5s';
+    panel.style.opacity = '1';
+  };
+})();
+</script>
+</section>
+
+<section id="css-transitions-third-attempt-explanation"
+  class="frame-explanation" data-transition="fade">
+<svg width="800" viewBox="0 0 960 700" class="frame-timing">
+  <g class="frame-outline">
+    <rect x="40" y="250" width="400" height="200" />
+    <rect x="520" y="250" width="400" height="200" />
+  </g>
+  <g class="frame-label">
+    <text x="200" y="490">Frame 1</text>
+    <text x="720" y="490">Frame 2</text>
+  </g>
+  <g>
+    <rect x="40" y="250" width="50" height="200" class="style"/>
+    <text x="63" y="265" class="vertical-label">Style</text>
+    <rect x="91" y="250" width="50" height="200" class="layout"/>
+    <text x="114" y="265" class="vertical-label">Layout</text>
+    <rect x="142" y="250" width="50" height="200" class="painting"/>
+    <text x="165" y="265" class="vertical-label">Painting</text>
+  </g>
+  <line x1="233" x2="233" y1="210" y2="250" class="connecting-line" />
+  <rect x="193" y="250" width="80" height="200" class="script"/>
+  <text x="245" y="265" class="vertical-label">Script
+    <tspan dx="-1em" y="265">(onclick)</tspan></text>
+  <g class="fragment">
+    <rect x="274" y="250" width="50" height="200" class="style"/>
+    <text x="297" y="265" class="vertical-label">Style</text>
+    <g transform="translate(133)">
+      <rect x="193" y="250" width="80" height="200" class="script"/>
+      <text x="245" y="265" class="vertical-label"
+        style="font-size: 25px">Script
+        <tspan dx="-1em" y="265">(onclick) contd.</tspan></text>
+    </g>
+  </g>
+  <g class="fragment">
+    <line x1="299" x2="299" y1="450" y2="510" class="connecting-line" />
+    <text x="299" y="530" class="inline-note">Resolve<tspan
+      x="299" dy="1.2em">opacity as &lsquo;0&rsquo;</tspan></text>
+  </g>
+  <g class="fragment">
+    <line x1="546" x2="546" y1="450" y2="510" class="connecting-line" />
+    <text x="546" y="530" class="inline-note">Resolve<tspan
+      x="546" dy="1.2em">opacity as &lsquo;1&rsquo;</tspan></text>
+    <rect x="520" y="250" width="50" height="200" class="style"/>
+    <text x="545" y="265" class="vertical-label">Style</text>
+  </g>
+</svg>
+<div class="code-block">
+  <pre><code class="hljs js" data-trim data-noescape>
+  button.onclick = () => {
+    const panel = document.createElement('div');
+    ...
+    panel.style.opacity = '0';
+<span class="highlight">    getComputedStyle(panel).opacity;</span>
+    panel.style.transition = 'opacity .5s';
+    panel.style.opacity = '1';
+  };
+  </code></pre>
+</div>
+<div class="popup fragment">
+  <ul>
+    <li><span class="prop-name">opacity</span> is <span
+              class="prop-value">1</span>.
+    <li>Previous <span class="prop-name">opacity</span> is <span
+                       class="prop-value">0</span>.
+    <li><span class="action">&rArr; Make transition</span>
+  </ul>
+</div>
+<style>
+#css-transitions-third-attempt-explanation > .code-block {
+  display: flex;
+  position: absolute;
+  top: 20px;
+  width: 100%;
+}
+#css-transitions-third-attempt-explanation > .code-block > pre {
+  font-size: 15px;
+  flex: 0 1 50%;
+}
+#css-transitions-third-attempt-explanation > .popup {
+  top: -100px;
+}
+</style>
+</section>
+
+<section id="css-transitions-style-change-summary" class="summary-slide">
+<h1>
+  <svg width="900px" viewBox="0 0 670 350">
+    <text y=".9em" x="50%" text-anchor="middle"
+      ><tspan class="number">Point 1</tspan><tspan
+      dy="1.5em" x="50%" class="summary">To create a transition,<tspan
+      dy="1.1em" x="50%" class="summary">the browser needs to see<tspan
+      dy="1.1em" x="50%" class="summary">a change in style<tspan></text></svg>
+</h1>
+<style>
+.summary-slide h1 svg text {
+  stroke: var(--neutral-1);
+  text-anchor: middle;
+}
+.summary-slide svg .number {
+  stroke-width: 4px;
+  fill: var(--pink);
+  font-size: 80px;
+}
+.summary-slide svg .summary {
+  fill: var(--green);
+  font-size: 50px;
+  font-weight: normal;
+  stroke-width: .5px;
+  text-transform: none;
+}
+</style>
+</section>
+
+<section id="style-change-tips-slide">
+<h2 class="svg">
+  <svg><text y="1em" x="3px">Tips</svg>
+</h2>
+<ul>
+  <li>Be careful with:
+    <ul>
+      <li><code>createElement</code>
+      <li>&ldquo;rendering&rdquo; using a framework (e.g. React etc.)
+      <li><code>display: none</code>
+    </ul>
+  <li><code>getComputedStyle(elem)</code> does <em>NOT</em> update style
+    <ul>
+      <li><code>getComputedStyle(elem).<em>&lt;property&gt;</em></code> does
+    </ul>
+</ul>
+<style>
+#style-change-tips-slide ul {
+  font-size: 35px;
+}
+#style-change-tips-slide ul code {
+  color: var(--green-dark);
+}
+#style-change-tips-slide > ul > li {
+  margin-top: 1em;
 }
 </style>
 </section>
