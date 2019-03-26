@@ -85,7 +85,7 @@ document.getElementsByTagName('head')[0].appendChild(link);
 <div class="reveal">
 <div class="slides">
 
-<section id="title-slide" class="title-slide"
+<section id="title" class="title-slide"
   data-background="#5ab041">
 <h1>
   <svg width="900px"
@@ -99,7 +99,7 @@ document.getElementsByTagName('head')[0].appendChild(link);
 </h1>
 </section>
 
-<section id="about-me-slide">
+<section id="about-me">
 <h2 class="svg smaller">
   <svg><text y="1em" x="3px">A few things about me&hellip;</text></svg>
 </h2>
@@ -116,7 +116,7 @@ document.getElementsByTagName('head')[0].appendChild(link);
 </ul>
 </section>
 
-<section id="about-meat-pie-slide" data-background-image="img/punk-doily-1.jpg">
+<section id="about-meat-pie" data-background-image="img/punk-doily-1.jpg">
   <p class="full-page-source">
     <span>
       Source:
@@ -127,11 +127,11 @@ document.getElementsByTagName('head')[0].appendChild(link);
   </p>
 </section>
 
-<section id="three-days-of-pie-slide" class="fit-picture">
+<section id="three-days-of-pie" class="fit-picture">
   <img src="img/3-days-of-pie.jpg">
 </section>
 
-<section id="app-intro-slide">
+<section id="app-intro">
 <h2 class="svg smallerer">
   <svg><text y="1em" x="3px">Introducing <tspan style="text-decoration:
   line-through">Meat</tspan> &ldquo;Meet Pie&rdquo;</text></svg>
@@ -164,17 +164,17 @@ document.getElementsByTagName('head')[0].appendChild(link);
 </section>
 
 <style>
-#app-intro-slide .side-by-side {
+#app-intro .side-by-side {
   height: 450px;
 }
-#app-intro-slide .side-by-side > svg {
+#app-intro .side-by-side > svg {
   flex: 1 0 200px;
   padding: 2.5em;
   border: 0;
   filter: drop-shadow(1px 6px 3px #888);
   transform: rotate(-15deg);
 }
-#app-intro-slide .side-by-side > svg text {
+#app-intro .side-by-side > svg text {
   fill: var(--pink);
   stroke: var(--black);
   stroke-width: 10px;
@@ -182,10 +182,10 @@ document.getElementsByTagName('head')[0].appendChild(link);
   font-family: Sniglet, sans-serif;
   font-weight: 800;
 }
-#app-intro-slide .side-by-side > svg text.white {
+#app-intro .side-by-side > svg text.white {
   fill: white;
 }
-#app-intro-slide .side-by-side .jiggle {
+#app-intro .side-by-side .jiggle {
   animation: jiggle 2s infinite;
   transform-origin: 50% 50%;
   transform-box: fill-box;
@@ -216,12 +216,12 @@ document.getElementsByTagName('head')[0].appendChild(link);
     transform: translate(0,0px) rotate(0deg);
   }
 }
-#app-intro-slide .side-by-side > ul li {
+#app-intro .side-by-side > ul li {
   margin-bottom: .5em;
 }
 </style>
 
-<section id="app-lineup-slide" data-background="#5ab041">
+<section id="app-lineup" data-background="#5ab041">
 <div class="lineup">
   <img src="img/screenshot-feed.png">
   <img src="img/screenshot-poll.png">
@@ -230,12 +230,12 @@ document.getElementsByTagName('head')[0].appendChild(link);
 </section>
 
 <style>
-#app-lineup-slide .lineup {
+#app-lineup .lineup {
   display: grid;
   grid-template-columns: repeat(3, 300px);
   justify-content: space-around;
 }
-#app-lineup-slide .lineup > img {
+#app-lineup .lineup > img {
   max-height: 600px;
   border: none;
   background: transparent;
@@ -243,7 +243,7 @@ document.getElementsByTagName('head')[0].appendChild(link);
 }
 </style>
 
-<section id="agenda-slide">
+<section id="agenda">
 <h2 class="svg">
   <svg><text y="1em" x="3px">Agenda</svg>
 </h2>
@@ -256,14 +256,14 @@ document.getElementsByTagName('head')[0].appendChild(link);
 </ul>
 </section>
 
-<section id="css-transitions-section" class="section-title"
+<section id="css-transitions-title" class="section-title"
   data-background="#5ab041">
 <h1 class="svg">
   <svg><text y="1em" x="50%">CSS Transitions</text></svg>
 </h1>
 </section>
 
-<section id="css-transitions-intro-slide">
+<section id="css-transitions-intro">
 <div class="side-by-side">
   <pre><code class="css live-code" data-trim contenteditable=true
   spellcheck=false>
@@ -282,7 +282,7 @@ document.getElementsByTagName('head')[0].appendChild(link);
 </div>
 </section>
 
-<section id="css-transitions-button-slide">
+<section id="css-transitions-button">
 <div class="side-by-side">
   <pre><code class="css live-code" data-trim contenteditable=true
   spellcheck=false>
@@ -303,7 +303,7 @@ document.getElementsByTagName('head')[0].appendChild(link);
 </section>
 
 <style>
-#css-transitions-button-slide .side-by-side > .target-content .button {
+#css-transitions-button .side-by-side > .target-content .button {
   border: 1px solid hsl(41, 9%, 35%);
   border-radius: 10px;
   box-shadow: 1px 2px 3px 0 #ccc;
@@ -314,18 +314,18 @@ document.getElementsByTagName('head')[0].appendChild(link);
 }
 </style>
 
-<section id="css-transitions-attempted-overlay-slide" data-background="#5ab041">
+<section id="css-transitions-overlay-intro" data-background="#5ab041">
   <iframe width="400" height="600" src="meetpie/index.html#finder"></iframe>
 </section>
 
 <style>
-#css-transitions-attempted-overlay-slide iframe {
+#css-transitions-overlay-intro iframe {
   border: 4px solid #222;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
 }
 </style>
 
-<section id="css-transitions-render-code-slide" class="panel-example">
+<section id="css-transitions-overlay-code" class="panel-example">
 <div class="side-by-side">
   <pre><code class="hljs js" data-trim data-noescape>
 button.onclick = () => {
@@ -348,14 +348,14 @@ button.onclick = () => {
 <script>
 (() => {
   const button = document.querySelector(
-    '#css-transitions-render-code-slide .button'
+    '#css-transitions-overlay-code .button'
   );
-  const parent = document.querySelector('#css-transitions-render-code-slide');
+  const parent = document.querySelector('#css-transitions-overlay-code');
 
   button.onclick = () => {
     // If there is an existing panel, remove it
     const existingPanel = document.querySelector(
-      '#css-transitions-render-code-slide .panel'
+      '#css-transitions-overlay-code .panel'
     );
     if (existingPanel) {
       existingPanel.remove();
@@ -551,7 +551,7 @@ button.onclick = () => {
 </style>
 </section>
 
-<section id="css-transitions-transition-creation" class="frame-explanation"
+<section id="css-transitions-creation" class="frame-explanation"
   data-transition="fade">
 <svg width="800" viewBox="0 0 960 700" class="frame-timing">
   <g class="frame-outline">
@@ -641,7 +641,7 @@ button.onclick = () => {
 </style>
 </section>
 
-<section id="css-transitions-creation-problem" class="frame-explanation"
+<section id="css-transitions-overlay-problem" class="frame-explanation"
   data-transition="fade">
 <svg width="800" viewBox="0 0 960 700" class="frame-timing">
   <g class="frame-outline">
@@ -700,20 +700,20 @@ button.onclick = () => {
   stroke: var(--script-yellow-dark);
   stroke-width: 2px;
 }
-#css-transitions-creation-problem > .code-block {
+#css-transitions-overlay-problem > .code-block {
   display: flex;
   position: absolute;
   top: 20px;
   width: 100%;
 }
-#css-transitions-creation-problem > .code-block > pre {
+#css-transitions-overlay-problem > .code-block > pre {
   font-size: 15px;
   flex: 0 1 50%;
 }
 </style>
 </section>
 
-<section id="css-transitions-panel-fix-attempt-one-slide" class="panel-example">
+<section id="css-transitions-attempt-one" class="panel-example">
 <div class="side-by-side">
   <pre><code class="hljs js" data-trim data-noescape>
 button.onclick = () => {
@@ -736,15 +736,14 @@ button.onclick = () => {
 <script>
 (() => {
   const button = document.querySelector(
-    '#css-transitions-panel-fix-attempt-one-slide .button'
+    '#css-transitions-attempt-one .button'
   );
-  const parent
-    = document.querySelector('#css-transitions-panel-fix-attempt-one-slide');
+  const parent = document.querySelector('#css-transitions-attempt-one');
 
   button.onclick = () => {
     // If there is an existing panel, remove it
     const existingPanel = document.querySelector(
-      '#css-transitions-panel-fix-attempt-one-slide .panel'
+      '#css-transitions-attempt-one .panel'
     );
     if (existingPanel) {
       existingPanel.remove();
@@ -771,7 +770,7 @@ button.onclick = () => {
 </script>
 </section>
 
-<section id="css-transitions-first-attempt-explanation"
+<section id="css-transitions-attempt-one-explanation"
   class="frame-explanation" data-transition="fade">
 <svg width="800" viewBox="0 0 960 700" class="frame-timing">
   <g class="frame-outline">
@@ -825,20 +824,20 @@ button.onclick = () => {
   </ul>
 </div>
 <style>
-#css-transitions-first-attempt-explanation > .code-block {
+#css-transitions-attempt-one-explanation > .code-block {
   display: flex;
   position: absolute;
   top: 20px;
   width: 100%;
 }
-#css-transitions-first-attempt-explanation > .code-block > pre {
+#css-transitions-attempt-one-explanation > .code-block > pre {
   font-size: 15px;
   flex: 0 1 50%;
 }
 </style>
 </section>
 
-<section id="css-transitions-panel-fix-attempt-two-slide" class="panel-example">
+<section id="css-transitions-panel-attempt-two" class="panel-example">
 <div class="side-by-side">
   <pre><code class="hljs js" data-trim data-noescape>
 button.onclick = () => {
@@ -863,15 +862,15 @@ button.onclick = () => {
 <script>
 (() => {
   const button = document.querySelector(
-    '#css-transitions-panel-fix-attempt-two-slide .button'
+    '#css-transitions-panel-attempt-two .button'
   );
   const parent
-    = document.querySelector('#css-transitions-panel-fix-attempt-two-slide');
+    = document.querySelector('#css-transitions-panel-attempt-two');
 
   button.onclick = () => {
     // If there is an existing panel, remove it
     const existingPanel = document.querySelector(
-      '#css-transitions-panel-fix-attempt-two-slide .panel'
+      '#css-transitions-panel-attempt-two .panel'
     );
     if (existingPanel) {
       existingPanel.remove();
@@ -897,7 +896,7 @@ button.onclick = () => {
 </script>
 </section>
 
-<section id="css-transitions-second-attempt-explanation"
+<section id="css-transitions-attempt-two-explanation"
   class="frame-explanation" data-transition="fade">
 <svg width="800" viewBox="39 100 1362 700" class="frame-timing">
   <g class="frame-outline">
@@ -974,26 +973,26 @@ button.onclick = () => {
   fill: var(--neutral-4);
   font-size: 25px;
 }
-#css-transitions-second-attempt-explanation > svg {
+#css-transitions-attempt-two-explanation > svg {
   margin-top: 180px;
 }
-#css-transitions-second-attempt-explanation > .code-block {
+#css-transitions-attempt-two-explanation > .code-block {
   display: flex;
   position: absolute;
   top: 10px;
   width: 100%;
 }
-#css-transitions-second-attempt-explanation > .code-block > pre {
+#css-transitions-attempt-two-explanation > .code-block > pre {
   font-size: 15px;
   flex: 0 1 50%;
 }
-#css-transitions-second-attempt-explanation > .popup {
+#css-transitions-attempt-two-explanation > .popup {
   top: -100px;
 }
 </style>
 </section>
 
-<section id="css-transitions-panel-fix-attempt-three-slide" class="panel-example">
+<section id="css-transitions-panel-attempt-three" class="panel-example">
 <div class="side-by-side">
   <pre><code class="hljs js" data-trim data-noescape>
 button.onclick = () => {
@@ -1015,15 +1014,15 @@ button.onclick = () => {
 <script>
 (() => {
   const button = document.querySelector(
-    '#css-transitions-panel-fix-attempt-three-slide .button'
+    '#css-transitions-panel-attempt-three .button'
   );
   const parent
-    = document.querySelector('#css-transitions-panel-fix-attempt-three-slide');
+    = document.querySelector('#css-transitions-panel-attempt-three');
 
   button.onclick = () => {
     // If there is an existing panel, remove it
     const existingPanel = document.querySelector(
-      '#css-transitions-panel-fix-attempt-three-slide .panel'
+      '#css-transitions-panel-attempt-three .panel'
     );
     if (existingPanel) {
       existingPanel.remove();
@@ -1046,7 +1045,7 @@ button.onclick = () => {
 </script>
 </section>
 
-<section id="css-transitions-third-attempt-explanation"
+<section id="css-transitions-attempt-three-explanation"
   class="frame-explanation" data-transition="fade">
 <svg width="800" viewBox="0 0 960 700" class="frame-timing">
   <g class="frame-outline">
@@ -1114,17 +1113,17 @@ button.onclick = () => {
   </ul>
 </div>
 <style>
-#css-transitions-third-attempt-explanation > .code-block {
+#css-transitions-attempt-three-explanation > .code-block {
   display: flex;
   position: absolute;
   top: 20px;
   width: 100%;
 }
-#css-transitions-third-attempt-explanation > .code-block > pre {
+#css-transitions-attempt-three-explanation > .code-block > pre {
   font-size: 15px;
   flex: 0 1 50%;
 }
-#css-transitions-third-attempt-explanation > .popup {
+#css-transitions-attempt-three-explanation > .popup {
   top: -100px;
 }
 </style>
@@ -1174,6 +1173,8 @@ button.onclick = () => {
     <ul>
       <li><code>getComputedStyle(elem).<em>&lt;property&gt;</em></code> does
     </ul>
+  <li>Using <code>getComputedStyle</code> can be expensive
+  <li>Consider CSS Animations or Web Animations instead
 </ul>
 <style>
 #style-change-tips-slide ul {
