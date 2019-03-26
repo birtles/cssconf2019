@@ -523,20 +523,6 @@ h2.pink svg text {
 }
 
 /*********************************************
- * SORT OF FULL-SCREEN PICTURE, but not cropped
- *********************************************/
-.reveal .slides > section.fit-picture {
-  padding: 0;
-  margin: 0;
-}
-
-.reveal .fit-picture > img {
-  height: 700px;
-  border: 0;
-  margin: 0;
-}
-
-/*********************************************
  * NAVIGATION CONTROLS
  *********************************************/
 .reveal .controls {

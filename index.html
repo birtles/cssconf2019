@@ -47,6 +47,37 @@ document.getElementsByTagName('head')[0].appendChild(link);
   padding: 1em;
   font-weight: bold;
 }
+
+.reveal pre code .highlight {
+  background-color: hsl(53.8, 100%, 91.2%);
+}
+
+/*********************************************
+ * CODE SAMPLE AND LIVE PREVIEW
+ *********************************************/
+.reveal .slides .side-by-side {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.reveal .slides .side-by-side > .target-content {
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+/*********************************************
+ * SORT OF FULL-SCREEN PICTURE, but not cropped
+ *********************************************/
+.reveal .slides > section.fit-picture {
+  padding: 0;
+  margin: 0;
+}
+
+.reveal .fit-picture > img {
+  height: 700px;
+  border: 0;
+  margin: 0;
+}
 </style>
 </head>
 
@@ -106,38 +137,39 @@ document.getElementsByTagName('head')[0].appendChild(link);
   line-through">Meat</tspan> &ldquo;Meet Pie&rdquo;</text></svg>
 </h2>
 <div class="side-by-side">
-  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 862 1754">
+  <svg viewBox="0 0 862 1754">
+    <defs>
+      <svg id="pie" viewBox="2 15 60 33">
+        <path fill="#bdc1c6" d="M8.9 37.9L12.1 48H52l2.9-10.1-3.6-2.2-2.7 3.2-4.7-.2-4.5-3-2.7 3.2-4.2 1.2-4.9-1.1-3.1-2.7-2.4 1.8-2.7 1-5-1.1-1.8-2.3z"/>
+        <path d="M8.1 37.9s-3.4-.6-3.6-1-1.9-4.6-1.9-4.6l3.3-4 3-.7 3.9-5.4 8.9-4.9 8.6-1 9.9.6 7.1 3.1 4.8 4.1 2.4 3.1.4 1.2 4.6.8 1.8 4.2-2.4 3.9-4 .6-3.6-2.2-1.5 1.4-3.8 1.6h-3.6l-3-3.1-2.8 3.3-5.3 1-3.7-.9-2.6-3.3-2.3 1.9-4.7 1.5-2-.7-3.4-2.7-2.5 2-2 .2z" fill="#b56f1c"/>
+        <path d="M12 48.6c-.3 0-.5-.2-.6-.4l-2.9-9.6H8a5.6 5.6 0 1 1 0-11.2h.5l.1-.2C11.8 20 21 15.4 32 15.4S52.2 20 55.4 27.2l.1.2h.5a5.6 5.6 0 1 1 0 11.2h-.5l-2.9 9.6c-.1.3-.3.4-.6.4H12zm.1-11.8c-.6.6-1.3 1.1-2.1 1.4l-.3.1 2.8 9.1h39.1l2.7-9.1-.3-.1c-.8-.3-1.5-.8-2.1-1.4l-.3-.3-.3.4c-.3.3-.6.7-.9.9a7.5 7.5 0 0 1-10.5-.7l-.3-.4-.3.4c-.5.6-1 1.1-1.6 1.6a9.99 9.99 0 0 1-5.7 1.9c-2.9 0-5.5-1.3-7.3-3.5l-.3-.4-.3.3-.9.9a7.06 7.06 0 0 1-4.7 1.6c-2.3 0-4.4-1-5.8-2.8l-.3-.4-.3.5zm12.4-2c.2 0 .4.2.5.4a7.5 7.5 0 0 0 6.7 4.3h.5c2.9 0 5.5-1.7 6.7-4.3.1-.2.3-.4.5-.4s.5.1.6.3a5.89 5.89 0 0 0 5.4 3.3c2.3 0 4.4-1.3 5.5-3.4.1-.2.3-.4.5-.4s.4.1.5.3a4.7 4.7 0 0 0 3.1 2.4c.3.1.5.1.8.1 2.4 0 4.4-2 4.4-4.4 0-2.4-2-4.4-4.4-4.4-.3 0-.5 0-.8.1h-.1c-.2 0-.5-.2-.6-.4C51.8 21.2 43 16.6 32 16.6S12.2 21.2 9.5 28.3c-.1.2-.3.4-.6.4h-.1c-.3-.1-.5-.1-.8-.1-2.4 0-4.4 2-4.4 4.4 0 2.4 2 4.4 4.4 4.4.3 0 .5 0 .8-.1 1.3-.3 2.5-1.1 3.1-2.4.1-.2.3-.3.5-.3s.5.2.5.4c1 2.1 3.1 3.4 5.3 3.4h.3c2.3 0 4.3-1.3 5.3-3.3.3-.2.5-.3.7-.3z"/>
+        <path d="M32 26.6c-.3 0-.6-.3-.6-.6v-4c0-.3.3-.6.6-.6s.6.3.6.6v4c0 .3-.3.6-.6.6zM24 26.6c-.1 0-.2 0-.3-.1-.3-.2-.4-.5-.3-.8l2-4c.1-.2.3-.3.5-.3.1 0 .2 0 .3.1.3.1.4.5.3.8l-2 4c-.1.2-.3.3-.5.3zM40 26.6c-.2 0-.4-.1-.5-.3l-2-4c-.1-.3 0-.6.3-.7.1-.1.2-.1.3-.1.2 0 .4.1.5.3l2 4c.1.3 0 .7-.3.8H40zM15 44.6c-.3 0-.6-.3-.6-.6s.3-.6.6-.6h2c.3 0 .6.3.6.6s-.3.6-.6.6h-2zM21 44.6c-.3 0-.6-.3-.6-.6s.3-.6.6-.6h8c.3 0 .6.3.6.6s-.3.6-.6.6h-8z"/>
+      </svg>
+    </defs>
     <image href="img/screenshot-feed.png" width="862" height="1754"/>
     <rect x="55.5" y="209" width="750" height="1335"
       fill="hsl(106.5, 46.1%, 47.3%)" />
     <text x="100" y="700" dx="0,-30,-20,-30">Meet</text>
     <text x="380" y="860" dx="0,-40,-30" class="white">Pie</text>
-    <g transform="translate(200 850) scale(7)">
-      <g class="jiggle">
-        <path fill="#bdc1c6" d="M8.9 37.9L12.1 48H52l2.9-10.1-3.6-2.2-2.7 3.2-4.7-.2-4.5-3-2.7 3.2-4.2 1.2-4.9-1.1-3.1-2.7-2.4 1.8-2.7 1-5-1.1-1.8-2.3z"/>
-        <path d="M8.1 37.9s-3.4-.6-3.6-1-1.9-4.6-1.9-4.6l3.3-4 3-.7 3.9-5.4 8.9-4.9 8.6-1 9.9.6 7.1 3.1 4.8 4.1 2.4 3.1.4 1.2 4.6.8 1.8 4.2-2.4 3.9-4 .6-3.6-2.2-1.5 1.4-3.8 1.6h-3.6l-3-3.1-2.8 3.3-5.3 1-3.7-.9-2.6-3.3-2.3 1.9-4.7 1.5-2-.7-3.4-2.7-2.5 2-2 .2z" fill="#b56f1c"/>
-        <path d="M12 48.6c-.3 0-.5-.2-.6-.4l-2.9-9.6H8a5.6 5.6 0 1 1 0-11.2h.5l.1-.2C11.8 20 21 15.4 32 15.4S52.2 20 55.4 27.2l.1.2h.5a5.6 5.6 0 1 1 0 11.2h-.5l-2.9 9.6c-.1.3-.3.4-.6.4H12zm.1-11.8c-.6.6-1.3 1.1-2.1 1.4l-.3.1 2.8 9.1h39.1l2.7-9.1-.3-.1c-.8-.3-1.5-.8-2.1-1.4l-.3-.3-.3.4c-.3.3-.6.7-.9.9a7.5 7.5 0 0 1-10.5-.7l-.3-.4-.3.4c-.5.6-1 1.1-1.6 1.6a9.99 9.99 0 0 1-5.7 1.9c-2.9 0-5.5-1.3-7.3-3.5l-.3-.4-.3.3-.9.9a7.06 7.06 0 0 1-4.7 1.6c-2.3 0-4.4-1-5.8-2.8l-.3-.4-.3.5zm12.4-2c.2 0 .4.2.5.4a7.5 7.5 0 0 0 6.7 4.3h.5c2.9 0 5.5-1.7 6.7-4.3.1-.2.3-.4.5-.4s.5.1.6.3a5.89 5.89 0 0 0 5.4 3.3c2.3 0 4.4-1.3 5.5-3.4.1-.2.3-.4.5-.4s.4.1.5.3a4.7 4.7 0 0 0 3.1 2.4c.3.1.5.1.8.1 2.4 0 4.4-2 4.4-4.4 0-2.4-2-4.4-4.4-4.4-.3 0-.5 0-.8.1h-.1c-.2 0-.5-.2-.6-.4C51.8 21.2 43 16.6 32 16.6S12.2 21.2 9.5 28.3c-.1.2-.3.4-.6.4h-.1c-.3-.1-.5-.1-.8-.1-2.4 0-4.4 2-4.4 4.4 0 2.4 2 4.4 4.4 4.4.3 0 .5 0 .8-.1 1.3-.3 2.5-1.1 3.1-2.4.1-.2.3-.3.5-.3s.5.2.5.4c1 2.1 3.1 3.4 5.3 3.4h.3c2.3 0 4.3-1.3 5.3-3.3.3-.2.5-.3.7-.3z"/>
-        <path d="M32 26.6c-.3 0-.6-.3-.6-.6v-4c0-.3.3-.6.6-.6s.6.3.6.6v4c0 .3-.3.6-.6.6zM24 26.6c-.1 0-.2 0-.3-.1-.3-.2-.4-.5-.3-.8l2-4c.1-.2.3-.3.5-.3.1 0 .2 0 .3.1.3.1.4.5.3.8l-2 4c-.1.2-.3.3-.5.3zM40 26.6c-.2 0-.4-.1-.5-.3l-2-4c-.1-.3 0-.6.3-.7.1-.1.2-.1.3-.1.2 0 .4.1.5.3l2 4c.1.3 0 .7-.3.8H40zM15 44.6c-.3 0-.6-.3-.6-.6s.3-.6.6-.6h2c.3 0 .6.3.6.6s-.3.6-.6.6h-2zM21 44.6c-.3 0-.6-.3-.6-.6s.3-.6.6-.6h8c.3 0 .6.3.6.6s-.3.6-.6.6h-8z"/>
-      </g>
+    <g class="jiggle">
+      <use x="210" y="190" href="#pie" width="420"/>
     </g>
   </svg>
   <ul class="pie-list">
     <li>The first social network for meat pie lovers!</li>
-    <li>Latest (p)AI technology</li>
     <li>PWA (Pie Web App)</li>
+    <li>Latest (p) A.I. technology</li>
   </ul>
 </div>
 </section>
 
 <style>
 #app-intro-slide .side-by-side {
-  display: flex;
   height: 450px;
 }
 #app-intro-slide .side-by-side > svg {
-  flex: 1 0 auto;
-  width: 300px;
-  padding: .5em;
+  flex: 1 0 200px;
+  padding: 2.5em;
   border: 0;
   filter: drop-shadow(1px 6px 3px #888);
   transform: rotate(-15deg);
@@ -160,25 +192,25 @@ document.getElementsByTagName('head')[0].appendChild(link);
 }
 @keyframes jiggle {
   15% {
-    transform: translate(0,-10px);
+    transform: translate(0,-70px);
   }
   20% {
-    transform: translate(0,-10px);
+    transform: translate(0,-70px);
   }
   22% {
-    transform: translate(0,-10px) rotate(-10deg);
+    transform: translate(0,-70px) rotate(-10deg);
   }
   26% {
-    transform: translate(0,-10px) rotate(10deg);
+    transform: translate(0,-70px) rotate(10deg);
   }
   30% {
-    transform: translate(0,-10px) rotate(-10deg);
+    transform: translate(0,-70px) rotate(-10deg);
   }
   32% {
-    transform: translate(0,-10px) rotate(0deg);
+    transform: translate(0,-70px) rotate(0deg);
   }
   37% {
-    transform: translate(0,-10px) rotate(0deg);
+    transform: translate(0,-70px) rotate(0deg);
   }
   52% {
     transform: translate(0,0px) rotate(0deg);
@@ -211,6 +243,19 @@ document.getElementsByTagName('head')[0].appendChild(link);
 }
 </style>
 
+<section id="agenda-slide">
+<h2 class="svg">
+  <svg><text y="1em" x="3px">Agenda</svg>
+</h2>
+<ul>
+  <li>CSS Transitions
+  <li>CSS Animations
+  <li>Web Animations API
+  <li>Performance (and DevTools)
+  <li>Accessibility
+</ul>
+</section>
+
 <section id="css-transitions-section" class="section-title"
   data-background="#5ab041">
 <h1 class="svg">
@@ -218,11 +263,225 @@ document.getElementsByTagName('head')[0].appendChild(link);
 </h1>
 </section>
 
+<section id="css-transitions-intro-slide">
+<div class="side-by-side">
+  <pre><code class="css live-code" data-trim contenteditable=true
+  spellcheck=false>
+.pie {
+  
+}
+.pie:hover {
+  transform: scale(2);
+}
+  </code></pre>
+  <div class="target-content">
+    <svg class="pie" width="200px">
+      <use href="#pie"/>
+    </svg>
+  </div>
+</div>
+</section>
+
+<section id="css-transitions-button-slide">
+<div class="side-by-side">
+  <pre><code class="css live-code" data-trim contenteditable=true
+  spellcheck=false>
+.button {
+  background: hsl(40, 15%, 80%);
+  transition: background-color .15s,
+              transform .15s;
+}
+.button:hover {
+  background: hsl(43, 13%, 90%);
+  transform: scale(1.05);
+}
+  </code></pre>
+  <div class="target-content">
+    <button class="button">Button</button>
+  </div>
+</div>
+</section>
+
+<style>
+#css-transitions-button-slide .side-by-side > .target-content .button {
+  border: 1px solid hsl(41, 9%, 35%);
+  border-radius: 10px;
+  box-shadow: 1px 2px 3px 0 #ccc;
+  padding: 1em;
+  font-size: 30px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+</style>
+
+<section id="css-transitions-attempted-overlay-slide" data-background="#5ab041">
+  <iframe width="400" height="600" src="meetpie/index.html#finder"></iframe>
+</section>
+
+<style>
+#css-transitions-attempted-overlay-slide iframe {
+  border: 4px solid #222;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
+}
+</style>
+
+<section id="css-transitions-render-code-slide">
+<div class="side-by-side">
+  <pre><code class="hljs js" data-trim data-noescape>
+button.onclick = () => {
+  // Make the panel
+  const panel = document.createElement('div');
+  panel.classList.add('panel');
+  panel.textContent = 'Hello!';
+  parent.appendChild(panel);
+
+<span class="highlight">  // Fade it in
+  panel.style.opacity = '0';
+  panel.style.transition = 'opacity .3s';
+  panel.style.opacity = '1';</span>
+};
+  </code></pre>
+  <div>
+    <button class="button">Button</button>
+  </div>
+</div>
+<script>
+(() => {
+  const button = document.querySelector(
+    '#css-transitions-render-code-slide .button'
+  );
+  const parent = document.querySelector('#css-transitions-render-code-slide');
+
+  button.onclick = () => {
+    // If there is an existing panel, remove it
+    const existingPanel = document.querySelector(
+      '#css-transitions-render-code-slide .panel'
+    );
+    if (existingPanel) {
+      existingPanel.remove();
+      return;
+    }
+
+    // Create the panel
+    const panel = document.createElement('div');
+    panel.classList.add('panel');
+    panel.textContent = 'Hello!';
+    parent.appendChild(panel);
+
+    // Fade in
+    panel.style.opacity = '0';
+    panel.style.transition = 'opacity .3s';
+    panel.style.opacity = '1';
+  };
+})();
+</script>
+<style>
+#css-transitions-render-code-slide .panel {
+  position: absolute;
+  width: 10em;
+  top: 0;
+  left: calc(50% - 5em);
+  z-index: 10;
+  background: white;
+  border: 1px solid hsl(41, 8%, 61%);
+  border-radius: 20px;
+  box-sizing: border-box;
+  box-shadow: 3px 3px 5px hsl(41, 8%, 61%);
+  padding: 1em;
+}
+#css-transitions-render-code-slide .button {
+  font-size: 30px;
+  margin: 2em;
+}
+</style>
+</section>
+
 </div> <!-- end slides -->
 </div> <!-- end reveal -->
 
 <script src="lib/js/head.min.js"></script>
 <script src="js/reveal.js"></script>
+
+<!-- Live code sections -->
+<script>
+for (const block of Array.from(document.querySelectorAll('.live-code'))) {
+  block.addEventListener('input', scheduleCodeUpdate);
+  // Initial application
+  window.addEventListener('load', () => updateCode(block));
+}
+
+function scheduleCodeUpdate(evt) {
+  let block = evt.target;
+
+  // Edge adds extra divs when editing. It's weird.
+  while (block && !block.classList.contains('live-code')) {
+    block = block.parentNode;
+  }
+  if (!block) {
+    console.log('Couldn\'t get root of block');
+    return;
+  }
+
+  if (block.updateTimeout) {
+    clearTimeout(block.updateTimeout);
+  }
+  if (block.highlightTimeout) {
+    clearTimeout(block.highlightTimeout);
+  }
+  block.updateTimeout = setTimeout(() => { updateCode(block) }, 500);
+  block.highlightTimeout = setTimeout(() => {
+    block.highlightTimeout = null;
+    hljs.highlightBlock(block);
+  }, 3000);
+}
+
+function updateCode(block) {
+  block.updateTimeout = null;
+
+  // Get target content
+  let ancestor = block;
+  let target = null;
+  while (ancestor && !target) {
+    // Check we don't start targeting another slide
+    if (ancestor.classList.contains('slides')) {
+      break;
+    }
+    target = ancestor.querySelector('.target-content');
+    ancestor = ancestor.parentNode;
+  }
+
+  if (!target) {
+    console.log('Target content to update not found');
+  }
+
+  // Create a "unique" ID. We really should test to see if the ID is unique but
+  // this way I have a 1 in 10,000 chance of the presentation going pear-shaped
+  // which could never happen. Definitely not.
+  if (!target.id) {
+    target.setAttribute('id', 'id-' + Date.now()
+                               + '-' + Math.floor((Math.random() * 100000)));
+  }
+
+  // Create style element
+  let styleBlock = target.querySelector('style');
+  if (!styleBlock) {
+    styleBlock = document.createElement('style');
+    target.appendChild(styleBlock);
+  }
+
+  // Update result
+  styleBlock.textContent = localizeCSS(block.textContent, target.id);
+}
+
+function localizeCSS(css, id) {
+  //
+  // We're just going to do something super hacky here that will work for
+  // this presentation. Basically, just add an ID to the start of any line
+  // that doesn't start with a space or an @
+  //
+  return css.replace(/^([^@ ].*{)\s*/mg, '#' + id + ' $1');
+}
+</script>
 
 <script>
 Reveal.initialize({
