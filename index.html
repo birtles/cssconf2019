@@ -1158,7 +1158,7 @@ button.onclick = () => {
 </style>
 </section>
 
-<section id="style-change-tips-slide">
+<section id="style-change-tips">
 <h2 class="svg">
   <svg><text y="1em" x="3px">Tips</svg>
 </h2>
@@ -1177,14 +1177,67 @@ button.onclick = () => {
   <li>Consider CSS Animations or Web Animations instead
 </ul>
 <style>
-#style-change-tips-slide ul {
+#style-change-tips ul {
   font-size: 35px;
 }
-#style-change-tips-slide ul code {
-  color: var(--green-dark);
+#style-change-tips ul code {
+  background: var(--green-light);
+  border-radius: .5em;
+  padding: 1px 15px;
 }
-#style-change-tips-slide > ul > li {
+#style-change-tips > ul > li {
   margin-top: 1em;
+}
+</style>
+</section>
+
+<section id="transitionend-problem-intro">
+<h2 class="svg">
+  <svg><text y="1em" x="3px">transitionend</svg>
+</h2>
+<div class="side-by-side">
+  <pre><code class="js" data-trim>
+    popup.addEventListener('transitionend', () => {
+      video.play();
+    });
+  </code></pre>
+  <div>
+    <svg class="pie" width="200px">
+      <use href="#pie"/>
+    </svg>
+  </div>
+</div>
+</section>
+
+<section id="transitions-can-be-canceled">
+<h2 class="svg">
+  <svg><text y="1em" x="3px">But what if...</svg>
+</h2>
+<ul>
+  <li>The element is removed?
+  <li>The element becomes <code>display:none</code>?
+  <li>The element is re-created? Re-&ldquo;rendered&rdquo;?
+  <li>The <code>transition-property</code> property changes?
+</ul>
+<p class="lookout fragment">
+The transition will be <em>canceled!</em><br>
+<code>transitionend</code> will never fire!
+</p>
+<style>
+#transitions-can-be-canceled code {
+  background: var(--green-light);
+  border-radius: .5em;
+  padding: 1px 15px;
+}
+#transitions-can-be-canceled .lookout {
+  background: var(--green);
+  padding: 25px;
+  color: white;
+  border-radius: 50px;
+}
+#transitions-can-be-canceled .lookout code {
+  color: var(--pink);
+  font-weight: bold;
 }
 </style>
 </section>
