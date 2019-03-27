@@ -1647,6 +1647,179 @@ button.onclick = () => {
 </h1>
 </section>
 
+<section id="css-animations-easing-intro" data-transition="fade">
+<div class="side-by-side">
+  <pre><code class="css live-code" data-trim contenteditable=true
+  spellcheck=false>
+.pie {
+  animation: fancy 2s infinite;
+}
+@keyframes fancy {
+  0%   { transform: none; }
+  50%  { transform: scale(1.5); }
+  90%  { transform: scale(1.5) rotate(360deg); }
+  100% { transform: scale(1.5) rotate(360deg); }
+}
+  </code></pre>
+  <div class="target-content">
+    <svg class="pie" width="200px">
+      <use href="#pie"/>
+    </svg>
+  </div>
+</div>
+<style>
+#css-animations-easing-intro pre code {
+  font-size: 20px;
+}
+</style>
+</section>
+
+<section id="css-animations-easing-bug-video" class="robot-example">
+<video data-autoplay controls>
+  <source src="video/unlock-animation-stutter.mp4" type="video/mp4">
+</video>
+<style>
+#css-animations-easing-bug-video video {
+  border: 4px solid #222;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
+}
+</style>
+</section>
+
+<section id="css-animations-easing-bug-video-slow-mo" class="robot-example">
+<video data-autoplay controls>
+  <source src="video/unlock-animation-slow-motion.mp4" type="video/mp4">
+</video>
+<style>
+#css-animations-easing-bug-video-slow-mo video {
+  border: 4px solid #222;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
+}
+</style>
+</section>
+
+<section id="css-animations-easing-bug-reproduced" data-transition="fade">
+<div class="side-by-side">
+  <pre><code class="css live-code" data-trim contenteditable=true
+  spellcheck=false>
+.pie {
+  animation: fade-out 3s forwards infinite
+             cubic-bezier(0.7, 0.0, 1.0, 1.0);
+}
+@keyframes fade-out {
+  0%   { transform: scale(1.0); opacity: 1.0; }
+  50%  { transform: scale(1.5); opacity: 0.5; }
+  100% { transform: scale(2);   opacity: 0.0; }
+}
+  </code></pre>
+  <div class="target-content">
+    <svg class="pie" width="200px">
+      <use href="#pie"/>
+    </svg>
+  </div>
+</div>
+<style>
+#css-animations-easing-bug-reproduced pre code {
+  font-size: 20px;
+}
+</style>
+</section>
+
+<section id="css-animations-easing-bug-in-devtools" data-transition="fade">
+  <img src="img/easing-bug-firefox-devtools.png">
+</section>
+
+<section id="css-animations-easing-bug-explained" data-transition="fade">
+<div class="side-by-side">
+  <pre><code class="css" data-trim data-noescape>
+.pie {
+  animation: fade-out 3s forwards infinite;
+<span class=highlight>  animation-timing-function: ease;</span>
+}
+@keyframes fade-out {
+  0%   { transform: scale(1.0); opacity: 1.0; }
+  50%  { transform: scale(1.5); opacity: 0.5; }
+  100% { transform: scale(2);   opacity: 0.0; }
+}
+  </code></pre>
+  <pre><code class="css" data-trim data-noescape>
+.pie {
+  animation: fade-out 3s forwards infinite;
+}
+@keyframes fade-out {
+  0%   { transform: scale(1.0); opacity: 1.0;
+<span class=highlight>         animation-timing-function: ease; }</span>
+  50%  { transform: scale(1.5); opacity: 0.5;
+<span class=highlight>         animation-timing-function: ease; }</span>
+  100% { transform: scale(2);   opacity: 0.0;
+<span class=highlight>         animation-timing-function: ease; }</span>
+}
+  </code></pre>
+</div>
+<style>
+#css-animations-easing-bug-explained pre code {
+  line-height: 20px;
+  font-size: 14px;
+}
+</style>
+</section>
+
+<section id="css-animations-easing-bug-fixed" data-transition="fade">
+<div class="side-by-side">
+  <pre><code class="css" data-trim data-noescape>
+.pie {
+  animation: fade-out 3s forwards infinite
+             cubic-bezier(0.7, 0.0, 1.0, 1.0);
+}
+@keyframes fade-out {
+  0%   { transform: scale(1.0); opacity: 1.0; }
+<span class="strike">  50%  { transform: scale(1.5); opacity: 0.5; }</span>
+  100% { transform: scale(2);   opacity: 0.0; }
+}
+  </code></pre>
+  <div class="target-content">
+    <svg class="pie" width="200px">
+      <use href="#pie"/>
+    </svg>
+  </div>
+</div>
+<style>
+#css-animations-easing-bug-fixed pre code {
+  font-size: 20px;
+}
+#css-animations-easing-bug-fixed code .strike {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+#css-animations-easing-bug-fixed .pie {
+  animation: fade-out-fixed 3s forwards infinite
+             cubic-bezier(0.7, 0.0, 1.0, 1.0);
+}
+@keyframes fade-out-fixed {
+  0%   { transform: scale(1.0); opacity: 1.0; }
+  100% { transform: scale(2);   opacity: 0.0; }
+}
+</style>
+</section>
+
+<section id="css-animations-easing-summary" class="summary-slide">
+<h1>
+  <svg width="900px" viewBox="0 0 670 350">
+    <text y=".9em" x="50%" text-anchor="middle"
+      ><tspan class="number">Point 4</tspan><tspan
+      dy="1.5em" x="50%" class="summary">animation-timing-function</tspan><tspan
+      dy="1.1em" x="50%" class="summary">always applies</tspan><tspan
+      dy="1.1em" x="50%" class="summary"><tspan
+        class="emphasis">between</tspan> keyframes</tspan></text></svg>
+</h1>
+<style>
+.summary-slide svg text .emphasis {
+  font-style: italic;
+  fill: var(--pink);
+}
+</style>
+</section>
+
 </div> <!-- end slides -->
 </div> <!-- end reveal -->
 
@@ -1730,7 +1903,7 @@ function localizeCSS(css, id) {
   // this presentation. Basically, just add an ID to the start of any line
   // that doesn't start with a space or an @
   //
-  return css.replace(/^([^@ ].*{)\s*/mg, '#' + id + ' $1');
+  return css.replace(/^([^@ \n].*{)\s*/mg, '#' + id + ' $1');
 }
 </script>
 
