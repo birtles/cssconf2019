@@ -1858,10 +1858,11 @@ pie.animate(
 let pieAnimation;
 
 function startWebAnimationsIntro() {
-  const pie = document.querySelector('#web-animations-intro .pie');
   if (pieAnimation) {
     return;
   }
+
+  const pie = document.querySelector('#web-animations-intro .pie');
 
   pieAnimation = pie.animate(
     {
@@ -2027,6 +2028,183 @@ You might not need the <a href="https://github.com/web-animations/web-animations
 </h1>
 </section>
 
+<section id="web-animations-vs-css">
+<table>
+  <thead>
+    <tr>
+      <th>CSS transitions/animations</th>
+      <th>Web Animations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <span class=prop-name>animation-iteration-count</span>
+      </td>
+      <td>
+        <span class=prop-name>iterations</span></td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class=prop-name>transition-timing-function</span>,
+        <span class=prop-name>animation-timing-function</span>
+      </td>
+      <td>
+        <span class=prop-name>easing</span></td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        Default easing is <span class=prop-value>ease</span>
+      </td>
+      <td>
+        Default easing is <span class=prop-value>linear</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<style>
+#web-animations-vs-css table {
+  font-size: 30px;
+  table-layout: fixed;
+  width: 100%;
+}
+#web-animations-vs-css th,
+#web-animations-vs-css td {
+  text-align: center;
+  vertical-align: middle;
+}
+#web-animations-vs-css .prop-name {
+  color: var(--green-dark);
+}
+#web-animations-vs-css .prop-value {
+  color: var(--pink);
+}
+</style>
+</section>
+
+<section id="web-animations-two-easings" data-transition="fade-out">
+<div class="side-by-side">
+  <pre><code class="js" data-trim data-noescape>
+pieOne.animate(
+  {
+    transform: ['scale(1)', 'scale(1.5)', 'scale(2)'],
+    opacity: [1, 0.5, 0],
+<span class=highlight>    easing: 'ease',</span>
+  },
+  {
+    duration: 2000,
+    iterations: Infinity,
+  }
+);
+
+pieTwo.animate(
+  {
+    transform: ['scale(1)', 'scale(1.5)', 'scale(2)'],
+    opacity: [1, 0.5, 0],
+  },
+  {
+    duration: 2000,
+    iterations: Infinity,
+<span class=highlight>    easing: 'ease',</span>
+  }
+);
+  </code></pre>
+  <div class="target-content">
+    <svg class="pie pie-one" width="200px">
+      <use href="#pie"/>
+    </svg>
+    <svg class="pie pie-two" width="200px">
+      <use href="#pie"/>
+    </svg>
+  </div>
+</div>
+<style>
+#web-animations-two-easings pre code {
+  font-size: 15px;
+  line-height: 18px;
+}
+#web-animations-two-easings .pie {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+</style>
+<script>
+let pieEasingAnimations;
+
+function startWebAnimationsEasing() {
+  if (pieEasingAnimations) {
+    return;
+  }
+
+  pieEasingAnimations = [];
+
+  const pieOne = document.querySelector('#web-animations-two-easings .pie-one');
+  pieEasingAnimations.push(pieOne.animate(
+    {
+      transform: ['scale(1)', 'scale(1.5)', 'scale(2)'],
+      opacity: [1, 0.5, 0],
+      easing: 'ease',
+    },
+    {
+      duration: 2000,
+      iterations: Infinity,
+    }
+  ));
+
+  const pieTwo = document.querySelector('#web-animations-two-easings .pie-two');
+  pieEasingAnimations.push(pieTwo.animate(
+    {
+      transform: ['scale(1)', 'scale(1.5)', 'scale(2)'],
+      opacity: [1, 0.5, 0],
+    },
+    {
+      duration: 2000,
+      iterations: Infinity,
+      easing: 'ease',
+    }
+  ));
+}
+
+function stopWebAnimationsEasing() {
+  if (!pieEasingAnimations) {
+    return;
+  }
+
+  for (const anim of pieEasingAnimations) {
+    anim.cancel();
+  }
+  pieEasingAnimations = null;
+}
+</script>
+</section>
+
+<section id="web-animations-easings-in-devtools" data-transition="fade">
+<div class="stack">
+  <img src="img/web-animations-two-easings.png">
+  <img src="img/web-animations-easing-keyframe.png">
+  <img src="img/web-animations-easing-effect.png">
+</div>
+<style>
+#web-animations-easings-in-devtools img {
+  height: 180px;
+}
+</style>
+</section>
+
+<section id="web-animations-differences-summary" class="summary-slide">
+<h1>
+  <svg width="900px" viewBox="0 0 670 350">
+    <text y=".9em" x="50%" text-anchor="middle"
+      ><tspan class="number">Point 6</tspan><tspan
+      dy="1.5em" x="50%" class="summary">Web Animations has</tspan><tspan
+      dy="1.1em" x="50%" class="summary">some differences to CSS,</tspan><tspan
+      dy="1.1em" x="50%" class="summary">especially easing</tspan
+      ></text></svg>
+</h1>
+</section>
+
 </div> <!-- end slides -->
 </div> <!-- end reveal -->
 
@@ -2129,18 +2307,26 @@ Reveal.initialize({
   history: true,
 });
 
-Reveal.addEventListener('slidechanged', evt => {
-  if (evt.currentSlide.id == 'web-animations-intro') {
+function startStopScriptedAnimations(slideId) {
+  if (slideId == 'web-animations-intro') {
     startWebAnimationsIntro();
   } else {
     stopWebAnimationsIntro();
   }
+
+  if (slideId == 'web-animations-two-easings') {
+    startWebAnimationsEasing();
+  } else {
+    stopWebAnimationsEasing();
+  }
+}
+
+Reveal.addEventListener('slidechanged', evt => {
+  startStopScriptedAnimations(evt.currentSlide.id);
 });
 
 Reveal.addEventListener('ready', evt => {
-  if (evt.currentSlide.id == 'web-animations-intro') {
-    startWebAnimationsIntro();
-  }
+  startStopScriptedAnimations(evt.currentSlide.id);
 });
 </script>
 </body>
