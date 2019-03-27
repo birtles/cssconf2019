@@ -1,0 +1,238 @@
+<!doctype html>
+<meta charset=utf-8>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meet pie - finder</title>
+<script src="js/prop-types.js"></script>
+<script src="js/react.development.js"></script>
+<script src="js/react-dom.development.js"></script>
+<script src="js/react-router-dom.min.js"></script>
+<script src="js/babel.min.js"></script>
+
+<style>
+:root {
+  --neutral-1: hsl(42, 15%, 13%);
+  --neutral-2: hsl(40, 13%, 23%);
+  --neutral-3: hsl(37, 11%, 28%);
+  --neutral-4: hsl(41, 9%, 35%);
+  --neutral-5: hsl(41, 8%, 48%);
+  --neutral-6: hsl(41, 8%, 61%);
+  --neutral-7: hsl(39, 11%, 69%);
+  --neutral-8: hsl(40, 15%, 80%);
+  --neutral-9: hsl(43, 13%, 90%);
+  --neutral-10: hsl(40, 23%, 97%);
+
+  --green-dark: hsl(106.5, 40%, 30%);
+  --green: hsl(106.5, 46.1%, 47.3%);
+  --green-light: hsl(106.5, 66.1%, 87%);
+  --brown: #ba7f31;
+  --pink: hsl(335.9, 69.9%, 51.8%);
+}
+
+@font-face {
+  font-family: "Sniglet";
+  src: local("Sniglet Regular"),
+       url(fonts/Sniglet/Sniglet-Regular.ttf);
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Sniglet";
+  src: local("Sniglet ExtraBold"),
+       url(fonts/Sniglet/Sniglet-ExtraBold.ttf);
+  font-weight: 800;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  padding: 0;
+  margin: 0;
+  color: var(--neutral-1);
+  font-family: sans-serif;
+  background: white;
+}
+
+#container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+}
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.app > .screens {
+  position: relative;
+  flex: 1;
+  overflow: hidden;
+  transform: translate(0px);
+}
+.app > .screens > * {
+  background: var(--neutral-10);
+  height: 100%;
+}
+
+.tab-panel {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  background: var(--neutral-10);
+}
+
+.finder-tab {
+  position: relative;
+  height: 100%;
+}
+.finder-tab > .map {
+  width: 100%;
+  height: calc(100% - 1px);
+  background: url(img/map.png);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border: 1px solid var(--neutral-6);
+}
+.finder-tab > .marker {
+  position: absolute;
+  top: 200px;
+  left: 55%;
+  cursor: pointer;
+}
+.finder-tab > .marker svg {
+  width: 50px;
+  filter: drop-shadow(2px 1px 3px var(--neutral-4));
+  transition: filter .2s;
+}
+.finder-tab > .marker svg > path {
+  transition: fill .2s;
+}
+.finder-tab > .marker a:hover svg {
+  filter: drop-shadow(2px 1px 3px var(--neutral-2));
+}
+.finder-tab > .marker a:hover svg > path {
+  fill: red;
+}
+.finder-tab .popup {
+  position: absolute;
+  margin: 1em;
+  width: calc(100% - 2em);
+  z-index: 10;
+  background: white;
+  border: 1px solid var(--neutral-6);
+  border-radius: 20px;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  box-shadow: 3px 3px 5px var(--neutral-6);
+  overflow-x: hidden;
+  transition: transform .3s, opacity .5s;
+}
+.finder-tab .popup:not(.active) {
+  transform: scale(0);
+  opacity: 0;
+  pointer-events: none;
+}
+.finder-tab .popup > .title {
+  padding: 30px;
+  font-family: Sniglet;
+  font-size: 30px;
+}
+.finder-tab .popup > .close svg {
+  position: absolute;
+  top: 40px;
+  right: 30px;
+  width: 20px;
+  height: 20px;
+  transition: color .15s;
+  color: var(--neutral-6);
+}
+.finder-tab .popup > .close:hover svg {
+  color: var(--neutral-4);
+}
+.finder-tab .popup > .gallery {
+  height: 200px;
+  white-space: nowrap;
+}
+.finder-tab .popup > .gallery > img {
+  height: 200px;
+  margin-right: .5em;
+}
+.finder-tab .popup > .description {
+  padding: 30px;
+  color: var(--neutral-6);
+  line-height: 1.5;
+}
+</style>
+<div id=container></div>
+<script type="text/babel">
+function Finder() {
+  const [popupActive, setPopupActive] = React.useState(false);
+
+  let popupClassName = 'popup';
+  if (popupActive) {
+    popupClassName += ' active';
+  }
+
+  const onClickMarker = React.useCallback(evt => {
+    evt.preventDefault();
+    setPopupActive(true);
+  });
+
+  const onClickClose = React.useCallback(evt => {
+    evt.preventDefault();
+    setPopupActive(false);
+  });
+
+  return (
+    <div className="tab-panel active">
+      <div className="finder-tab">
+        <div className="map" />
+        <div className="marker">
+          <a href="#" onClick={onClickMarker}>
+            <svg viewBox="0 0 10 10">
+              <path d="M5 0c7 0 0 10 0 10s-7-10 0-10z" fill="crimson"/>
+            </svg>
+          </a>
+        </div>
+        <div className={popupClassName}>
+          <div className="title" role="heading">Shenzhen Pie Shop</div>
+          <div className="close" onClick={onClickClose}>
+            <a href="#">
+              <svg viewBox="0 0 100 100">
+                <path fill="none" stroke="currentColor" strokeWidth="20"
+                  strokeLinecap="round" d="M85 15L15 85M15 15l70 70"/>
+              </svg>
+            </a>
+          </div>
+          <div className="gallery">
+            <img src="img/pieminister-2.jpg" />
+            <img src="img/punk-doily-2.jpg" />
+            <img src="img/punk-doily-3.jpg" />
+            <img src="img/pieminister-1.jpg" />
+          </div>
+          <div className="description">
+            We have all the meat pies you could ever want. Please come and visit
+            us!
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+ReactDOM.render(
+  <div className="app">
+    <div className="screens">
+      <Finder />
+    </div>
+  </div>,
+  document.getElementById('container')
+);
+</script>
