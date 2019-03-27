@@ -247,6 +247,9 @@ h2.smaller svg text {
 h2.smallerer svg text {
   font-size: 50px;
 }
+h2.multiline svg {
+  height: 150px;
+}
 h2.center svg text {
   text-anchor: middle;
 }
@@ -280,7 +283,7 @@ h2.pink svg text {
   will-change: transform, opacity;
 }
 .reveal .slides > section.future {
-  opacity: 0.01;
+  opacity: 0.0001;
 }
 .reveal .slides > section,
 .reveal .slides > section > section {

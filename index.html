@@ -99,7 +99,7 @@ document.getElementsByTagName('head')[0].appendChild(link);
 </h1>
 </section>
 
-<section id="about-me">
+<section id="about-me" data-transition="fade-out">
 <h2 class="svg smaller">
   <svg><text y="1em" x="3px">A few things about me&hellip;</text></svg>
 </h2>
@@ -116,7 +116,8 @@ document.getElementsByTagName('head')[0].appendChild(link);
 </ul>
 </section>
 
-<section id="about-meat-pie" data-background-image="img/punk-doily-1.jpg">
+<section id="about-meat-pie" data-background-image="img/punk-doily-1.jpg"
+  data-transition="fade">
   <p class="full-page-source">
     <span>
       Source:
@@ -127,7 +128,7 @@ document.getElementsByTagName('head')[0].appendChild(link);
   </p>
 </section>
 
-<section id="three-days-of-pie" class="fit-picture">
+<section id="three-days-of-pie" class="fit-picture" data-transition="fade-in">
   <img src="img/3-days-of-pie.jpg">
 </section>
 
@@ -263,7 +264,7 @@ document.getElementsByTagName('head')[0].appendChild(link);
 </h1>
 </section>
 
-<section id="css-transitions-intro">
+<section id="css-transitions-intro" data-transition="fade-out">
 <div class="side-by-side">
   <pre><code class="css live-code" data-trim contenteditable=true
   spellcheck=false>
@@ -282,7 +283,7 @@ document.getElementsByTagName('head')[0].appendChild(link);
 </div>
 </section>
 
-<section id="css-transitions-button">
+<section id="css-transitions-button" data-transition="fade-in">
 <div class="side-by-side">
   <pre><code class="css live-code" data-trim contenteditable=true
   spellcheck=false>
@@ -314,12 +315,13 @@ document.getElementsByTagName('head')[0].appendChild(link);
 }
 </style>
 
-<section id="css-transitions-overlay-intro" data-background="#5ab041">
+<section id="css-transitions-overlay-intro" data-background="#5ab041"
+  class="app-frame">
   <iframe width="400" height="600" src="meetpie/index.html#finder"></iframe>
 </section>
 
 <style>
-#css-transitions-overlay-intro iframe {
+.app-frame iframe {
   border: 4px solid #222;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
 }
@@ -713,7 +715,8 @@ button.onclick = () => {
 </style>
 </section>
 
-<section id="css-transitions-attempt-one" class="panel-example">
+<section id="css-transitions-attempt-one" class="panel-example"
+  data-transition="fade-out">
 <div class="side-by-side">
   <pre><code class="hljs js" data-trim data-noescape>
 button.onclick = () => {
@@ -837,7 +840,8 @@ button.onclick = () => {
 </style>
 </section>
 
-<section id="css-transitions-panel-attempt-two" class="panel-example">
+<section id="css-transitions-panel-attempt-two" class="panel-example"
+  data-transition="fade">
 <div class="side-by-side">
   <pre><code class="hljs js" data-trim data-noescape>
 button.onclick = () => {
@@ -992,7 +996,8 @@ button.onclick = () => {
 </style>
 </section>
 
-<section id="css-transitions-panel-attempt-three" class="panel-example">
+<section id="css-transitions-panel-attempt-three" class="panel-example"
+  data-transition="fade-out">
 <div class="side-by-side">
   <pre><code class="hljs js" data-trim data-noescape>
 button.onclick = () => {
@@ -1134,9 +1139,9 @@ button.onclick = () => {
   <svg width="900px" viewBox="0 0 670 350">
     <text y=".9em" x="50%" text-anchor="middle"
       ><tspan class="number">Point 1</tspan><tspan
-      dy="1.5em" x="50%" class="summary">To create a transition,<tspan
-      dy="1.1em" x="50%" class="summary">the browser needs to see<tspan
-      dy="1.1em" x="50%" class="summary">a change in style<tspan></text></svg>
+      dy="1.5em" x="50%" class="summary">To create a transition,</tspan><tspan
+      dy="1.1em" x="50%" class="summary">the browser needs to see</tspan><tspan
+      dy="1.1em" x="50%" class="summary">a change in style</tspan></text></svg>
 </h1>
 <style>
 .summary-slide h1 svg text {
@@ -1191,33 +1196,113 @@ button.onclick = () => {
 </style>
 </section>
 
-<section id="transitionend-problem-intro">
-<h2 class="svg">
-  <svg><text y="1em" x="3px">transitionend</svg>
-</h2>
+<section id="css-transitions-hiding" class="panel-example"
+  data-transition="fade-out">
 <div class="side-by-side">
-  <pre><code class="js" data-trim>
-    popup.addEventListener('transitionend', () => {
-      video.play();
-    });
+  <pre><code class="hljs js" data-trim data-noescape>
+button.onclick = () => {
+  // If the panel already exists, remove it.
+<span class="highlight">  panel.remove();</span>
+};
   </code></pre>
   <div>
-    <svg class="pie" width="200px">
-      <use href="#pie"/>
-    </svg>
+    <button class="button">Button</button>
   </div>
 </div>
+<script>
+(() => {
+  const button = document.querySelector('#css-transitions-hiding .button');
+  const parent = document.querySelector('#css-transitions-hiding');
+
+  button.onclick = () => {
+    // If there is an existing panel, remove it
+    const existingPanel = document.querySelector(
+      '#css-transitions-hiding .panel'
+    );
+    if (existingPanel) {
+      existingPanel.remove();
+      return;
+    }
+
+    // Create the panel
+    const panel = document.createElement('div');
+    panel.classList.add('panel');
+    panel.textContent = 'Hello!';
+    parent.appendChild(panel);
+
+    // Fade in
+    panel.style.opacity = '0';
+    getComputedStyle(panel).opacity;
+    panel.style.transition = 'opacity .5s';
+    panel.style.opacity = '1';
+  };
+})();
+</script>
+</section>
+
+<section id="css-transitions-hiding-with-transition" class="panel-example"
+  data-transition="fade-in">
+<div class="side-by-side">
+  <pre><code class="hljs js" data-trim data-noescape>
+button.onclick = () => {
+  // If the panel already exists, remove it.
+<span class="highlight">  panel.style.opacity = '0';
+  panel.addEventListener('transitionend', () => {
+    panel.remove();
+  });</span>
+};
+  </code></pre>
+  <div>
+    <button class="button">Button</button>
+  </div>
+</div>
+<script>
+(() => {
+  const button = document.querySelector(
+    '#css-transitions-hiding-with-transition .button'
+  );
+  const parent = document.querySelector(
+    '#css-transitions-hiding-with-transition'
+  );
+
+  button.onclick = () => {
+    // If there is an existing panel, remove it
+    const existingPanel = document.querySelector(
+      '#css-transitions-hiding-with-transition .panel'
+    );
+    if (existingPanel) {
+      existingPanel.style.opacity = '0';
+      existingPanel.addEventListener('transitionend', () => {
+        existingPanel.remove();
+      });
+      return;
+    }
+
+    // Create the panel
+    const panel = document.createElement('div');
+    panel.classList.add('panel');
+    panel.textContent = 'Hello!';
+    parent.appendChild(panel);
+
+    // Fade in
+    panel.style.opacity = '0';
+    getComputedStyle(panel).opacity;
+    panel.style.transition = 'opacity .5s';
+    panel.style.opacity = '1';
+  };
+})();
+</script>
 </section>
 
 <section id="transitions-can-be-canceled">
 <h2 class="svg">
-  <svg><text y="1em" x="3px">But what if...</svg>
+  <svg><text y="1em" x="3px">But what if&hellip;</svg>
 </h2>
 <ul>
-  <li>The element is removed?
   <li>The element becomes <code>display:none</code>?
   <li>The element is re-created? Re-&ldquo;rendered&rdquo;?
   <li>The <code>transition-property</code> property changes?
+  <li>The element is removed?
 </ul>
 <p class="lookout fragment">
 The transition will be <em>canceled!</em><br>
@@ -1240,6 +1325,228 @@ The transition will be <em>canceled!</em><br>
   font-weight: bold;
 }
 </style>
+</section>
+
+<section id="css-transitions-hiding-with-bug" class="panel-example"
+  data-transition="fade-in">
+<div class="side-by-side">
+  <pre><code class="hljs js" data-trim data-noescape>
+button.onclick = () => {
+  // If the panel already exists, remove it.
+<span class="highlight">  panel.style.opacity = '0';
+  panel.addEventListener(
+    'transitionend',
+    () => { panel.remove(); }
+  );</span>
+};
+  </code></pre>
+  <div>
+    <button class="button">Button</button>
+  </div>
+</div>
+<script>
+(() => {
+  const button = document.querySelector(
+    '#css-transitions-hiding-with-bug .button'
+  );
+  const parent = document.querySelector('#css-transitions-hiding-with-bug');
+
+  button.onclick = () => {
+    // If there is an existing panel, remove it
+    const existingPanel = document.querySelector(
+      '#css-transitions-hiding-with-bug .panel'
+    );
+    if (existingPanel) {
+      // This is a deliberate bug. However, it's not uncommon for frameworks
+      // and the like to reset things like this.
+      existingPanel.style.transitionProperty = 'none';
+      getComputedStyle(existingPanel).transitionProperty;
+
+      existingPanel.style.transition = 'opacity 3s';
+      existingPanel.style.opacity = '0';
+      existingPanel.addEventListener('transitionend', () => {
+        existingPanel.remove();
+      });
+      return;
+    }
+
+    // Create the panel
+    const panel = document.createElement('div');
+    panel.classList.add('panel');
+    panel.textContent = 'Hello!';
+    parent.appendChild(panel);
+
+    // Fade in
+    panel.style.opacity = '0';
+    getComputedStyle(panel).opacity;
+    panel.style.transition = 'opacity .5s';
+    panel.style.opacity = '1';
+  };
+})();
+</script>
+</section>
+
+<section id="transitioncancel-to-the-rescue">
+<h2 class="svg smaller multiline">
+  <svg><text y="1em" x="3px">Handling canceled<tspan
+    dy="1em" x="3px">transitions</tspan></svg>
+</h2>
+<ul>
+  <li><code>setTimeout</code>
+  <li><code>transitioncancel</code> event
+    <ul class="logo-list">
+      <li><img class="little-logo" src="img/firefox-logo.svg"><span>53+</span>
+      <li><img class="little-logo" src="img/chrome-logo.svg"><span>74+ (April)</span>
+      <li><img class="little-logo" src="img/safari-logo.svg"><span>Tech Preview</span>
+      <li><img class="little-logo" src="img/edge-logo.svg"><span class=batsu>ｘ</span>
+    </ul>
+  <li>Also <code>transitionrun</code> event
+    <ul><li>Make sure there is a transition in the first place!</ul>
+</ul>
+<style>
+#transitioncancel-to-the-rescue .logo-list {
+  margin-top: .5em;
+  line-height: 1.5;
+  list-style: none;
+  display: flex;
+}
+#transitioncancel-to-the-rescue .logo-list li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 1em;
+}
+#transitioncancel-to-the-rescue .little-logo {
+  width: 1.4em;
+  height: 1.4em;
+  margin: 0;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  vertical-align: text-bottom;
+}
+#transitioncancel-to-the-rescue .batsu {
+  color: red;
+  font-weight: bold;
+}
+#transitioncancel-to-the-rescue code {
+  background: var(--green-light);
+  border-radius: .5em;
+  padding: 1px 15px;
+}
+#transitioncancel-to-the-rescue > ul {
+  font-size: 35px;
+}
+#transitioncancel-to-the-rescue > ul > li {
+  margin-bottom: .5em;
+}
+</style>
+</section>
+
+<section id="css-transitions-hiding-fixed" class="panel-example"
+  data-transition="fade-in">
+<div class="side-by-side">
+  <pre><code class="hljs js" data-trim data-noescape>
+button.onclick = () => {
+  // If the panel already exists, remove it.
+  const dropPanel = () => { panel.remove(); };
+
+  panel.style.opacity = '0';
+  panel.addEventListener(
+    'transitionend',
+    dropPanel
+  );
+<span class="highlight">  panel.addEventListener(
+    'transitioncancel',
+    dropPanel
+  );</span>
+};
+  </code></pre>
+  <div>
+    <button class="button">Button</button>
+  </div>
+</div>
+<script>
+(() => {
+  const button = document.querySelector(
+    '#css-transitions-hiding-fixed .button'
+  );
+  const parent = document.querySelector('#css-transitions-hiding-fixed');
+
+  button.onclick = () => {
+    // If there is an existing panel, remove it
+    const existingPanel = document.querySelector(
+      '#css-transitions-hiding-fixed .panel'
+    );
+    if (existingPanel) {
+      // This is a deliberate bug. However, it's not uncommon for frameworks
+      // and the like to reset things like this.
+      existingPanel.style.transitionProperty = 'none';
+      getComputedStyle(existingPanel).transitionProperty;
+
+      existingPanel.style.transition = 'opacity 3s';
+      existingPanel.style.opacity = '0';
+      existingPanel.addEventListener('transitionend', () => {
+        existingPanel.remove();
+      });
+      // This is the roundabout way of fixing our deliberate bug.
+      existingPanel.addEventListener('transitioncancel', () => {
+        existingPanel.remove();
+      });
+      return;
+    }
+
+    // Create the panel
+    const panel = document.createElement('div');
+    panel.classList.add('panel');
+    panel.textContent = 'Hello!';
+    parent.appendChild(panel);
+
+    // Fade in
+    panel.style.opacity = '0';
+    getComputedStyle(panel).opacity;
+    panel.style.transition = 'opacity .5s';
+    panel.style.opacity = '1';
+  };
+})();
+</script>
+</section>
+
+<section id="css-transitions-cancel-summary" class="summary-slide">
+<h1>
+  <svg width="900px" viewBox="0 0 670 350">
+    <text y=".9em" x="50%" text-anchor="middle"
+      ><tspan class="number">Point 2</tspan><tspan
+      dy="1.5em" x="50%" class="summary">Transitions can be</tspan><tspan
+      dy="1.1em" x="50%" class="summary">canceled</tspan></text></svg>
+</h1>
+</section>
+
+<section id="css-animations-title" class="section-title"
+  data-background="#5ab041">
+<h1 class="svg">
+  <svg><text y="1em" x="50%">CSS Animations</text></svg>
+</h1>
+</section>
+
+<section id="css-animations-intro">
+<div class="side-by-side">
+  <pre><code class="css live-code" data-trim contenteditable=true
+  spellcheck=false>
+.pie {
+  
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(0deg); }
+}
+  </code></pre>
+  <div class="target-content">
+    <svg class="pie" width="200px">
+      <use href="#pie"/>
+    </svg>
+  </div>
+</div>
 </section>
 
 </div> <!-- end slides -->
