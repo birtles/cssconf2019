@@ -1398,7 +1398,7 @@ button.onclick = () => {
       <li><img class="little-logo" src="img/firefox-logo.svg"><span>53+</span>
       <li><img class="little-logo" src="img/chrome-logo.svg"><span>74+ (April)</span>
       <li><img class="little-logo" src="img/safari-logo.svg"><span>Tech Preview</span>
-      <li><img class="little-logo" src="img/edge-logo.svg"><span class=batsu>ｘ</span>
+      <li><img class="little-logo" src="img/edge-logo.svg"><span class=batsu>x</span>
     </ul>
   <li>Also <code>transitionrun</code> event
     <ul><li>Make sure there is a transition in the first place!</ul>
@@ -1426,7 +1426,7 @@ button.onclick = () => {
   vertical-align: text-bottom;
 }
 #transitioncancel-to-the-rescue .batsu {
-  color: red;
+  color: hsl(354, 85%, 44%);
   font-weight: bold;
 }
 #transitioncancel-to-the-rescue code {
@@ -1812,12 +1812,219 @@ button.onclick = () => {
       dy="1.1em" x="50%" class="summary"><tspan
         class="emphasis">between</tspan> keyframes</tspan></text></svg>
 </h1>
+</section>
+
 <style>
 .summary-slide svg text .emphasis {
   font-style: italic;
   fill: var(--pink);
 }
 </style>
+
+<section id="web-animations-title" class="section-title"
+  data-background="#5ab041">
+<h1 class="svg">
+  <svg><text y="1em" x="50%">Web Animations</text></svg>
+</h1>
+</section>
+
+<section id="web-animations-intro" data-transition="fade-out">
+<div class="side-by-side">
+  <pre><code class="js" data-trim>
+pie.animate(
+  {
+    transform: ['scale(1)', 'scale(2)'],
+    opacity: [1, 0],
+  },
+  {
+    duration: 3000,
+    iterations: Infinity,
+    easing: 'cubic-bezier(0.7, 0.0, 1.0, 1.0)',
+  }
+);
+  </code></pre>
+  <div class="target-content">
+    <svg class="pie" width="200px">
+      <use href="#pie"/>
+    </svg>
+  </div>
+</div>
+<style>
+#web-animations-intro pre code {
+  font-size: 20px;
+}
+</style>
+<script>
+let pieAnimation;
+
+function startWebAnimationsIntro() {
+  const pie = document.querySelector('#web-animations-intro .pie');
+  if (pieAnimation) {
+    return;
+  }
+
+  pieAnimation = pie.animate(
+    {
+      transform: ['scale(1)', 'scale(2)'],
+      opacity: [1, 0],
+    },
+    {
+      duration: 3000,
+      iterations: Infinity,
+      easing: 'cubic-bezier(0.7, 0.0, 1.0, 1.0)',
+    }
+  );
+}
+
+function stopWebAnimationsIntro() {
+  if (pieAnimation) {
+    pieAnimation.cancel();
+    pieAnimation = null;
+  }
+}
+</script>
+</section>
+
+<section id="why-web-animations">
+<h2 class="svg">
+  <svg><text y="1em" x="3px">Why?</svg>
+</h2>
+<div class="side-by-side">
+  <ul>
+    <li>vs other JS
+      <ul>
+        <li>Performance
+        <li>No library
+        <li>Combines with CSS
+      </ul>
+    <li>vs CSS
+      <ul>
+        <li>Procedural
+        <li>(In future) CSS to create, JS to control
+      </ul>
+  </ul>
+  <div>
+    <figure>
+      <a href="https://hacks.mozilla.org/2016/08/animating-like-you-just-dont-care-with-element-animate/" target="_blank"><img src="img/jank-example-400.gif" width="400"></a>
+      <figcaption>
+        <a href="https://hacks.mozilla.org/2016/08/animating-like-you-just-dont-care-with-element-animate/" target="_blank">https://hacks.mozilla.org/2016/08/animating-like-you-just-dont-care-with-element-animate/</a>
+      </figcaption>
+    </figure>
+  </div>
+</div>
+<style>
+#why-web-animations .side-by-side {
+  align-items: start;
+}
+#why-web-animations ul {
+  margin-bottom: 1em;
+}
+#why-web-animations figcaption {
+  font-size: 15px;
+}
+</style>
+</section>
+
+<section id="web-animations-browser-support">
+<h2 class="svg">
+  <svg><text y="1em" x="3px">Browser support</svg>
+</h2>
+<ul class="logo-list">
+  <li><img class="logo" src="img/firefox-logo.svg"><span>48+</span>
+  <li><img class="logo" src="img/chrome-logo.svg"><span>36+</span>
+  <li><img class="logo" src="img/safari-logo.svg"><span>Tech Preview</span>
+  <li><img class="logo" src="img/edge-logo.svg"><span class=batsu>x</span>
+</ul>
+<style>
+#web-animations-browser-support .logo-list {
+  margin: 100px 50px;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+#web-animations-browser-support .logo-list li {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-right: 1em;
+  line-height: 1;
+}
+#web-animations-browser-support .logo {
+  width: 3em;
+  height: 3em;
+  margin: 0;
+  margin-bottom: 30px;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  vertical-align: text-bottom;
+}
+#web-animations-browser-support .batsu {
+  color: hsl(354, 85%, 44%);
+  font-weight: bold;
+}
+</style>
+</section>
+
+<section id="who-web-animations">
+<h2 class="svg">
+  <svg><text y="1em" x="3px">Who?</svg>
+</h2>
+<figure>
+  <img src="img/element-animate-usage-counter.png" width="600">
+  <figcaption>Source:
+    <a
+       href="https://www.chromestatus.com/metrics/feature/timeline/popularity/773">Chrome use counter for Element.animate()</a></figcaption>
+</figure>
+<p>
+  5th most popular API in <a
+    href="https://2018.stateofjs.com/other-tools/#browser_apis">2018 State of
+    JS survey</a>
+</p>
+<style>
+#who-web-animations h2 {
+  margin-bottom: 0;
+}
+#who-web-animations figcaption {
+  font-size: 20px;
+}
+</style>
+</section>
+
+<section id="web-animations-feature-detection">
+<h2 class="svg">
+  <svg><text y="1em" x="3px">Feature detection</svg>
+</h2>
+<pre><code class="hljs js" data-trim>
+// Check for browser support.
+//
+// TODO: Check for _user_ support too (see point 10)
+if ('animate' in elem) {
+  // ... Animate away...
+}
+</code></pre>
+<p class="explanation">
+You might not need the <a href="https://github.com/web-animations/web-animations-js">polyfill (web-animations-js)</a>.
+</p>
+<style>
+#web-animations-feature-detection .explanation {
+  font-size: 30px;
+}
+</style>
+</section>
+
+<section id="web-animations-support-summary" class="summary-slide">
+<h1>
+  <svg width="900px" viewBox="0 0 670 350">
+    <text y=".9em" x="50%" text-anchor="middle"
+      ><tspan class="number">Point 5</tspan><tspan
+      dy="1.5em" x="50%" class="summary">You can use</tspan><tspan
+      dy="1.1em" x="50%" class="summary">Web Animations today</tspan
+      ></text></svg>
+</h1>
 </section>
 
 </div> <!-- end slides -->
@@ -1920,6 +2127,20 @@ Reveal.initialize({
     },
   ],
   history: true,
+});
+
+Reveal.addEventListener('slidechanged', evt => {
+  if (evt.currentSlide.id == 'web-animations-intro') {
+    startWebAnimationsIntro();
+  } else {
+    stopWebAnimationsIntro();
+  }
+});
+
+Reveal.addEventListener('ready', evt => {
+  if (evt.currentSlide.id == 'web-animations-intro') {
+    startWebAnimationsIntro();
+  }
 });
 </script>
 </body>
