@@ -1529,7 +1529,7 @@ button.onclick = () => {
 </h1>
 </section>
 
-<section id="css-animations-intro">
+<section id="css-animations-intro" data-transition="fade">
 <div class="side-by-side">
   <pre><code class="css live-code" data-trim contenteditable=true
   spellcheck=false>
@@ -1537,8 +1537,8 @@ button.onclick = () => {
   
 }
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(0deg); }
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
   </code></pre>
   <div class="target-content">
@@ -1547,6 +1547,104 @@ button.onclick = () => {
     </svg>
   </div>
 </div>
+</section>
+
+<section id="css-animations-overlay-recap" class="panel-example"
+  data-transition="fade">
+<div class="side-by-side">
+  <pre><code class="hljs js" data-trim data-noescape>
+button.onclick = () => {
+  // Make the panel
+  const panel = document.createElement('div');
+  ...
+
+  // Fade it in
+  panel.style.opacity = '0';
+<span class="highlight">  getComputedStyle(panel).opacity;</span>
+  panel.style.transition = 'opacity .5s';
+  panel.style.opacity = '1';
+};
+  </code></pre>
+  <div>
+    <button class="button" disabled>Button</button>
+  </div>
+</div>
+</section>
+
+<section id="css-animations-overlay-code" class="panel-example"
+  data-transition="fade">
+<div class="side-by-side">
+  <div>
+    <pre><code class="css live-code" data-trim contenteditable=true
+    spellcheck=false>
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+    </code></pre>
+    <pre><code class="hljs js" data-trim data-noescape>
+button.onclick = () => {
+  // Make the panel
+  const panel = document.createElement('div');
+  ...
+
+  // Fade it in
+<span class="highlight">  panel.style.animation = 'fade-in .5s';</span>
+};
+    </code></pre>
+  </div>
+  <div>
+    <button class="button">Button</button>
+    <div class="target-content"></div>
+  </div>
+</div>
+<script>
+(() => {
+  const button = document.querySelector('#css-animations-overlay-code .button');
+  const parent = document.querySelector('#css-animations-overlay-code');
+
+  button.onclick = () => {
+    // If there is an existing panel, remove it
+    const existingPanel = document.querySelector(
+      '#css-animations-overlay-code .panel'
+    );
+    if (existingPanel) {
+      existingPanel.remove();
+      return;
+    }
+
+    // Create the panel
+    const panel = document.createElement('div');
+    panel.classList.add('panel');
+    panel.textContent = 'Hello!';
+    parent.appendChild(panel);
+
+    // Fade in
+    panel.style.animation = 'fade-in .5s';
+  };
+})();
+</script>
+<style>
+#css-animations-overlay-code .side-by-side pre {
+  /* Drop the width: 90% declaration since it will make these boxes too narrow
+   */
+  width: auto;
+}
+</style>
+</section>
+
+<section id="css-animations-state-summary" class="summary-slide">
+<h1>
+  <svg width="900px" viewBox="0 0 670 420">
+    <text y=".9em" x="50%" text-anchor="middle"
+      ><tspan class="number">Point 3</tspan><tspan
+      dy="1.5em" x="50%" class="summary">Use CSS transitions for</tspan><tspan
+      dy="1.1em" x="50%" class="summary">simple changes in state,</tspan><tspan
+      dy="1.1em" x="50%" class="summary">CSS animations and</tspan><tspan
+      dy="1.1em" x="50%" class="summary">Web Animations</tspan><tspan
+      dy="1.1em" x="50%" class="summary">for everything else</tspan>
+    </text></svg>
+</h1>
 </section>
 
 </div> <!-- end slides -->
