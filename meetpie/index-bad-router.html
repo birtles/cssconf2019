@@ -7,6 +7,7 @@
 <script src="js/react-dom.development.js"></script>
 <script src="js/react-router-dom.min.js"></script>
 <script src="js/babel.min.js"></script>
+<script src="js/react-transition-group.js"></script>
 
 <style>
 :root {
@@ -156,17 +157,27 @@ html, body {
   transition: transform 300ms ease;
   will-change: transform;
 }
-.tab-panel.active {
-  transform: none;
-  z-index: 1;
-}
-.tab-panel:not(.active) {
-  pointer-events: none;
-  transform: translate(100%);
-  transition-delay: 300ms;
-}
 .tab-panel > p {
   padding: 0 1em;
+}
+
+.slide-enter {
+  transform: translate(100%);
+  z-index: 1;
+}
+.slide-enter.slide-enter-active {
+  transform: none;
+  transition: transform 300ms ease;
+}
+.slide-exit {
+  transform: none;
+}
+.slide-exit.slide-exit-active {
+  transform: translate(100%);
+  transition: transform 100ms 3000ms ease;
+}
+.slide-exit-done {
+  transition: translate(100%);
 }
 
 .photo-list {
@@ -497,15 +508,7 @@ html, body {
 <div id=container></div>
 <script type="text/babel">
 const { HashRouter, Link, Route, Switch } = ReactRouterDOM;
-
-function TabPanel(props) {
-  let className = 'tab-panel';
-  if (props.active) {
-    className += ' active';
-  }
-
-  return <div className={className}>{props.children}</div>;
-}
+const { CSSTransition, TransitionGroup } = ReactTransitionGroup;
 
 function Photo(props) {
   return (
@@ -533,7 +536,7 @@ function Photo(props) {
 
 function Photos(props) {
   return (
-    <TabPanel active={props.active}>
+    <div className="tab-panel photos" key="photos">
       <div className="photo-list">
         <Photo
           key={1}
@@ -581,13 +584,13 @@ function Photos(props) {
           comments={[]}
         />
       </div>
-    </TabPanel>
+    </div>
   );
 }
 
 function Polls(props) {
   return (
-    <TabPanel active={props.active}>
+    <div className="tab-panel polls" key="polls">
       <div className="poll">
         <div className="title" role="heading">Is a chicken pie a meat pie?</div>
         <div className="chart">
@@ -598,7 +601,7 @@ function Polls(props) {
         <div className="explanation">Voting for this poll has closed.</div>
       </div>
       <NoteList initialNotes={['There\'s always one...']} />
-    </TabPanel>
+    </div>
   );
 }
 
@@ -621,7 +624,7 @@ function Finder(props) {
   });
 
   return (
-    <TabPanel active={props.active}>
+    <div className="tab-panel finder" key="finder">
       <div className="finder-tab">
         <div className="map" />
         <div className="marker">
@@ -653,7 +656,7 @@ function Finder(props) {
           </div>
         </div>
       </div>
-    </TabPanel>
+    </div>
   );
 }
 
@@ -1021,9 +1024,18 @@ ReactDOM.render(
         return (
           <div className="app">
             <div className="screens">
-              <Photos active={position === 0} />
-              <Polls active={position === 1} />
-              <Finder active={position === 2} />
+              <TransitionGroup>
+                <CSSTransition
+                  key={location.pathname}
+                  timeout={400}
+                  classNames="slide">
+                  <Switch location={location}>
+                    <Route exact path="/" component={Photos} />
+                    <Route path="/polls" component={Polls} />
+                    <Route path="/finder" component={Finder} />
+                  </Switch>
+                </CSSTransition>
+              </TransitionGroup>
             </div>
             <TabBar position={position}>
               <Link to="" className="pictures">

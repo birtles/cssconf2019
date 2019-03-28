@@ -2212,12 +2212,12 @@ function stopWebAnimationsEasing() {
 </h1>
 </section>
 
-<section id="performance-boring" class="section-title">
+<section id="performance-boring">
 <img src="img/boring.jpg">
 <!-- Source: ぱくたそ -->
 </section>
 
-<section id="transform-and-opacity" class="section-title">
+<section id="transform-and-opacity">
 <h2 class="svg smaller">
   <svg><text y="1em" x="3px">transform and opacity</svg>
 </h2>
@@ -2541,7 +2541,11 @@ function stopWebAnimationsEasing() {
   box-shadow: none;
   background: transparent;
   padding: .5em;
+  width: 400px;
   filter: drop-shadow(1px 4px 3px var(--neutral-8));
+}
+#perf-inspection-devtools img:nth-child(2) {
+  width: 500px;
 }
 </style>
 </section>
@@ -2554,6 +2558,175 @@ function stopWebAnimationsEasing() {
       dy="1.5em" x="50%" class="summary">You can use the</tspan><tspan
       dy="1.1em" x="50%" class="summary">animation inspector to</tspan><tspan
       dy="1.1em" x="50%" class="summary">check animation performance</tspan></text></svg>
+</h1>
+</section>
+
+<section id="single-page-apps" data-transition="fade-out">
+<h2 class="svg smaller">
+  <svg><text y="1em" x="3px">Single page apps</svg>
+</h2>
+<pre><code class="hljs js" data-trim>
+react.render(
+  &lt;Router&gt;
+    &lt;Route exact path="/" component={Photos} /&gt;
+    &lt;Route path="/polls" component={Polls} /&gt;
+    &lt;Route path="/finder" component={Finder} /&gt;
+  &lt;/Router&gt;
+);
+</code></pre>
+</section>
+
+<section id="single-page-apps-animated" data-transition="fade-in">
+<h2 class="svg smaller">
+  <svg><text y="1em" x="3px">Single page apps</svg>
+</h2>
+<pre><code class="hljs js" data-trim data-noescape>
+&lt;Router&gt;
+  &lt;Route render={({ location }) =&gt; (
+<span class=highlight>    &lt;TransitionGroup&gt;
+      &lt;CSSTransition key={location.pathname}
+        timeout={400} classNames="slide"&gt;</span>
+        &lt;Switch location={location}&gt;
+          &lt;Route exact path="/" component={Photos} /&gt;
+          &lt;Route path="/polls" component={Polls} /&gt;
+          &lt;Route path="/finder" component={Finder} /&gt;
+        &lt;/Switch&gt;
+<span class=highlight>      &lt;/CSSTransition&gt;
+    &lt;/TransitionGroup&gt;</span>
+  )}/&gt;
+&lt;/Router&gt;
+</code></pre>
+<style>
+#single-page-apps-animated code {
+  font-size: 20px;
+}
+</style>
+</section>
+
+<section id="naive-single-page-app" data-background="#5ab041"
+  class="app-frame">
+  <iframe width="400" height="600" src="meetpie/index-bad-router.html"></iframe>
+</section>
+
+<section id="naive-single-page-app-explained">
+<h2 class="svg smaller">
+  <svg><text y="1em" x="3px">When you click&hellip;</svg>
+</h2>
+<div class=side-by-side>
+  <ol>
+    <li>Handle click
+    <li>Create DOM elements
+    <li>Resolve style
+      <ul style="font-size: smaller">
+        <li>(<code>&lt;CSSTransition&gt;</code> resolves style and layout
+          multiple times)
+      </ul>
+    <li>Trigger transition
+    <li>Calculate layout
+    <li>Paint each new element
+    <li>Run the transition
+  </ol>
+  <img src="img/bad-router-profile.png">
+</div>
+<style>
+#naive-single-page-app-explained .side-by-side ol {
+  font-size: 25px;
+}
+#naive-single-page-app-explained .side-by-side img {
+  width: 700px;
+  margin-left: 50px;
+}
+</style>
+</section>
+
+<section id="fixed-single-page-app-proposal">
+<h2 class="svg smaller">
+  <svg><text y="1em" x="3px">What about&hellip;</svg>
+</h2>
+<pre><code class="hljs js" data-trim data-noescape>
+&lt;Router&gt;
+  &lt;Route render={({ location }) =&gt; (
+<span class=highlight>    &lt;Photos active={location.pathname === '/'}/&gt;
+    &lt;Polls active={location.pathname === '/stories'}/&gt;
+    &lt;Finder active={location.pathname === '/notes'}/&gt;</span>
+  )}/&gt;
+&lt;/Router&gt;
+</code></pre>
+</section>
+
+<section id="fixed-single-page-app-explained">
+<h2 class="svg smaller">
+  <svg><text y="1em" x="3px">When you click&hellip;</svg>
+</h2>
+<div class=side-by-side>
+  <ol>
+    <li>Handle click
+    <li class=strike>Create DOM elements
+    <li>Resolve style
+      <ul style="font-size: smaller" class=strike>
+        <li>(<code>&lt;CSSTransition&gt;</code> resolves style and layout
+          multiple times)
+      </ul>
+    <li>Trigger transition
+    <li class=strike>Calculate layout
+    <li class=strike>Paint each new element
+    <li>Run the transition
+  </ol>
+  <img src="img/bad-router-profile.png">
+</div>
+<style>
+#fixed-single-page-app-explained .side-by-side ol {
+  font-size: 25px;
+}
+#fixed-single-page-app-explained .side-by-side img {
+  width: 700px;
+  margin-left: 50px;
+}
+#fixed-single-page-app-explained .strike {
+  text-decoration: line-through;
+  opacity: .5;
+}
+</style>
+</section>
+
+<section id="fixed-single-page-app" data-background="#5ab041"
+  class="app-frame">
+  <iframe width="400" height="600" src="meetpie/index.html"></iframe>
+</section>
+
+<section id="single-page-app-comparison">
+<div class="side-by-side">
+  <figure>
+    <img src="img/bad-router-profile.png">
+    <figcaption>Before</figcaption>
+  </figure>
+  <figure>
+    <img src="img/better-router-profile.png">
+    <figcaption>After</figcaption>
+  </figure>
+</div>
+<style>
+#single-page-app-comparison > * {
+  margin: 0 .5em;
+}
+</style>
+</section>
+
+<section id="spinner-idea" data-background="#5ab041"
+  class="app-frame">
+  <iframe width="400" height="600"
+    src="meetpie/finder-only-with-spinner.html"></iframe>
+</section>
+
+<section id="animation-inspector-summary" class="summary-slide">
+<h1>
+  <svg width="900px" viewBox="0 0 670 350">
+    <text y=".9em" x="50%" text-anchor="middle"
+      ><tspan class="number">Point 9</tspan><tspan
+      dy="1.5em" x="50%" class="summary">Try to have elements</tspan><tspan
+      dy="1.1em" x="50%" class="summary">ready to animate</tspan><tspan
+      dy="1.1em" x="50%" class="summary"><tspan class="emphasis">before</tspan
+      > you need them</tspan></text></svg>
 </h1>
 </section>
 
