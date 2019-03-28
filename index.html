@@ -2718,7 +2718,7 @@ react.render(
     src="meetpie/finder-only-with-spinner.html"></iframe>
 </section>
 
-<section id="animation-inspector-summary" class="summary-slide">
+<section id="router-example-summary" class="summary-slide">
 <h1>
   <svg width="900px" viewBox="0 0 670 350">
     <text y=".9em" x="50%" text-anchor="middle"
@@ -2727,6 +2727,138 @@ react.render(
       dy="1.1em" x="50%" class="summary">ready to animate</tspan><tspan
       dy="1.1em" x="50%" class="summary"><tspan class="emphasis">before</tspan
       > you need them</tspan></text></svg>
+</h1>
+</section>
+
+<section id="accessibility-title" class="section-title"
+  data-background="#5ab041">
+<h1 class="svg">
+  <svg><text y="1em" x="50%">Accessibility</text></svg>
+</h1>
+</section>
+
+<section id="vestibular-disorders">
+<h2 class="svg smaller">
+  <svg><text y="1em" x="3px">Sick of Animation</svg>
+</h2>
+<img src="img/headache-city-1.jpg">
+<div class=callout>
+  Headaches, dizziness, migraines, epilepsy&hellip;
+</div>
+<style>
+#vestibular-disorders h2 {
+  margin-bottom: 0px;
+}
+#vestibular-disorders h2 svg {
+  height: 65px;
+}
+#vestibular-disorders img {
+  max-height: 400px;
+}
+</style>
+</section>
+
+<section id="motion-settings">
+<div class=side-by-side>
+  <figure>
+    <img src="img/reduce-motion-windows.png">
+    <figcaption>Windows</figcaption>
+  </figure>
+  <figure>
+    <img src="img/reduce-motion-mac.png">
+    <figcaption>Mac</figcaption>
+  </figure>
+</div>
+<style>
+#motion-settings .side-by-side img {
+  height: 300px;
+  margin: 20px;
+}
+</style>
+</section>
+
+<section id="prefers-reduced-motion" data-transition="fade-out">
+<code class=css-prod>prefers-reduced-motion: reduce | no-preference</code>
+<pre><code class="hljs css" data-trim>
+div {
+  animation: ...
+  transition: ...
+}
+
+@media (prefers-reduced-motion: reduce) {
+  animation-name: none;
+  transition-property: none;
+}
+</code></pre>
+<ul class="logo-list">
+  <li><img class="little-logo" src="img/firefox-logo.svg"><span>64+</span>
+  <li><img class="little-logo" src="img/chrome-logo.svg"><span>74+ (April)</span>
+  <li><img class="little-logo" src="img/safari-logo.svg"><span>10.1</span>
+  <li><img class="little-logo" src="img/edge-logo.svg"><span class=batsu>x</span>
+</ul>
+<style>
+#prefers-reduced-motion .css-prod {
+  font-family: "Courier New", monospace;
+  font-weight: bold;
+  font-size: 30px;
+  color: var(--pink);
+
+  display: block;
+  margin-bottom: 1em;
+}
+#prefers-reduced-motion .logo-list {
+  margin: .5em 3em;
+  line-height: 1.5;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+#prefers-reduced-motion .logo-list li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 1em;
+}
+#prefers-reduced-motion .little-logo {
+  width: 1.4em;
+  height: 1.4em;
+  margin: 0;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  vertical-align: text-bottom;
+}
+#prefers-reduced-motion .batsu {
+  color: hsl(354, 85%, 44%);
+  font-weight: bold;
+}
+</style>
+</section>
+
+<section id="prefers-reduced-motion-js" data-transition="fade-in">
+<pre><code class="hljs js" data-trim>
+// Check for browser support
+if (!('animate' in elem)) {
+  return;
+}
+
+// Check for user support
+if (matchMedia('(prefers-reduced-motion)').matches) {
+  return;
+}
+
+// Animate away...
+</code></pre>
+</section>
+
+<section id="accessibility-summary" class="summary-slide">
+<h1>
+  <svg width="900px" viewBox="0 0 670 350">
+    <text y=".9em" x="50%" text-anchor="middle"
+      ><tspan class="number">Point 10</tspan><tspan
+      dy="1.5em" x="50%" class="summary">You can (and probably</tspan><tspan
+      dy="1.1em" x="50%" class="summary">should) check if the user</tspan><tspan
+      dy="1.1em" x="50%" class="summary">prefers to reduce animation</tspan></text></svg>
 </h1>
 </section>
 
