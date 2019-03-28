@@ -2862,6 +2862,97 @@ if (matchMedia('(prefers-reduced-motion)').matches) {
 </h1>
 </section>
 
+<section id="summary-summary" class="summary-slide" data-transition="fade">
+<h2 class="svg pink center">
+  <svg><text y="1em" x="50%">10 things</svg>
+</h2>
+<div class=summary-table>
+<h3>Transitions</h3>
+<ol>
+  <li>Transitions only run when there is a <em>change</em> in style
+  <li>Transitions can be canceled
+</ol>
+<h3>CSS Animations</h3>
+<ol start=3>
+  <li>For CSS animations, easing always applies <em>between</em> keyframes
+</ol>
+<h3>Web Animations</h3>
+<ol start=4>
+  <li>You can use Web Animations today
+  <li>&hellip; but there are some minor differences to CSS animations
+</ol>
+<h3>Performance</h3>
+<ol start=6>
+  <li>Try to animate <span class=prop-name>transform</span> and <span
+      class=prop-name>opacity</span>
+  <li>You can check animation performance in DevTools
+  <li>Try to have <em>something</em> ready to animate <em>before</em> you need
+      it
+</ol>
+<h3>Accessibility</h3>
+<ol start=9>
+  <li>Disable large animations based on the user's preference
+</ol>
+</div>
+<style>
+#summary-summary .summary-table {
+  font-size: 25px;
+  padding: 1em;
+  border-radius: 1em;
+  column-count: 2;
+  column-gap: 50px;
+  background: var(--green-light);
+  color: var(--green-dark);
+}
+#summary-summary .summary-table h3 {
+  font-size: 25px;
+  color: var(--green-dark);
+  margin-bottom: .4em;
+}
+#summary-summary .summary-table ol {
+  /* Revert reveal styles */
+  display: block;
+}
+#summary-summary .summary-table ol li {
+  margin-bottom: .5em;
+}
+</style>
+</section>
+
+<section id="thankyou" data-transition="fade">
+<h2 class="svg center">
+  <svg><text y="1em" x="50%">Thank you!</svg>
+</h2>
+<div class=slides-link>
+  <a href="https://birtles.github.io/cssconf2019/"
+    target="_blank">birtles.github.io/cssconf2019/</a>
+</div>
+<div class=twitter>
+  <a href="https://twitter.com/brianskold" target="_blank">@brianskold</a>
+</div>
+<style>
+#thankyou .slides-link,
+#thankyou .twitter {
+  margin: 1em 0;
+}
+
+#thankyou .slides-link a,
+#thankyou .twitter a {
+  color: var(--green-dark);
+}
+
+#thankyou .twitter::before {
+  content: "";
+  display: inline-block;
+  width: 1.4em;
+  height: 1.4em;
+  vertical-align: top;
+  background: url(img/twitter.svg);
+  background-size: 1.4em 1.4em;
+}
+</style>
+</section>
+
 </div> <!-- end slides -->
 </div> <!-- end reveal -->
 
