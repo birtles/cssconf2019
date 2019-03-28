@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<title>10 things I wish you knew about animation</title>
+<title>10 things I wish people knew about animation</title>
 <meta name="author" content="Brian Birtles">
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -1674,26 +1674,26 @@ button.onclick = () => {
 </style>
 </section>
 
-<section id="css-animations-easing-bug-video" class="robot-example">
-<video data-autoplay controls>
+<section id="css-animations-easing-bug-video">
+<video data-autoplay>
   <source src="video/unlock-animation-stutter.mp4" type="video/mp4">
 </video>
 <style>
 #css-animations-easing-bug-video video {
   border: 4px solid #222;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 }
 </style>
 </section>
 
-<section id="css-animations-easing-bug-video-slow-mo" class="robot-example">
-<video data-autoplay controls>
+<section id="css-animations-easing-bug-video-slow-mo">
+<video data-autoplay>
   <source src="video/unlock-animation-slow-motion.mp4" type="video/mp4">
 </video>
 <style>
 #css-animations-easing-bug-video-slow-mo video {
   border: 4px solid #222;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 }
 </style>
 </section>
@@ -2202,6 +2202,291 @@ function stopWebAnimationsEasing() {
       dy="1.1em" x="50%" class="summary">some differences to CSS,</tspan><tspan
       dy="1.1em" x="50%" class="summary">especially easing</tspan
       ></text></svg>
+</h1>
+</section>
+
+<section id="performance-title" class="section-title"
+  data-background="#5ab041">
+<h1 class="svg">
+  <svg><text y="1em" x="50%">Performance</text></svg>
+</h1>
+</section>
+
+<section id="performance-boring" class="section-title">
+<img src="img/boring.jpg">
+<!-- Source: ぱくたそ -->
+</section>
+
+<section id="transform-and-opacity" class="section-title">
+<h2 class="svg smaller">
+  <svg><text y="1em" x="3px">transform and opacity</svg>
+</h2>
+<div class=demo-grid>
+<figure class="fragment move">
+  <svg class=pie><use href="#pie"></svg>
+  <figcaption>move</figcaption>
+</figure>
+<figure class="fragment grow-anim">
+  <svg class=pie><use href="#pie"></svg>
+  <figcaption>grow</figcaption>
+</figure>
+<figure class="fragment spin">
+  <svg class=pie><use href="#pie"></svg>
+  <figcaption>spin</figcaption>
+</figure>
+<figure class="fragment three-d">
+  <svg class=pie><use href="#pie"></svg>
+  <figcaption>3D</figcaption>
+</figure>
+<figure class="fragment fade">
+  <svg class=pie><use href="#pie"></svg>
+  <figcaption>fade</figcaption>
+</figure>
+<figure class="fragment combo">
+  <svg class=pie><use href="#pie"></svg>
+  <figcaption>grow + spin + fade</figcaption>
+</figure>
+<figure class="fragment colour-change">
+  <div class=stack>
+    <svg class=pie><use href="#pie"></svg>
+    <svg class=pink-pie><use href="#pink-pie"></svg>
+  </div>
+  <figcaption>colour change</figcaption>
+</figure>
+<figure class="fragment shadow-effect">
+  <div class=stack>
+    <svg class=pie><use href="#pie"></svg>
+    <svg class=pie-shadow><use href="#pie"></svg>
+  </div>
+  <figcaption>shadow effect</figcaption>
+</figure>
+<figure class="fragment split">
+  <div class=stack>
+    <svg class=pie-left><use href="#split-pie-left"></svg>
+    <svg class=pie-right><use href="#split-pie-right"></svg>
+  </div>
+  <figcaption>split</figcaption>
+</figure>
+</div>
+<svg width="0" height="0" style="visibility: hidden">
+  <defs>
+    <svg id="pink-pie" viewBox="2 15 60 33">
+      <path fill="#bdc1c6" d="M8.9 37.9L12.1 48H52l2.9-10.1-3.6-2.2-2.7 3.2-4.7-.2-4.5-3-2.7 3.2-4.2 1.2-4.9-1.1-3.1-2.7-2.4 1.8-2.7 1-5-1.1-1.8-2.3z"/>
+      <path d="M8.1 37.9s-3.4-.6-3.6-1-1.9-4.6-1.9-4.6l3.3-4 3-.7 3.9-5.4
+      8.9-4.9 8.6-1 9.9.6 7.1 3.1 4.8 4.1 2.4 3.1.4 1.2 4.6.8 1.8 4.2-2.4 3.9-4
+      .6-3.6-2.2-1.5 1.4-3.8 1.6h-3.6l-3-3.1-2.8 3.3-5.3 1-3.7-.9-2.6-3.3-2.3
+      1.9-4.7 1.5-2-.7-3.4-2.7-2.5 2-2 .2z" style="fill: var(--pink)"/>
+      <path d="M12 48.6c-.3 0-.5-.2-.6-.4l-2.9-9.6H8a5.6 5.6 0 1 1 0-11.2h.5l.1-.2C11.8 20 21 15.4 32 15.4S52.2 20 55.4 27.2l.1.2h.5a5.6 5.6 0 1 1 0 11.2h-.5l-2.9 9.6c-.1.3-.3.4-.6.4H12zm.1-11.8c-.6.6-1.3 1.1-2.1 1.4l-.3.1 2.8 9.1h39.1l2.7-9.1-.3-.1c-.8-.3-1.5-.8-2.1-1.4l-.3-.3-.3.4c-.3.3-.6.7-.9.9a7.5 7.5 0 0 1-10.5-.7l-.3-.4-.3.4c-.5.6-1 1.1-1.6 1.6a9.99 9.99 0 0 1-5.7 1.9c-2.9 0-5.5-1.3-7.3-3.5l-.3-.4-.3.3-.9.9a7.06 7.06 0 0 1-4.7 1.6c-2.3 0-4.4-1-5.8-2.8l-.3-.4-.3.5zm12.4-2c.2 0 .4.2.5.4a7.5 7.5 0 0 0 6.7 4.3h.5c2.9 0 5.5-1.7 6.7-4.3.1-.2.3-.4.5-.4s.5.1.6.3a5.89 5.89 0 0 0 5.4 3.3c2.3 0 4.4-1.3 5.5-3.4.1-.2.3-.4.5-.4s.4.1.5.3a4.7 4.7 0 0 0 3.1 2.4c.3.1.5.1.8.1 2.4 0 4.4-2 4.4-4.4 0-2.4-2-4.4-4.4-4.4-.3 0-.5 0-.8.1h-.1c-.2 0-.5-.2-.6-.4C51.8 21.2 43 16.6 32 16.6S12.2 21.2 9.5 28.3c-.1.2-.3.4-.6.4h-.1c-.3-.1-.5-.1-.8-.1-2.4 0-4.4 2-4.4 4.4 0 2.4 2 4.4 4.4 4.4.3 0 .5 0 .8-.1 1.3-.3 2.5-1.1 3.1-2.4.1-.2.3-.3.5-.3s.5.2.5.4c1 2.1 3.1 3.4 5.3 3.4h.3c2.3 0 4.3-1.3 5.3-3.3.3-.2.5-.3.7-.3z"/>
+      <path d="M32 26.6c-.3 0-.6-.3-.6-.6v-4c0-.3.3-.6.6-.6s.6.3.6.6v4c0 .3-.3.6-.6.6zM24 26.6c-.1 0-.2 0-.3-.1-.3-.2-.4-.5-.3-.8l2-4c.1-.2.3-.3.5-.3.1 0 .2 0 .3.1.3.1.4.5.3.8l-2 4c-.1.2-.3.3-.5.3zM40 26.6c-.2 0-.4-.1-.5-.3l-2-4c-.1-.3 0-.6.3-.7.1-.1.2-.1.3-.1.2 0 .4.1.5.3l2 4c.1.3 0 .7-.3.8H40zM15 44.6c-.3 0-.6-.3-.6-.6s.3-.6.6-.6h2c.3 0 .6.3.6.6s-.3.6-.6.6h-2zM21 44.6c-.3 0-.6-.3-.6-.6s.3-.6.6-.6h8c.3 0 .6.3.6.6s-.3.6-.6.6h-8z"/>
+    </svg>
+    <svg id="split-pie-left" viewBox="0 0 61.173 34.307">
+      <path fill="#BDC1C6" d="M23.043 22.424l-.31-.414-.31.311-.93.93c-1.365 1.121-3.091 1.709-4.857 1.653-2.376 0-4.546-1.033-5.993-2.894l-.31-.413-.31.517c-.62.62-1.343 1.137-2.17 1.447l-.31.104 2.894 9.402h21.12l3.901-6.149-1.274-1.594c-1.142.448-2.357.696-3.597.717-2.997-.001-5.684-1.344-7.544-3.617zm-7.956 7.75H13.02c-.31 0-.62-.311-.62-.621 0-.309.31-.619.62-.619h2.067c.31 0 .62.311.62.619 0 .31-.31.621-.62.621zm12.4 0H19.22c-.31 0-.62-.311-.62-.621 0-.309.31-.619.62-.619h8.267c.31 0 .62.311.62.619 0 .31-.31.621-.62.621z"/>
+      <path fill="#B56F1C" d="M33.75 9.333L29.038 1.28C18.402 1.694 9.999 6.332 7.337 13.33c-.104.207-.31.414-.62.414h-.103c-.31-.104-.517-.104-.827-.104-2.48 0-4.547 2.066-4.547 4.546s2.066 4.547 4.547 4.547c.31 0 .517 0 .827-.104 1.343-.31 2.583-1.136 3.203-2.479.104-.207.31-.311.517-.311s.517.207.517.414c1.034 2.17 3.204 3.513 5.477 3.513h.31c2.377 0 4.443-1.343 5.477-3.409.31-.207.517-.311.723-.311s.413.207.517.413c1.267 2.685 3.955 4.411 6.923 4.443h.518c.929 0 1.819-.187 2.654-.499l-6.657-8.321 6.957-6.749zM29.967 6.82c0-.311.31-.62.62-.62s.62.31.62.62v4.133c0 .311-.31.62-.62.62s-.62-.31-.62-.62V6.82zm-5.064.31l-2.066 4.134c-.104.207-.31.31-.517.31-.104 0-.207 0-.31-.103-.31-.207-.414-.518-.31-.827l2.067-4.134c.103-.207.31-.31.517-.31.103 0 .207 0 .31.103.309.103.413.517.309.827z"/>
+      <path d="M33.74 24.77l-.128-.161-3.575.675 1.067.239zM20.357 23.457l2.48-1.86 3.203 2.79-2.686-3.41-2.377 1.962-4.267 1.363.857.188z"/>
+      <path d="M10.023 33.687L6.717 23.25l.167-.1-.994.1s-3.513-.62-3.72-1.033c-.207-.414-1.963-4.754-1.963-4.754l3.41-4.133 3.1-.723 4.03-5.58 9.196-5.064L28.83.93h.002l-.505-.863C17.974.653 9.492 5.253 6.407 12.193l-.103.207h-.517C2.591 12.4 0 14.99 0 18.187s2.591 5.786 5.787 5.786h.517L9.3 33.894c.103.206.31.413.62.413h20.85l.393-.62h-21.14z"/>
+      <path d="M13.968 23.698l-3.428-2.721 1.86 2.377z"/>
+      <path d="M10.437 33.066l-2.894-9.402.31-.104c.827-.311 1.55-.827 2.17-1.447l.31-.517.31.413c1.447 1.86 3.617 2.894 5.993 2.894 1.766.056 3.492-.532 4.857-1.653l.93-.93.31-.311.31.414c1.86 2.273 4.547 3.616 7.543 3.616 1.239-.021 2.455-.269 3.597-.717l-.443-.552-2.637.754-1.067-.239-.172.032-3.824-.93-3.203-2.79-2.48 1.86-2.79 1.033-.856-.188-.59.188-2.066-.724-.086-.068-1.569-.344-1.86-2.377-2.583 2.066-1.073.107-.167.1 3.307 10.437h21.14l.393-.62h-21.12z"/>
+      <path d="M19.943 1.963l-9.196 5.064-4.03 5.58-3.1.723-3.41 4.133s1.756 4.34 1.963 4.754c.207.413 3.72 1.033 3.72 1.033l.994-.1 3.656-2.174 3.428 2.722 2.743.604 4.267-1.362 2.376-1.963 2.687 3.41 3.997.897 3.576-.675-.164-.205c-.835.313-1.726.499-2.654.499h-.518c-2.968-.032-5.656-1.759-6.923-4.443-.104-.206-.31-.413-.517-.413s-.414.104-.723.311c-1.034 2.066-3.1 3.409-5.477 3.409h-.31c-2.273 0-4.443-1.343-5.477-3.513 0-.207-.31-.414-.517-.414s-.414.103-.517.31c-.62 1.344-1.86 2.17-3.203 2.479-.31.104-.517.104-.827.104-2.48 0-4.547-2.067-4.547-4.547s2.066-4.546 4.547-4.546c.31 0 .517 0 .827.104h.103c.31 0 .517-.207.62-.414C9.999 6.332 18.402 1.694 29.038 1.281L28.833.93h-.003l-8.887 1.033z"/>
+      <path d="M16.12 24.49l.59-.188-2.742-.604.086.069zM30.037 25.284l-3.997-.897 3.824.929zM10.54 20.977L6.884 23.15l1.073-.107zM15.087 28.934H13.02c-.31 0-.62.311-.62.619 0 .311.31.621.62.621h2.067c.31 0 .62-.311.62-.621 0-.309-.31-.619-.62-.619zM27.487 28.934H19.22c-.31 0-.62.311-.62.619 0 .311.31.621.62.621h8.267c.31 0 .62-.311.62-.621 0-.309-.31-.619-.62-.619zM30.587 11.573c.311 0 .62-.31.62-.62V6.82c0-.311-.31-.62-.62-.62s-.62.31-.62.62v4.133c0 .311.309.62.62.62zM24.594 6.303c-.104-.103-.207-.103-.31-.103-.207 0-.414.103-.517.31L21.7 10.644c-.104.31 0 .62.31.827.104.103.207.103.31.103.207 0 .413-.103.517-.31l2.066-4.134c.104-.31 0-.724-.309-.827z"/>
+    </svg>
+    <svg id="split-pie-right" viewBox="0 0 61.173 34.307">
+      <path fill="none" d="M48.122 6.228l1.927 1.646c-.593-.58-1.229-1.134-1.927-1.646zM55.821 13.707l.399.07c-.13-.032-.264-.05-.399-.07z"/>
+      <path fill="#BDC1C6" d="M31.557 33.066h19.284l2.789-9.402-.31-.104c-.827-.311-1.55-.827-2.17-1.447l-.31-.311-.311.414c-.311.311-.62.723-.93.93-3.207 2.763-8.038 2.44-10.851-.723l-.31-.414-.311.414c-.516.619-1.033 1.137-1.652 1.652-.712.517-1.485.931-2.294 1.247l1.274 1.594-3.898 6.15z"/>
+      <path fill="#B56F1C" d="M29.038 1.281l4.712 8.053-6.958 6.75 6.657 8.321c1.86-.696 3.413-2.09 4.269-3.944.104-.206.31-.413.517-.413s.517.104.62.311c1.04 2.123 3.216 3.453 5.58 3.409 2.376 0 4.547-1.343 5.683-3.513.104-.207.311-.414.518-.414s.413.104.517.311c.655 1.254 1.825 2.159 3.203 2.479.31.104.517.104.827.104 2.479 0 4.547-2.067 4.547-4.547 0-2.121-1.518-3.929-3.507-4.41l-.399-.07c-.211-.031-.422-.066-.641-.066-.311 0-.518 0-.827.103h-.106c-.206 0-.517-.206-.62-.413-.717-2.037-1.951-3.865-3.581-5.457l-1.927-1.646C43.831 3.078 37.649 1.24 30.587 1.24c-.524 0-1.036.021-1.549.041zm7.542 5.125c.104-.104.207-.104.31-.104.207 0 .414.104.518.311l2.066 4.133c.104.311 0 .725-.311.827h-.31c-.206 0-.413-.103-.517-.31L36.271 7.13c-.104-.31 0-.62.309-.724z"/>
+      <path d="M50.53 20.977l-1.55 1.447-3.926 1.652h-2.17l4.856.207zM35.443 24.283l2.79-3.306.283.188-.283-.292-2.892 3.41-1.729.326.128.161z"/>
+      <path d="M55.387 12.4h-.517l-.104-.207C51.46 4.754 41.954 0 30.587 0c-.763 0-1.515.025-2.26.067l.505.863 10.228.62 7.338 3.204 1.725 1.474c.698.512 1.334 1.066 1.927 1.646l1.308 1.117 2.48 3.203.413 1.24 1.571.273c.135.02.269.038.399.07l2.782.483 1.861 4.34-2.48 4.03-4.134.62-2.997 10.437H31.164l-.393.62h20.482c.311 0 .518-.104.621-.413l2.996-9.921h.517c3.196 0 5.786-2.59 5.786-5.786s-2.59-5.787-5.786-5.787z"/>
+      <path d="M47.74 24.283l-4.856-.207h-1.551l-2.817-2.912-.282-.188-2.79 3.307-1.704.487.443.554c.809-.316 1.582-.73 2.294-1.247.619-.516 1.137-1.033 1.652-1.652l.311-.414.31.414c2.813 3.163 7.644 3.485 10.851.723.31-.207.619-.619.93-.93l.311-.414.31.311c.62.62 1.343 1.137 2.17 1.447l.31.104-2.789 9.402H31.557l-.393.62h20.089L54.25 23.25l-3.72-2.273-2.79 3.306z"/>
+      <path d="M59.728 18.187c0 2.479-2.067 4.547-4.547 4.547-.311 0-.518 0-.827-.104-1.378-.32-2.548-1.226-3.203-2.479-.104-.207-.31-.311-.517-.311s-.414.207-.518.414c-1.136 2.17-3.307 3.513-5.683 3.513-2.364.044-4.54-1.286-5.58-3.409-.104-.207-.413-.311-.62-.311s-.413.207-.517.413c-.855 1.854-2.408 3.248-4.269 3.944l.164.205 1.729-.326 2.893-3.41.282.292 4.368 2.912h2.17l3.927-1.652 1.55-1.447 3.72 2.273 4.134-.62 2.48-4.03-1.861-4.34-2.782-.483c1.989.48 3.507 2.287 3.507 4.409zM53.63 13.33c.104.207.414.413.62.413h.104c.31-.103.517-.103.827-.103.219 0 .43.035.641.066l-1.571-.273-.413-1.24-2.48-3.203-1.308-1.117c1.629 1.592 2.863 3.42 3.58 5.457zM30.587 1.24c7.063 0 13.244 1.837 17.535 4.987l-1.725-1.474L39.06 1.55 28.833.93l.205.351c.513-.02 1.025-.041 1.549-.041z"/>
+      <path d="M42.884 24.076l-4.368-2.911 2.817 2.911zM38.337 11.264c.104.207.311.31.517.31h.31c.311-.103.414-.517.311-.827l-2.066-4.133c-.104-.207-.311-.311-.518-.311-.103 0-.206 0-.31.104-.31.104-.413.414-.31.724l2.066 4.133z"/>
+      </g>
+    </svg>
+  </defs>
+</svg>
+<style>
+#transform-and-opacity h2 {
+  margin-bottom: 0px;
+}
+#transform-and-opacity h2 svg {
+  height: 65px;
+}
+#transform-and-opacity .demo-grid {
+  display: grid;
+  grid-gap: 10px 30px;
+  justify-content: center;
+  grid-template-columns: repeat(3, 250px);
+}
+#transform-and-opacity .demo-grid figure svg {
+  width: 130px;
+  overflow: visible;
+}
+#transform-and-opacity .demo-grid figure figcaption {
+  margin-top: -20px;
+  font-size: 25px;
+}
+
+#transform-and-opacity figure.move .pie {
+  animation: demo-move 1.2s -.3s infinite ease-in-out;
+}
+@keyframes demo-move {
+  from { transform: translate(-40px); }
+  50% { transform: translate(40px); }
+  to { transform: translate(-40px); }
+}
+
+#transform-and-opacity figure.grow-anim .pie {
+  animation: demo-grow 1.2s -.3s infinite ease-in-out;
+}
+@keyframes demo-grow {
+  from { transform: scale(.5); }
+  50% { transform: scale(2); }
+  to { transform: scale(.5); }
+}
+
+#transform-and-opacity figure.spin .pie {
+  animation: demo-spin 1.2s infinite ease-in-out;
+}
+@keyframes demo-spin {
+  from { transform: none; }
+  50% { transform: rotate(360deg); }
+  to { transform: none; }
+}
+
+#transform-and-opacity figure.three-d .pie {
+  animation: demo-three-d 3s infinite ease-in-out;
+}
+@keyframes demo-three-d {
+  from { transform: none; }
+  25% { transform: rotateY(180deg) rotateX(180deg); }
+  50% { transform: rotateY(360deg) rotateX(180deg); }
+  to { transform: none; }
+}
+
+#transform-and-opacity figure.fade .pie {
+  animation: demo-fade .8s infinite ease-in;
+}
+@keyframes demo-fade {
+  70% { opacity: 0; animation-timing-function: ease }
+}
+
+#transform-and-opacity figure.combo .pie {
+  animation: demo-combo 2s infinite;
+}
+@keyframes demo-combo {
+  from { opacity: 1; animation-timing-function: ease-out }
+  to { transform: scale(2) rotate(720deg); opacity: 0 }
+}
+
+#transform-and-opacity figure.colour-change .stack {
+  display: inline-block;
+  position: relative;
+}
+#transform-and-opacity figure.colour-change .pink-pie {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  animation: demo-colour-change 2.5s infinite ease-in-out;
+}
+@keyframes demo-colour-change {
+  50% { opacity: 1; }
+}
+
+#transform-and-opacity figure.shadow-effect .stack {
+  display: inline-block;
+  position: relative;
+}
+#transform-and-opacity figure.shadow-effect .pie {
+  animation: demo-shadow-effect-grow 2s infinite;
+}
+@keyframes demo-shadow-effect-grow {
+  50% { transform: scale(1.5); }
+}
+#transform-and-opacity figure.shadow-effect .pie-shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  filter: brightness(0) blur(6px);
+  z-index: -1;
+  animation: demo-shadow-effect-grow-shadow 2s infinite;
+}
+@keyframes demo-shadow-effect-grow-shadow {
+  0% { transform: scale(.8) translateY(0px); }
+  50% { transform: scale(1.4) translateY(4px); opacity: 0.3 }
+  100% { transform: scale(.8) translateY(0px); }
+}
+
+#transform-and-opacity figure.split .stack {
+  display: inline-block;
+  position: relative;
+}
+#transform-and-opacity figure.split .pie-right {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 50% 110px;
+  animation: demo-split 4s infinite;
+}
+@keyframes demo-split {
+  20% { transform: translate(-2px, 0px) rotate(0deg);
+       animation-timing-function: cubic-bezier(.5,0,.64,1.6); }
+  45% { transform: translate(-2px, 0px) rotate(20deg); }
+  50% { transform: translate(-2px, 0px) rotate(20deg); }
+  80% { transform: translate(-2px, 0px) rotate(30deg); }
+  100% { transform: translate(-2px, 300px) rotate(180deg); }
+}
+</style>
+</section>
+
+<section id="tab-bar-explained" data-background="#5ab041"
+  class="app-frame">
+  <iframe width="400" height="600" src="meetpie/index.html"></iframe>
+</section>
+
+<section id="gmail-example">
+<video data-autoplay loop>
+  <source src="video/gmail.mp4" type="video/mp4">
+</video>
+<img src="img/gmail-devtools.png">
+<style>
+#gmail-example video {
+  border: 4px solid #222;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+</style>
+</section>
+
+<section id="taketori">
+<video data-autoplay>
+  <source src="video/taketori-sped-up.mp4" type="video/mp4">
+</video>
+<div class="url">
+  <a href="https://mozanime.github.io/taketori/">mozanime.github.io/taketori/</a>
+</div>
+<style>
+#taketori video {
+  border: 4px solid #222;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+#taketori .url {
+  background: var(--green-light);
+  border-radius: 30px;
+  text-align: center;
+}
+#taketori .url a,
+#taketori .url a:visited {
+  color: var(--green-dark);
+  font-weight: 500;
+}
+</style>
+</section>
+
+<section id="transform-and-opacity-summary" class="summary-slide">
+<h1>
+  <svg width="900px" viewBox="0 0 670 350">
+    <text y=".9em" x="50%" text-anchor="middle"
+      ><tspan class="number">Point 7</tspan><tspan
+      dy="1.5em" x="50%" class="summary">Try to animate just</tspan><tspan
+      dy="1.1em" x="50%" class="summary">transform and opacity</tspan></text></svg>
 </h1>
 </section>
 
