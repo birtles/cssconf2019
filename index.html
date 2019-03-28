@@ -2490,6 +2490,73 @@ function stopWebAnimationsEasing() {
 </h1>
 </section>
 
+<section id="perf-inspection">
+<div class="lineup">
+  <div class=some-ok>
+    <svg class=pie><use href="#pie"></svg>
+  </div>
+  <div class=conflict>
+    <svg class=pie><use href="#pie"></svg>
+  </div>
+</div>
+<style>
+#perf-inspection .lineup {
+  display: flex;
+  justify-content: space-between;
+}
+#perf-inspection .lineup .pie {
+  width: 300px;
+  height: 300px;
+}
+
+#perf-inspection .some-ok .pie {
+  animation: some-on-compositor 2s 3s infinite;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: var(--green-light);
+}
+@keyframes some-on-compositor {
+  0% { background-color: var(--green-light); }
+  50% { background-color: var(--green); opacity: 1 }
+  to { opacity: 0; background-color: var(--green-light); }
+}
+
+#perf-inspection .conflict .pie {
+  animation: synced-animation 2s 3s infinite;
+}
+@keyframes synced-animation {
+  50% { transform: translateY(10px); width: 400px; height: 400px; }
+}
+</style>
+</section>
+
+<section id="perf-inspection-devtools">
+<div class="side-by-side">
+  <img src="img/some-on-compositor.png">
+  <img src="img/synced-animation.png">
+</div>
+<style>
+#perf-inspection-devtools img {
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  padding: .5em;
+  filter: drop-shadow(1px 4px 3px var(--neutral-8));
+}
+</style>
+</section>
+
+<section id="animation-inspector-summary" class="summary-slide">
+<h1>
+  <svg width="900px" viewBox="0 0 670 350">
+    <text y=".9em" x="50%" text-anchor="middle"
+      ><tspan class="number">Point 8</tspan><tspan
+      dy="1.5em" x="50%" class="summary">You can use the</tspan><tspan
+      dy="1.1em" x="50%" class="summary">animation inspector to</tspan><tspan
+      dy="1.1em" x="50%" class="summary">check animation performance</tspan></text></svg>
+</h1>
+</section>
+
 </div> <!-- end slides -->
 </div> <!-- end reveal -->
 
