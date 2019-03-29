@@ -2565,12 +2565,22 @@ function stopWebAnimationsEasing() {
 <h2 class="svg smaller">
   <svg><text y="1em" x="3px">Single page apps</svg>
 </h2>
-<pre><code class="hljs js" data-trim>
+<pre><code class="hljs js" data-trim data-noescape>
 react.render(
   &lt;Router&gt;
-    &lt;Route exact path="/" component={Photos} /&gt;
-    &lt;Route path="/polls" component={Polls} /&gt;
-    &lt;Route path="/finder" component={Finder} /&gt;
+    &lt;Route <span class=hljs-attr>exact</span> <span
+                    class=hljs-attr>path</span>=<span
+                    class=hljs-string>"/"</span> <span
+                    class=hljs-attr>component</span>={<span
+                    class=hljs-literal>Photos</span>} /&gt;
+    &lt;Route <span class=hljs-attr>path</span>=<span
+                    class=hljs-string>"/polls"</span> <span
+                    class=hljs-attr>component</span>={<span
+                    class=hljs-literal>Polls</span>} /&gt;
+    &lt;Route <span class=hljs-attr>path</span>=<span
+                    class=hljs-string>"/finder"</span> <span
+                    class=hljs-attr>component</span>={<span
+                    class=hljs-literal>Finder</span>} /&gt;
   &lt;/Router&gt;
 );
 </code></pre>
@@ -2582,14 +2592,29 @@ react.render(
 </h2>
 <pre><code class="hljs js" data-trim data-noescape>
 &lt;Router&gt;
-  &lt;Route render={({ location }) =&gt; (
+  &lt;Route <span class=hljs-attr>render</span>={({ <span
+                  class=hljs-variable>location</span> }) =&gt; (
 <span class=highlight>    &lt;TransitionGroup&gt;
-      &lt;CSSTransition key={location.pathname}
-        timeout={400} classNames="slide"&gt;</span>
-        &lt;Switch location={location}&gt;
-          &lt;Route exact path="/" component={Photos} /&gt;
-          &lt;Route path="/polls" component={Polls} /&gt;
-          &lt;Route path="/finder" component={Finder} /&gt;
+      &lt;CSSTransition <span
+          class=hljs-attr>key</span>={<span
+          class=hljs-variable>location.pathname</span>}
+        <span class=hljs-attr>timeout</span>={<span
+              class=hljs-literal>400</span>} <span
+              class=hljs-attr>classNames</span>=<span
+              class=hljs-string>"slide"</span>&gt;</span>
+        &lt;Switch <span class=hljs-attr>location</span>={<span
+                         class=hljs-variable>location</span>}&gt;
+          &lt;Route exact <span class=hljs-attr>path</span>="/" <span
+                                class=hljs-attr>component</span>={<span
+                                class=hljs-literal>Photos</span>} /&gt;
+          &lt;Route <span class=hljs-attr>path</span>=<span
+                          class=hljs-string>"/polls"</span> <span
+                          class=hljs-attr>component</span>={<span
+                          class=hljs-literal>Polls</span>} /&gt;
+          &lt;Route <span class=hljs-attr>path</span>=<span
+                          class=hljs-string>"/finder"</span> <span
+                          class=hljs-attr>component</span>={<span
+                          class=hljs-literal>Finder</span>} /&gt;
         &lt;/Switch&gt;
 <span class=highlight>      &lt;/CSSTransition&gt;
     &lt;/TransitionGroup&gt;</span>
@@ -2645,10 +2670,18 @@ react.render(
 </h2>
 <pre><code class="hljs js" data-trim data-noescape>
 &lt;Router&gt;
-  &lt;Route render={({ location }) =&gt; (
-<span class=highlight>    &lt;Photos active={location.pathname === '/'}/&gt;
-    &lt;Polls active={location.pathname === '/stories'}/&gt;
-    &lt;Finder active={location.pathname === '/notes'}/&gt;</span>
+  &lt;Route <span class=hljs-attr>render</span>={({ <span
+                  class=hljs-variable>location</span> }) =&gt; (
+<span class=highlight>    &lt;Photos <span
+      class=hljs-attr>active</span>={<span
+      class=hljs-variable>location.pathname</span> === <span
+      class=hljs-string>'/'</span>}/&gt;
+    &lt;Polls <span class=hljs-attr>active</span>={<span
+                    class=hljs-variable>location.pathname</span> === <span
+                    class=hljs-string>'/stories'</span>}/&gt;
+    &lt;Finder <span class=hljs-attr>active</span>={<span
+                    class=hljs-variable>location.pathname</span> === <span
+                    class=hljs-string>'/notes'</span>}/&gt;</span>
   )}/&gt;
 &lt;/Router&gt;
 </code></pre>
