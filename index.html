@@ -1633,20 +1633,6 @@ button.onclick = () => {
 </style>
 </section>
 
-<section id="css-animations-state-summary" class="summary-slide">
-<h1>
-  <svg width="900px" viewBox="0 0 670 420">
-    <text y=".9em" x="50%" text-anchor="middle"
-      ><tspan class="number">Point 3</tspan><tspan
-      dy="1.5em" x="50%" class="summary">Use CSS transitions for</tspan><tspan
-      dy="1.1em" x="50%" class="summary">simple changes in state,</tspan><tspan
-      dy="1.1em" x="50%" class="summary">CSS animations and</tspan><tspan
-      dy="1.1em" x="50%" class="summary">Web Animations</tspan><tspan
-      dy="1.1em" x="50%" class="summary">for everything else</tspan>
-    </text></svg>
-</h1>
-</section>
-
 <section id="css-animations-easing-intro" data-transition="fade">
 <div class="side-by-side">
   <pre><code class="css live-code" data-trim contenteditable=true
@@ -1806,7 +1792,7 @@ button.onclick = () => {
 <h1>
   <svg width="900px" viewBox="0 0 670 350">
     <text y=".9em" x="50%" text-anchor="middle"
-      ><tspan class="number">Point 4</tspan><tspan
+      ><tspan class="number">Point 3</tspan><tspan
       dy="1.5em" x="50%" class="summary">animation-timing-function</tspan><tspan
       dy="1.1em" x="50%" class="summary">always applies</tspan><tspan
       dy="1.1em" x="50%" class="summary"><tspan
@@ -2021,7 +2007,7 @@ You might not need the <a href="https://github.com/web-animations/web-animations
 <h1>
   <svg width="900px" viewBox="0 0 670 350">
     <text y=".9em" x="50%" text-anchor="middle"
-      ><tspan class="number">Point 5</tspan><tspan
+      ><tspan class="number">Point 4</tspan><tspan
       dy="1.5em" x="50%" class="summary">You can use</tspan><tspan
       dy="1.1em" x="50%" class="summary">Web Animations today</tspan
       ></text></svg>
@@ -2197,7 +2183,7 @@ function stopWebAnimationsEasing() {
 <h1>
   <svg width="900px" viewBox="0 0 670 350">
     <text y=".9em" x="50%" text-anchor="middle"
-      ><tspan class="number">Point 6</tspan><tspan
+      ><tspan class="number">Point 5</tspan><tspan
       dy="1.5em" x="50%" class="summary">Web Animations has</tspan><tspan
       dy="1.1em" x="50%" class="summary">some differences to CSS,</tspan><tspan
       dy="1.1em" x="50%" class="summary">especially easing</tspan
@@ -2484,7 +2470,7 @@ function stopWebAnimationsEasing() {
 <h1>
   <svg width="900px" viewBox="0 0 670 350">
     <text y=".9em" x="50%" text-anchor="middle"
-      ><tspan class="number">Point 7</tspan><tspan
+      ><tspan class="number">Point 6</tspan><tspan
       dy="1.5em" x="50%" class="summary">Try to animate just</tspan><tspan
       dy="1.1em" x="50%" class="summary">transform and opacity</tspan></text></svg>
 </h1>
@@ -2554,7 +2540,7 @@ function stopWebAnimationsEasing() {
 <h1>
   <svg width="900px" viewBox="0 0 670 350">
     <text y=".9em" x="50%" text-anchor="middle"
-      ><tspan class="number">Point 8</tspan><tspan
+      ><tspan class="number">Point 7</tspan><tspan
       dy="1.5em" x="50%" class="summary">You can use the</tspan><tspan
       dy="1.1em" x="50%" class="summary">animation inspector to</tspan><tspan
       dy="1.1em" x="50%" class="summary">check animation performance</tspan></text></svg>
@@ -2752,7 +2738,7 @@ react.render(
 <h1>
   <svg width="900px" viewBox="0 0 670 350">
     <text y=".9em" x="50%" text-anchor="middle"
-      ><tspan class="number">Point 9</tspan><tspan
+      ><tspan class="number">Point 8</tspan><tspan
               dy="1.5em" x="50%" class="summary">Try to have <tspan
                                  class=emphasis>something</tspan></tspan><tspan
       dy="1.1em" x="50%" class="summary">ready to animate</tspan><tspan
@@ -2885,7 +2871,7 @@ if (matchMedia('(prefers-reduced-motion)').matches) {
 <h1>
   <svg width="900px" viewBox="0 0 670 350">
     <text y=".9em" x="50%" text-anchor="middle"
-      ><tspan class="number">Point 10</tspan><tspan
+      ><tspan class="number">Point 9</tspan><tspan
       dy="1.5em" x="50%" class="summary">You can (and probably</tspan><tspan
       dy="1.1em" x="50%" class="summary">should) check if the user</tspan><tspan
       dy="1.1em" x="50%" class="summary">prefers to reduce animation</tspan></text></svg>
@@ -2907,7 +2893,9 @@ if (matchMedia('(prefers-reduced-motion)').matches) {
   <li>For CSS animations, easing always applies <em>between</em> keyframes
 </ol>
 <h3>Web Animations</h3>
-<ol start=4>
+<!-- This extra margin is super-high tech manual layout because I'm on a plane
+  and can't look up MDN to work out which breaking properties are supported -->
+<ol start=4 style="margin-bottom: 1em">
   <li>You can use Web Animations today
   <li>&hellip; but there are some minor differences to CSS animations
 </ol>
@@ -2922,6 +2910,10 @@ if (matchMedia('(prefers-reduced-motion)').matches) {
 <h3>Accessibility</h3>
 <ol start=9>
   <li>Disable large animations based on the user's preference
+</ol>
+<h3 class=fragment data-fragment-index=1>Don't forget&hellip;</h3>
+<ol start=10 class=fragment data-fragment-index=1>
+  <li>Have fun!</li>
 </ol>
 </div>
 <style>
