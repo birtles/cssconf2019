@@ -336,10 +336,10 @@ button.onclick = () => {
   panel.textContent = 'Hello!';
   parent.appendChild(panel);
 
-<span class="highlight">  // Fade it in
-  panel.style.opacity = '0';
-  panel.style.transition = 'opacity .5s';
-  panel.style.opacity = '1';</span>
+<span class="highlight">  // Stretch it in
+  panel.style.transform = 'scale(0)';
+  panel.style.transition = 'transform .5s';
+  panel.style.transform = 'scale(1)';</span>
 };
   </code></pre>
   <div>
@@ -369,10 +369,10 @@ button.onclick = () => {
     panel.textContent = 'Hello!';
     parent.appendChild(panel);
 
-    // Fade in
-    panel.style.opacity = '0';
-    panel.style.transition = 'opacity .5s';
-    panel.style.opacity = '1';
+    // Stretch in
+    panel.style.transform = 'scale(0)';
+    panel.style.transition = 'transform .5s';
+    panel.style.transform = 'scale(1)';
   };
 })();
 </script>
@@ -424,11 +424,11 @@ button.onclick = () => {
     <text x="543" y="265" class="vertical-label">Style</text>
     <g class="hide">
       <line x1="80" x2="65" y1="190" y2="250" class="connecting-line" />
-      <rect x="65" y="70" width="220" height="120" rx="10" ry="10"
+      <rect x="65" y="70" width="300" height="120" rx="10" ry="10"
         class="callout" />
       <text x="80" y="110" class="code">display: block;
-        <tspan x="80" dy="1.3em">opacity: 1;</tspan>
-        <tspan x="80" dy="1.3em">transform: none;</tspan></text>
+        <tspan x="80" dy="1.3em">opacity: 0;</tspan>
+        <tspan x="80" dy="1.3em">transform: scale(1.5);</tspan></text>
     </g>
     <g class="hide">
       <line x1="560" x2="545" y1="190" y2="250" class="connecting-line" />
@@ -570,21 +570,19 @@ button.onclick = () => {
     <text x="543" y="265" class="vertical-label">Style</text>
     <g>
       <line x1="80" x2="65" y1="190" y2="250" class="connecting-line" />
-      <rect x="65" y="70" width="220" height="120" rx="10" ry="10"
+      <rect x="65" y="70" width="300" height="120" rx="10" ry="10"
         class="callout" />
       <text x="80" y="110" class="code">display: block;
-        <tspan x="80" dy="1.3em">opacity: 1;</tspan>
-        <tspan x="80" dy="1.3em"
-          class="highlight">transform: none;</tspan></text>
+        <tspan x="80" dy="1.3em" class=highlight>opacity: 0;</tspan>
+        <tspan x="80" dy="1.3em">transform: scale(1.5);</tspan></text>
     </g>
     <g>
       <line x1="560" x2="545" y1="190" y2="250" class="connecting-line" />
       <rect x="545" y="70" width="300" height="120" rx="10" ry="10"
         class="callout" />
       <text x="560" y="110" class="code">display: block;
-        <tspan x="560" dy="1.3em">opacity: 1;</tspan>
-        <tspan x="560" dy="1.3em"
-          class="highlight">transform: scale(1.5);</tspan></text>
+        <tspan x="560" dy="1.3em" class=highlight>opacity: 1;</tspan>
+        <tspan x="560" dy="1.3em">transform: scale(1.5);</tspan></text>
     </g>
   </g>
   <g>
@@ -602,11 +600,11 @@ button.onclick = () => {
 </svg>
 <div class="popup fragment">
   <ul>
-    <li><span class="prop-name">transform</span> changed
-      <span class="prop-value">none</span> &rarr;
-      <span class="prop-value">scale(1.5)</span>!
+    <li><span class="prop-name">opacity</span> changed
+      <span class="prop-value">0</span> &rarr;
+      <span class="prop-value">1</span>!
     <li><span class="prop-name">transition</span> specifies
-      a transition time for <span class="prop-name">transform</span>
+      a transition time for <span class="prop-name">opacity</span>
     <li><span class="action">&rArr; Make a new transition!</span>
   </ul>
 </div>
@@ -682,17 +680,17 @@ button.onclick = () => {
   button.onclick = () => {
     const panel = document.createElement('div');
     ...
-    panel.style.opacity = '0';
-    panel.style.transition = 'opacity .5s';
-    panel.style.opacity = '1';
+    panel.style.transform = 'scale(0)';
+    panel.style.transition = 'transform .5s';
+    panel.style.transform = 'scale(1)';
   };
   </code></pre>
 </div>
 <div class="popup fragment" data-fragment-index="3">
   <ul>
-    <li><span class="prop-name">opacity</span> is <span
-              class="prop-value">1</span>.
-    <li>Previous <span class="prop-name">opacity</span> is... empty.
+    <li><span class="prop-name">transform</span> is <span
+              class="prop-value">scale(1)</span>.
+    <li>Previous <span class="prop-name">transform</span> is... empty.
   </ul>
 </div>
 <style>
@@ -723,11 +721,11 @@ button.onclick = () => {
   const panel = document.createElement('div');
   ...
 
-  // Fade it in
-  panel.style.opacity = '0';
-  panel.style.transition = 'opacity .5s';
+  // Stretch it in
+  panel.style.transform = 'scale(0)';
+  panel.style.transition = 'transform .5s';
 <span class="highlight">  requestAnimationFrame(() => {
-    panel.style.opacity = '1';
+    panel.style.transform = 'scale(1)';
   });</span>
 };
   </code></pre>
@@ -758,14 +756,14 @@ button.onclick = () => {
     panel.textContent = 'Hello!';
     parent.appendChild(panel);
 
-    // Fade in
-    panel.style.opacity = '0';
+    // Stretch in
+    panel.style.transform = 'scale(0)';
     // There is something very buggy with Chrome here. If you move the following
     // line _inside_ the rAF you actually DO get a transition (but you
     // shouldn't).
-    panel.style.transition = 'opacity .5s';
+    panel.style.transition = 'transform .5s';
     requestAnimationFrame(() => {
-      panel.style.opacity = '1';
+      panel.style.transform = 'scale(1)';
     });
   };
 })();
@@ -811,18 +809,18 @@ button.onclick = () => {
   button.onclick = () => {
     const panel = document.createElement('div');
     ...
-    panel.style.opacity = '0';
+    panel.style.transform = 'scale(0)';
     requestAnimationFrame(() => {
-      panel.style.opacity = '1';
+      panel.style.transform = 'scale(1)';
     });
   };
   </code></pre>
 </div>
 <div class="popup fragment" data-fragment-index="2">
   <ul>
-    <li><span class="prop-name">opacity</span> is <span
-              class="prop-value">1</span>.
-    <li>Previous <span class="prop-name">opacity</span> is... still empty.
+    <li><span class="prop-name">transform</span> is <span
+              class="prop-value">scale(1)</span>.
+    <li>Previous <span class="prop-name">transform</span> is... still empty.
   </ul>
 </div>
 <style>
@@ -848,12 +846,12 @@ button.onclick = () => {
   const panel = document.createElement('div');
   ...
 
-  // Fade it in
-  panel.style.opacity = '0';
-  panel.style.transition = 'opacity .5s';
+  // Stretch it in
+  panel.style.transform = 'scale(0)';
+  panel.style.transition = 'transform .5s';
 <span class="highlight">  requestAnimationFrame(() => {
     requestAnimationFrame(() => {
-      panel.style.opacity = '1';
+      panel.style.transform = 'scale(1)';
     });
   });</span>
 };
@@ -886,12 +884,12 @@ button.onclick = () => {
     panel.textContent = 'Hello!';
     parent.appendChild(panel);
 
-    // Fade in
-    panel.style.opacity = '0';
-    panel.style.transition = 'opacity .5s';
+    // Stretch in
+    panel.style.transform = 'scale(0)';
+    panel.style.transition = 'transform .5s';
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        panel.style.opacity = '1';
+        panel.style.transform = 'scale(1)';
       });
     });
   };
@@ -933,7 +931,7 @@ button.onclick = () => {
     <rect x="582" y="250" width="50" height="200" class="style"/>
     <text x="604" y="265" class="vertical-label">Style</text>
     <text x="605" y="530" class="inline-note">Resolve<tspan
-      x="605" dy="1.2em">opacity as &lsquo;0&rsquo;</tspan></text>
+      x="605" dy="1.2em">transform as &lsquo;scale(0)&rsquo;</tspan></text>
   </g>
   <g class="fragment">
     <rect x="1000" y="250" width="60" height="200" class="script"/>
@@ -945,17 +943,17 @@ button.onclick = () => {
     <rect x="1062" y="250" width="50" height="200" class="style"/>
     <text x="1085" y="265" class="vertical-label">Style</text>
     <text x="1084" y="530" class="inline-note">Resolve<tspan
-      x="1084" dy="1.2em">opacity as &lsquo;1&rsquo;</tspan></text>
+      x="1084" dy="1.2em">transform as &lsquo;scale(1)&rsquo;</tspan></text>
   </g>
 </svg>
 <div class="code-block">
   <pre><code class="hljs js" data-trim>
   button.onclick = () => {
     ...
-    panel.style.opacity = '0';
+    panel.style.transform = 'scale(0)';
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
-        panel.style.opacity = '1';
+        panel.style.transform = 'scale(1)';
       });
     });
   };
@@ -963,10 +961,10 @@ button.onclick = () => {
 </div>
 <div class="popup fragment">
   <ul>
-    <li><span class="prop-name">opacity</span> is <span
-              class="prop-value">1</span>.
-    <li>Previous <span class="prop-name">opacity</span> is
-        <span class="prop-value">0</span>.
+    <li><span class="prop-name">transform</span> is <span
+              class="prop-value">scale(1)</span>.
+    <li>Previous <span class="prop-name">transform</span> is
+        <span class="prop-value">scale(0)</span>.
     <li><span class="action">&rArr; Make transition!</span>
   </ul>
 </div>
@@ -1004,11 +1002,11 @@ button.onclick = () => {
   const panel = document.createElement('div');
   ...
 
-  // Fade it in
-  panel.style.opacity = '0';
-<span class="highlight">  getComputedStyle(panel).opacity;</span>
-  panel.style.transition = 'opacity .5s';
-  panel.style.opacity = '1';</span>
+  // Stretch it in
+  panel.style.transform = 'scale(0)';
+<span class="highlight">  getComputedStyle(panel).transform;</span>
+  panel.style.transition = 'transform .5s';
+  panel.style.transform = 'scale(1)';</span>
 };
   </code></pre>
   <div>
@@ -1039,11 +1037,11 @@ button.onclick = () => {
     panel.textContent = 'Hello!';
     parent.appendChild(panel);
 
-    // Fade in
-    panel.style.opacity = '0';
-    getComputedStyle(panel).opacity;
-    panel.style.transition = 'opacity .5s';
-    panel.style.opacity = '1';
+    // Stretch in
+    panel.style.transform = 'scale(0)';
+    getComputedStyle(panel).transform;
+    panel.style.transition = 'transform .5s';
+    panel.style.transform = 'scale(1)';
   };
 })();
 </script>
@@ -1084,13 +1082,13 @@ button.onclick = () => {
   </g>
   <g class="fragment">
     <line x1="299" x2="299" y1="450" y2="510" class="connecting-line" />
-    <text x="299" y="530" class="inline-note">Resolve<tspan
-      x="299" dy="1.2em">opacity as &lsquo;0&rsquo;</tspan></text>
+    <text x="299" y="530" class="inline-note smaller">Resolve<tspan
+      x="299" dy="1.2em">transform as &lsquo;scale(0)&rsquo;</tspan></text>
   </g>
   <g class="fragment">
     <line x1="546" x2="546" y1="450" y2="510" class="connecting-line" />
-    <text x="546" y="530" class="inline-note">Resolve<tspan
-      x="546" dy="1.2em">opacity as &lsquo;1&rsquo;</tspan></text>
+    <text x="546" y="530" class="inline-note smaller">Resolve<tspan
+      x="546" dy="1.2em">transform as &lsquo;scale(1)&rsquo;</tspan></text>
     <rect x="520" y="250" width="50" height="200" class="style"/>
     <text x="545" y="265" class="vertical-label">Style</text>
   </g>
@@ -1100,19 +1098,19 @@ button.onclick = () => {
   button.onclick = () => {
     const panel = document.createElement('div');
     ...
-    panel.style.opacity = '0';
-<span class="highlight">    getComputedStyle(panel).opacity;</span>
-    panel.style.transition = 'opacity .5s';
-    panel.style.opacity = '1';
+    panel.style.transform = 'scale(0)';
+<span class="highlight">    getComputedStyle(panel).transform;</span>
+    panel.style.transition = 'transform .5s';
+    panel.style.transform = 'scale(1)';
   };
   </code></pre>
 </div>
 <div class="popup fragment">
   <ul>
-    <li><span class="prop-name">opacity</span> is <span
-              class="prop-value">1</span>.
-    <li>Previous <span class="prop-name">opacity</span> is <span
-                       class="prop-value">0</span>.
+    <li><span class="prop-name">transform</span> is <span
+              class="prop-value">scale(1)</span>.
+    <li>Previous <span class="prop-name">transform</span> is <span
+                       class="prop-value">scale(0)</span>.
     <li><span class="action">&rArr; Make transition</span>
   </ul>
 </div>
@@ -1129,6 +1127,9 @@ button.onclick = () => {
 }
 #css-transitions-attempt-three-explanation > .popup {
   top: -100px;
+}
+.frame-timing .inline-note.smaller {
+  font-size: 22px;
 }
 </style>
 </section>
@@ -1229,11 +1230,11 @@ button.onclick = () => {
     panel.textContent = 'Hello!';
     parent.appendChild(panel);
 
-    // Fade in
-    panel.style.opacity = '0';
-    getComputedStyle(panel).opacity;
-    panel.style.transition = 'opacity .5s';
-    panel.style.opacity = '1';
+    // Stretch in
+    panel.style.transform = 'scale(0)';
+    getComputedStyle(panel).transform;
+    panel.style.transition = 'transform .5s';
+    panel.style.transform = 'scale(1)';
   };
 })();
 </script>
@@ -1245,7 +1246,7 @@ button.onclick = () => {
   <pre><code class="hljs js" data-trim data-noescape>
 button.onclick = () => {
   // If the panel already exists, remove it.
-<span class="highlight">  panel.style.opacity = '0';
+<span class="highlight">  panel.style.transform = 'scale(0)';
   panel.addEventListener('transitionend', () => {
     panel.remove();
   });</span>
@@ -1270,7 +1271,7 @@ button.onclick = () => {
       '#css-transitions-hiding-with-transition .panel'
     );
     if (existingPanel) {
-      existingPanel.style.opacity = '0';
+      existingPanel.style.transform = 'scale(0)';
       existingPanel.addEventListener('transitionend', () => {
         existingPanel.remove();
       });
@@ -1283,11 +1284,11 @@ button.onclick = () => {
     panel.textContent = 'Hello!';
     parent.appendChild(panel);
 
-    // Fade in
-    panel.style.opacity = '0';
-    getComputedStyle(panel).opacity;
-    panel.style.transition = 'opacity .5s';
-    panel.style.opacity = '1';
+    // Stretch in
+    panel.style.transform = 'scale(0)';
+    getComputedStyle(panel).transform;
+    panel.style.transition = 'transform .5s';
+    panel.style.transform = 'scale(1)';
   };
 })();
 </script>
@@ -1332,7 +1333,7 @@ The transition will be <em>canceled!</em><br>
   <pre><code class="hljs js" data-trim data-noescape>
 button.onclick = () => {
   // If the panel already exists, remove it.
-<span class="highlight">  panel.style.opacity = '0';
+<span class="highlight">  panel.style.transform = 'scale(0)';
   panel.addEventListener(
     'transitionend',
     () => { panel.remove(); }
@@ -1361,8 +1362,8 @@ button.onclick = () => {
       existingPanel.style.transitionProperty = 'none';
       getComputedStyle(existingPanel).transitionProperty;
 
-      existingPanel.style.transition = 'opacity 3s';
-      existingPanel.style.opacity = '0';
+      existingPanel.style.transition = 'transform 3s';
+      existingPanel.style.transform = 'scale(0)';
       existingPanel.addEventListener('transitionend', () => {
         existingPanel.remove();
       });
@@ -1375,11 +1376,11 @@ button.onclick = () => {
     panel.textContent = 'Hello!';
     parent.appendChild(panel);
 
-    // Fade in
-    panel.style.opacity = '0';
-    getComputedStyle(panel).opacity;
-    panel.style.transition = 'opacity .5s';
-    panel.style.opacity = '1';
+    // Stretch in
+    panel.style.transform = 'scale(0)';
+    getComputedStyle(panel).transform;
+    panel.style.transition = 'transform .5s';
+    panel.style.transform = 'scale(1)';
   };
 })();
 </script>
@@ -1450,7 +1451,7 @@ button.onclick = () => {
   // If the panel already exists, remove it.
   const dropPanel = () => { panel.remove(); };
 
-  panel.style.opacity = '0';
+  panel.style.transform = 'scale(0)';
   panel.addEventListener(
     'transitionend',
     dropPanel
@@ -1483,8 +1484,8 @@ button.onclick = () => {
       existingPanel.style.transitionProperty = 'none';
       getComputedStyle(existingPanel).transitionProperty;
 
-      existingPanel.style.transition = 'opacity 3s';
-      existingPanel.style.opacity = '0';
+      existingPanel.style.transition = 'transform 3s';
+      existingPanel.style.transform = 'scale(0)';
       existingPanel.addEventListener('transitionend', () => {
         existingPanel.remove();
       });
@@ -1501,11 +1502,11 @@ button.onclick = () => {
     panel.textContent = 'Hello!';
     parent.appendChild(panel);
 
-    // Fade in
-    panel.style.opacity = '0';
-    getComputedStyle(panel).opacity;
-    panel.style.transition = 'opacity .5s';
-    panel.style.opacity = '1';
+    // Stretch in
+    panel.style.transform = 'scale(0)';
+    getComputedStyle(panel).transform;
+    panel.style.transition = 'transform .5s';
+    panel.style.transform = 'scale(1)';
   };
 })();
 </script>
@@ -1557,11 +1558,11 @@ button.onclick = () => {
   const panel = document.createElement('div');
   ...
 
-  // Fade it in
-  panel.style.opacity = '0';
-<span class="highlight">  getComputedStyle(panel).opacity;</span>
-  panel.style.transition = 'opacity .5s';
-  panel.style.opacity = '1';
+  // Stretch it in
+  panel.style.transform = 'scale(0)';
+<span class="highlight">  getComputedStyle(panel).transform;</span>
+  panel.style.transition = 'transform .5s';
+  panel.style.transform = 'scale(1)';
 };
   </code></pre>
   <div>
@@ -1576,9 +1577,9 @@ button.onclick = () => {
   <div>
     <pre><code class="css live-code" data-trim contenteditable=true
     spellcheck=false>
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
+@keyframes stretch-in {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
 }
     </code></pre>
     <pre><code class="hljs js" data-trim data-noescape>
@@ -1587,8 +1588,8 @@ button.onclick = () => {
   const panel = document.createElement('div');
   ...
 
-  // Fade it in
-<span class="highlight">  panel.style.animation = 'fade-in .5s';</span>
+  // Stretch it in
+<span class="highlight">  panel.style.animation = 'stretch-in .5s';</span>
 };
     </code></pre>
   </div>
@@ -1619,7 +1620,7 @@ button.onclick = () => {
     parent.appendChild(panel);
 
     // Fade in
-    panel.style.animation = 'fade-in .5s';
+    panel.style.animation = 'stretch-in .5s';
   };
 })();
 </script>

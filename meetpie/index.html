@@ -300,10 +300,11 @@ html, body {
   box-sizing: border-box;
   box-shadow: 3px 3px 5px var(--neutral-6);
   overflow-x: hidden;
-  transition: opacity .2s;
+  transition: opacity .2s, transform .2s;
 }
 .finder-tab .popup:not(.active) {
   opacity: 0;
+  transform: scale(0);
   pointer-events: none;
 }
 .finder-tab .popup > .title {
