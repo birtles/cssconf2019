@@ -546,7 +546,7 @@ h2.pink svg text {
  * NAVIGATION CONTROLS
  *********************************************/
 .reveal .controls {
-  color: #2a76dd; }
+  color: var(--green); }
 
 /*********************************************
  * PROGRESS BAR
