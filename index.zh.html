@@ -1,0 +1,3148 @@
+<!doctype html>
+<html lang="zh">
+<head>
+<meta charset="utf-8">
+<title>我希望人们了解 Web Animation 的10件事</title>
+<meta name="author" content="Brian Birtles">
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="viewport"
+  content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+<link rel="stylesheet" href="css/reveal.css">
+<link rel="stylesheet" href="css/theme/greeeen.css" id="theme">
+
+<!-- For syntax highlighting -->
+<link rel="stylesheet" href="lib/css/github-gist.css">
+
+<!-- Printing and PDF exports -->
+<script>
+const link = document.createElement('link');
+link.rel = 'stylesheet';
+link.type = 'text/css';
+link.href = window.location.search.match(/print-pdf/gi)
+  ? 'css/print/pdf.css'
+  : 'css/print/paper.css';
+document.getElementsByTagName('head')[0].appendChild(link);
+</script>
+
+<style>
+.reveal pre {
+  font-size: 24px;
+  display: block;
+  position: relative;
+  width: 90%;
+  margin: 15px auto;
+  text-align: left;
+  font-family: monospace;
+  line-height: 1.2em;
+  word-wrap: break-word;
+  box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.3);
+}
+
+.reveal pre code {
+  font-family: "Courier New", monospace;
+  word-wrap: normal;
+  text-align: left;
+  padding: 1em;
+  font-weight: bold;
+}
+
+.reveal pre code .highlight {
+  background-color: var(--green-light);
+}
+
+/*********************************************
+ * CODE SAMPLE AND LIVE PREVIEW
+ *********************************************/
+.reveal .slides .side-by-side {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+.reveal .slides .side-by-side > .target-content {
+  padding-left: 1em;
+  padding-right: 1em;
+}
+
+/*********************************************
+ * SORT OF FULL-SCREEN PICTURE, but not cropped
+ *********************************************/
+.reveal .slides > section.fit-picture {
+  padding: 0;
+  margin: 0;
+}
+
+.reveal .fit-picture > img {
+  height: 700px;
+  border: 0;
+  margin: 0;
+}
+</style>
+</head>
+
+<body>
+<div class="reveal">
+<div class="slides">
+
+<section id="title" class="title-slide"
+  data-background="#5ab041">
+  <!-- 我希望人们了解 Web Animation 的10件事 -->
+<h1>
+  <svg width="900px"
+    viewBox="0 0 670 350" font-size="100px"
+    stroke="#222" stroke-width="4">
+    <text y=".9em" x="50%" text-anchor="middle"
+      ><tspan fill="var(--pink)">10 things</tspan><tspan
+      dy="1.4em" x="50%" fill="white" font-size="70px">I wish people<tspan
+      dy="1em" x="50%">knew about<tspan dy="1em"
+      x="50%">Web animation</tspan></tspan></text></svg>
+</h1>
+</section>
+
+<section id="about-me" data-transition="fade-out">
+<h2 class="svg smaller">
+  <!-- <svg><text y="1em" x="3px">A few things about me&hellip;</text></svg> -->
+  <svg><text y="1em" x="3px">一些关于我的事……</text></svg>
+</h2>
+<ul class="grid">
+  <li class="fragment fade-in"><img src="img/koala.svg"></li>
+  <li class="fragment fade-in"><img src="img/tokyo-tower.svg"></li>
+  <li class="fragment fade-in"><figure><img
+      src="img/firefox-logo.svg"><figcaption>2004~</figcaption></figure></li>
+  <li class="fragment fade-in"><figure><img
+      src="img/w3c-member.svg"><figcaption class=smaller>SVG WG 2011~<br>
+        CSS WG 2015~</figcaption></figure></li>
+  <li class="fragment fade-in"><img src="img/surfing.svg"></li>
+  <li class="fragment fade-in"><img class=shrink src="img/noodles.svg"></li>
+</ul>
+<style>
+#about-me ul.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(160px, auto);
+  width: 100%;
+  margin: 0;
+}
+#about-me ul.grid li {
+  list-style: none;
+
+  width: 240px;
+  height: 240px;
+  border-radius: 120px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+#about-me ul.grid li.fragment.current-fragment {
+  background: var(--green-light);
+}
+#about-me ul.grid li > img {
+  width: 200px;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+}
+#about-me ul.grid li > img.shrink {
+  width: 150px;
+}
+#about-me ul.grid li > figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: center;
+}
+#about-me ul.grid li > figure > img {
+  /* If I use flex: 1, Chrome does something awful */
+  flex: 0 1 auto;
+  border: none;
+  margin: 0;
+  width: 140px;
+  box-shadow: none;
+  background: transparent;
+}
+#about-me ul.grid li > figure > figcaption {
+  font-size: 25px;
+  margin-top: 15px;
+}
+#about-me ul.grid li > figure > figcaption.smaller {
+  font-size: 20px;
+}
+</style>
+</section>
+
+<section id="about-meat-pie" data-background-image="img/pie.jpg"
+  data-transition="fade">
+</section>
+
+<section id="three-days-of-pie" class="fit-picture" data-transition="fade-in">
+  <img src="img/3-days-of-pie.jpg">
+</section>
+
+<section id="app-intro">
+<h2 class="svg smallerer">
+  <svg><text y="1em" x="3px">Introducing <tspan style="text-decoration:
+  line-through">Meat</tspan> &ldquo;Meet Pie&rdquo;</text></svg>
+</h2>
+<div class="side-by-side">
+  <svg viewBox="0 0 862 1754">
+    <defs>
+      <svg id="pie" viewBox="2 15 60 33">
+        <path fill="#bdc1c6" d="M8.9 37.9L12.1 48H52l2.9-10.1-3.6-2.2-2.7 3.2-4.7-.2-4.5-3-2.7 3.2-4.2 1.2-4.9-1.1-3.1-2.7-2.4 1.8-2.7 1-5-1.1-1.8-2.3z"/>
+        <path d="M8.1 37.9s-3.4-.6-3.6-1-1.9-4.6-1.9-4.6l3.3-4 3-.7 3.9-5.4 8.9-4.9 8.6-1 9.9.6 7.1 3.1 4.8 4.1 2.4 3.1.4 1.2 4.6.8 1.8 4.2-2.4 3.9-4 .6-3.6-2.2-1.5 1.4-3.8 1.6h-3.6l-3-3.1-2.8 3.3-5.3 1-3.7-.9-2.6-3.3-2.3 1.9-4.7 1.5-2-.7-3.4-2.7-2.5 2-2 .2z" fill="#b56f1c"/>
+        <path d="M12 48.6c-.3 0-.5-.2-.6-.4l-2.9-9.6H8a5.6 5.6 0 1 1 0-11.2h.5l.1-.2C11.8 20 21 15.4 32 15.4S52.2 20 55.4 27.2l.1.2h.5a5.6 5.6 0 1 1 0 11.2h-.5l-2.9 9.6c-.1.3-.3.4-.6.4H12zm.1-11.8c-.6.6-1.3 1.1-2.1 1.4l-.3.1 2.8 9.1h39.1l2.7-9.1-.3-.1c-.8-.3-1.5-.8-2.1-1.4l-.3-.3-.3.4c-.3.3-.6.7-.9.9a7.5 7.5 0 0 1-10.5-.7l-.3-.4-.3.4c-.5.6-1 1.1-1.6 1.6a9.99 9.99 0 0 1-5.7 1.9c-2.9 0-5.5-1.3-7.3-3.5l-.3-.4-.3.3-.9.9a7.06 7.06 0 0 1-4.7 1.6c-2.3 0-4.4-1-5.8-2.8l-.3-.4-.3.5zm12.4-2c.2 0 .4.2.5.4a7.5 7.5 0 0 0 6.7 4.3h.5c2.9 0 5.5-1.7 6.7-4.3.1-.2.3-.4.5-.4s.5.1.6.3a5.89 5.89 0 0 0 5.4 3.3c2.3 0 4.4-1.3 5.5-3.4.1-.2.3-.4.5-.4s.4.1.5.3a4.7 4.7 0 0 0 3.1 2.4c.3.1.5.1.8.1 2.4 0 4.4-2 4.4-4.4 0-2.4-2-4.4-4.4-4.4-.3 0-.5 0-.8.1h-.1c-.2 0-.5-.2-.6-.4C51.8 21.2 43 16.6 32 16.6S12.2 21.2 9.5 28.3c-.1.2-.3.4-.6.4h-.1c-.3-.1-.5-.1-.8-.1-2.4 0-4.4 2-4.4 4.4 0 2.4 2 4.4 4.4 4.4.3 0 .5 0 .8-.1 1.3-.3 2.5-1.1 3.1-2.4.1-.2.3-.3.5-.3s.5.2.5.4c1 2.1 3.1 3.4 5.3 3.4h.3c2.3 0 4.3-1.3 5.3-3.3.3-.2.5-.3.7-.3z"/>
+        <path d="M32 26.6c-.3 0-.6-.3-.6-.6v-4c0-.3.3-.6.6-.6s.6.3.6.6v4c0 .3-.3.6-.6.6zM24 26.6c-.1 0-.2 0-.3-.1-.3-.2-.4-.5-.3-.8l2-4c.1-.2.3-.3.5-.3.1 0 .2 0 .3.1.3.1.4.5.3.8l-2 4c-.1.2-.3.3-.5.3zM40 26.6c-.2 0-.4-.1-.5-.3l-2-4c-.1-.3 0-.6.3-.7.1-.1.2-.1.3-.1.2 0 .4.1.5.3l2 4c.1.3 0 .7-.3.8H40zM15 44.6c-.3 0-.6-.3-.6-.6s.3-.6.6-.6h2c.3 0 .6.3.6.6s-.3.6-.6.6h-2zM21 44.6c-.3 0-.6-.3-.6-.6s.3-.6.6-.6h8c.3 0 .6.3.6.6s-.3.6-.6.6h-8z"/>
+      </svg>
+    </defs>
+    <image href="img/screenshot-feed.png" width="862" height="1754"/>
+    <rect x="55.5" y="209" width="750" height="1335"
+      fill="hsl(106.5, 46.1%, 47.3%)" />
+    <text x="100" y="700" dx="0,-30,-20,-30">Meet</text>
+    <text x="380" y="860" dx="0,-40,-30" class="white">Pie</text>
+    <g class="jiggle">
+      <use x="210" y="190" href="#pie" width="420"/>
+    </g>
+  </svg>
+  <ul class="pie-list">
+    <li>The first social network for meat pie lovers!</li>
+    <li>PWA (Pie Web App)</li>
+  </ul>
+</div>
+</section>
+
+<style>
+#app-intro .side-by-side {
+  height: 450px;
+}
+#app-intro .side-by-side > svg {
+  flex: 1 0 200px;
+  padding: 2.5em;
+  border: 0;
+  filter: drop-shadow(1px 6px 3px #888);
+  transform: rotate(-15deg);
+}
+#app-intro .side-by-side > svg text {
+  fill: var(--pink);
+  stroke: var(--black);
+  stroke-width: 10px;
+  font-size: 250px;
+  font-family: Sniglet, sans-serif;
+  font-weight: 800;
+}
+#app-intro .side-by-side > svg text.white {
+  fill: white;
+}
+#app-intro .side-by-side .jiggle {
+  animation: jiggle 2s infinite;
+  transform-origin: 50% 50%;
+  transform-box: fill-box;
+}
+@keyframes jiggle {
+  15% {
+    transform: translate(0,-70px);
+  }
+  20% {
+    transform: translate(0,-70px);
+  }
+  22% {
+    transform: translate(0,-70px) rotate(-10deg);
+  }
+  26% {
+    transform: translate(0,-70px) rotate(10deg);
+  }
+  30% {
+    transform: translate(0,-70px) rotate(-10deg);
+  }
+  32% {
+    transform: translate(0,-70px) rotate(0deg);
+  }
+  37% {
+    transform: translate(0,-70px) rotate(0deg);
+  }
+  52% {
+    transform: translate(0,0px) rotate(0deg);
+  }
+}
+#app-intro .side-by-side > ul li {
+  margin-bottom: .5em;
+}
+</style>
+
+<section id="app-lineup" data-background="#5ab041">
+<div class="lineup">
+  <img src="img/screenshot-feed.png">
+  <img src="img/screenshot-poll.png">
+  <img src="img/screenshot-map-with-popup.png">
+</div>
+</section>
+
+<style>
+#app-lineup .lineup {
+  display: grid;
+  grid-template-columns: repeat(3, 300px);
+  justify-content: space-around;
+}
+#app-lineup .lineup > img {
+  max-height: 600px;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+</style>
+
+<section id="agenda">
+<h2 class="svg">
+  <svg><text y="1em" x="3px">Agenda</svg>
+</h2>
+<ul>
+  <li>CSS Transitions
+  <li>CSS Animations
+  <li>Web Animations API
+  <li>性能（和开发者工具）
+  <li>信息无障碍
+</ul>
+</section>
+
+<section id="css-transitions-title" class="section-title"
+  data-background="#5ab041">
+<h1 class="svg">
+  <svg><text y="1em" x="50%">CSS Transitions</text></svg>
+</h1>
+</section>
+
+<section id="css-transitions-intro" data-transition="fade-out">
+<div class="side-by-side">
+  <pre><code class="css live-code" data-trim contenteditable=true
+  spellcheck=false>
+.pie {
+
+}
+.pie:hover {
+  transform: scale(2);
+}
+  </code></pre>
+  <div class="target-content">
+    <svg class="pie" width="200px">
+      <use href="#pie"/>
+    </svg>
+  </div>
+</div>
+</section>
+
+<section id="css-transitions-button" data-transition="fade-in">
+<div class="side-by-side">
+  <pre><code class="css live-code" data-trim contenteditable=true
+  spellcheck=false>
+.button {
+  background: hsl(40, 15%, 80%);
+  transition: background-color .15s,
+              transform .15s;
+}
+.button:hover {
+  background: hsl(43, 13%, 90%);
+  transform: scale(1.05);
+}
+  </code></pre>
+  <div class="target-content">
+    <button class="button">Button</button>
+  </div>
+</div>
+</section>
+
+<style>
+#css-transitions-button .side-by-side > .target-content .button {
+  border: 1px solid hsl(41, 9%, 35%);
+  border-radius: 10px;
+  box-shadow: 1px 2px 3px 0 #ccc;
+  padding: 1em;
+  font-size: 30px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+</style>
+
+<section id="css-transitions-overlay-intro" data-background="#5ab041"
+  class="app-frame">
+  <iframe width="400" height="600" src="meetpie/index.html#finder"></iframe>
+</section>
+
+<style>
+.app-frame iframe {
+  border: 4px solid #222;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
+}
+</style>
+
+<section id="css-transitions-overlay-code" class="panel-example">
+<div class="side-by-side">
+  <pre><code class="hljs js" data-trim data-noescape>
+button.onclick = () => {
+  // Make the panel
+  const panel = document.createElement('div');
+  panel.classList.add('panel');
+  panel.textContent = 'Hello!';
+  parent.appendChild(panel);
+
+<span class="highlight">  // Stretch it in
+  panel.style.transform = 'scale(0)';
+  panel.style.transition = 'transform .5s';
+  panel.style.transform = 'scale(1)';</span>
+};
+  </code></pre>
+  <div>
+    <button class="button">Button</button>
+  </div>
+</div>
+<script>
+(() => {
+  const button = document.querySelector(
+    '#css-transitions-overlay-code .button'
+  );
+  const parent = document.querySelector('#css-transitions-overlay-code');
+
+  button.onclick = () => {
+    // If there is an existing panel, remove it
+    const existingPanel = document.querySelector(
+      '#css-transitions-overlay-code .panel'
+    );
+    if (existingPanel) {
+      existingPanel.remove();
+      return;
+    }
+
+    // Create the panel
+    const panel = document.createElement('div');
+    panel.classList.add('panel');
+    panel.textContent = 'Hello!';
+    parent.appendChild(panel);
+
+    // Stretch in
+    panel.style.transform = 'scale(0)';
+    panel.style.transition = 'transform .5s';
+    panel.style.transform = 'scale(1)';
+  };
+})();
+</script>
+<style>
+.panel-example .panel {
+  position: absolute;
+  width: 10em;
+  top: 0;
+  left: calc(50% - 5em);
+  z-index: 10;
+  background: white;
+  border: 1px solid hsl(41, 8%, 61%);
+  border-radius: 20px;
+  box-sizing: border-box;
+  box-shadow: 3px 3px 5px hsl(41, 8%, 61%);
+  padding: 1em;
+}
+.panel-example .button {
+  font-size: 30px;
+  margin: 2em;
+}
+</style>
+</section>
+
+<section id="css-transitions-frame-timing" data-transition="fade">
+<svg width="800" viewBox="0 0 960 700" class="frame-timing">
+  <defs>
+    <marker id="arrow-neutral-4" viewBox="0 -5 10 10" orient="auto"
+      markerWidth="5" markerHeight="5">
+      <path d="M0-5l10 5l-10 5z" style="fill: var(--neutral-4)"/>
+    </marker>
+    <marker id="arrow-neutral-4-reverse" viewBox="-10 -5 10 10" orient="auto"
+      markerWidth="5" markerHeight="5">
+      <path d="M0-5l-10 5l10 5z" style="fill: var(--neutral-4)"/>
+    </marker>
+  </defs>
+  <g class="frame-outline">
+    <rect x="40" y="250" width="400" height="200" />
+    <rect x="520" y="250" width="400" height="200" />
+  </g>
+  <g class="frame-label fragment">
+    <text x="240" y="490">Frame 1</text>
+    <text x="720" y="490">Frame 2</text>
+  </g>
+  <g class="fragment">
+    <rect x="40" y="250" width="50" height="200" class="style"/>
+    <text x="63" y="265" class="vertical-label">Style</text>
+    <rect x="520" y="250" width="50" height="200" class="style"/>
+    <text x="543" y="265" class="vertical-label">Style</text>
+    <g class="hide">
+      <line x1="80" x2="65" y1="190" y2="250" class="connecting-line" />
+      <rect x="65" y="70" width="300" height="120" rx="10" ry="10"
+        class="callout" />
+      <text x="80" y="110" class="code">display: block;
+        <tspan x="80" dy="1.3em">opacity: 0;</tspan>
+        <tspan x="80" dy="1.3em">transform: scale(1.5);</tspan></text>
+    </g>
+    <g class="hide">
+      <line x1="560" x2="545" y1="190" y2="250" class="connecting-line" />
+      <rect x="545" y="70" width="300" height="120" rx="10" ry="10"
+        class="callout" />
+      <text x="560" y="110" class="code">display: block;
+        <tspan x="560" dy="1.3em">opacity: 1;</tspan>
+        <tspan x="560" dy="1.3em">transform: scale(1.5);</tspan></text>
+    </g>
+  </g>
+  <g class="fragment">
+    <rect x="91" y="250" width="50" height="200" class="layout"/>
+    <text x="114" y="265" class="vertical-label">Layout</text>
+    <rect x="571" y="250" width="50" height="200" class="layout"/>
+    <text x="594" y="265" class="vertical-label">Layout</text>
+    <g class="hide">
+      <line x1="130" x2="116" y1="210" y2="250" class="connecting-line" />
+      <g transform="translate(115 50)">
+        <rect width="180" height="160" rx="10" ry="10" class="callout" />
+        <rect x="20" y="30" width="100" height="100" class="element-outline" />
+        <line x1="135" x2="135" y1="40" y2="120" class="element-dimension"/>
+        <text x="155" y="80" class="dimension-label"
+          style="writing-mode: vertical-rl">120px</text>
+      </g>
+    </g>
+    <g class="hide">
+      <line x1="610" x2="596" y1="210" y2="250" class="connecting-line" />
+      <g transform="translate(595 50)">
+        <rect width="180" height="160" rx="10" ry="10" class="callout" />
+        <rect x="20" y="30" width="100" height="100" class="element-outline" />
+        <line x1="135" x2="135" y1="40" y2="120" class="element-dimension"/>
+        <text x="155" y="80" class="dimension-label"
+          style="writing-mode: vertical-rl">120px</text>
+      </g>
+    </g>
+  </g>
+  <g class="fragment">
+    <rect x="142" y="250" width="50" height="200" class="painting"/>
+    <text x="165" y="265" class="vertical-label">Painting</text>
+    <line x1="180" x2="167" y1="200" y2="250" class="connecting-line" />
+    <rect x="165" y="50" width="150" height="150" rx="10" ry="10"
+      class="callout"/>
+    <use href="#pie" x="190" y="80" width="100" height="100" opacity="0.2"/>
+
+    <rect x="622" y="250" width="50" height="200" class="painting"/>
+    <text x="645" y="265" class="vertical-label">Painting</text>
+    <line x1="660" x2="647" y1="200" y2="250" class="connecting-line" />
+    <rect x="645" y="50" width="150" height="150" rx="10" ry="10"
+      class="callout"/>
+    <use href="#pie" x="670" y="80" width="100" height="100"/>
+  </g>
+</svg>
+<style>
+.frame-timing .frame-outline {
+  fill: var(--neutral-8);
+  stroke: var(--neutral-6);
+  stroke-width: 2;
+}
+.frame-timing .frame-label {
+  fill: var(--neutral-5);
+  font-size: 30px;
+  text-anchor: middle;
+}
+.frame-timing .callout {
+  fill: white;
+  stroke: var(--neutral-4);
+  stroke-width: 2px;
+  stroke-dasharray: 3px 7px;
+  stroke-linecap: round;
+}
+.frame-timing .connecting-line {
+  stroke: var(--neutral-4);
+  stroke-width: 2px;
+  stroke-dasharray: 3px 7px;
+  stroke-linecap: round;
+  fill: none;
+}
+.frame-timing .style,
+.frame-timing .layout {
+  fill: var(--style-purple);
+  stroke: var(--style-purple-dark);
+  stroke-width: 2px;
+}
+.frame-timing .painting {
+  fill: var(--green);
+  stroke: var(--green-dark);
+  stroke-width: 2px;
+}
+.frame-timing .vertical-label {
+  writing-mode: vertical-rl;
+  fill: var(--neutral-1);
+  font-size: 30px;
+}
+.frame-timing .code {
+  fill: var(--neutral-1);
+  font-size: 20px;
+  font-family: "Courier New", monospace;
+}
+.frame-timing .element-outline {
+  stroke: var(--neutral-4);
+  fill: none;
+}
+.frame-timing .element-dimension {
+  stroke: var(--neutral-4);
+  stroke-width: 2px;
+  marker-start: url(#arrow-neutral-4-reverse);
+  marker-end: url(#arrow-neutral-4);
+}
+.frame-timing .dimension-label {
+  fill: var(--neutral-4);
+  text-anchor: middle;
+  font-size: 20px;
+}
+
+#css-transitions-frame-timing .fragment .hide {
+  transition: opacity .3s;
+}
+#css-transitions-frame-timing .fragment:not(.current-fragment) .hide {
+  opacity: 0;
+}
+</style>
+</section>
+
+<section id="css-transitions-creation" class="frame-explanation"
+  data-transition="fade">
+<svg width="800" viewBox="0 0 960 700" class="frame-timing">
+  <g class="frame-outline">
+    <rect x="40" y="250" width="400" height="200" />
+    <rect x="520" y="250" width="400" height="200" />
+  </g>
+  <g class="frame-label">
+    <text x="240" y="490">Frame 1</text>
+    <text x="720" y="490">Frame 2</text>
+  </g>
+  <g>
+    <rect x="40" y="250" width="50" height="200" class="style"/>
+    <text x="63" y="265" class="vertical-label">Style</text>
+    <rect x="520" y="250" width="50" height="200" class="style"/>
+    <text x="543" y="265" class="vertical-label">Style</text>
+    <g>
+      <line x1="80" x2="65" y1="190" y2="250" class="connecting-line" />
+      <rect x="65" y="70" width="300" height="120" rx="10" ry="10"
+        class="callout" />
+      <text x="80" y="110" class="code">display: block;
+        <tspan x="80" dy="1.3em" class=highlight>opacity: 0;</tspan>
+        <tspan x="80" dy="1.3em">transform: scale(1.5);</tspan></text>
+    </g>
+    <g>
+      <line x1="560" x2="545" y1="190" y2="250" class="connecting-line" />
+      <rect x="545" y="70" width="300" height="120" rx="10" ry="10"
+        class="callout" />
+      <text x="560" y="110" class="code">display: block;
+        <tspan x="560" dy="1.3em" class=highlight>opacity: 1;</tspan>
+        <tspan x="560" dy="1.3em">transform: scale(1.5);</tspan></text>
+    </g>
+  </g>
+  <g>
+    <rect x="91" y="250" width="50" height="200" class="layout"/>
+    <text x="114" y="265" class="vertical-label">Layout</text>
+    <rect x="571" y="250" width="50" height="200" class="layout"/>
+    <text x="594" y="265" class="vertical-label">Layout</text>
+  </g>
+  <g>
+    <rect x="142" y="250" width="50" height="200" class="painting"/>
+    <text x="165" y="265" class="vertical-label">Painting</text>
+    <rect x="622" y="250" width="50" height="200" class="painting"/>
+    <text x="645" y="265" class="vertical-label">Painting</text>
+  </g>
+</svg>
+<div class="popup fragment">
+  <ul>
+    <li><span class="prop-name">opacity</span> changed
+      <span class="prop-value">0</span> &rarr;
+      <span class="prop-value">1</span>!
+    <li><span class="prop-name">transition</span> specifies
+      a transition time for <span class="prop-name">opacity</span>
+    <li><span class="action">&rArr; Make a new transition!</span>
+  </ul>
+</div>
+<style>
+.frame-timing .code .highlight {
+  fill: var(--style-purple-dark);
+  font-weight: bold;
+}
+.frame-explanation .popup {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+  top: -150px;
+  font-size: 25px;
+  background: white;
+  border: 1px solid var(--neutral-6);
+  border-radius: 20px;
+  box-sizing: border-box;
+  box-shadow: 3px 3px 5px var(--neutral-8);
+  padding: 1em;
+}
+.frame-explanation .popup .prop-name {
+  color: var(--green-dark);
+}
+.frame-explanation .popup .prop-value {
+  color: var(--pink);
+}
+.frame-explanation .action {
+  color: var(--style-purple-dark);
+  font-weight: 500;
+}
+</style>
+</section>
+
+<section id="css-transitions-overlay-problem" class="frame-explanation"
+  data-transition="fade">
+<svg width="800" viewBox="0 0 960 700" class="frame-timing">
+  <g class="frame-outline">
+    <rect x="40" y="250" width="400" height="200" />
+    <rect x="520" y="250" width="400" height="200" />
+  </g>
+  <g class="frame-label">
+    <text x="240" y="490">Frame 1</text>
+    <text x="720" y="490">Frame 2</text>
+  </g>
+  <g>
+    <rect x="40" y="250" width="50" height="200" class="style"/>
+    <text x="63" y="265" class="vertical-label">Style</text>
+    <rect x="91" y="250" width="50" height="200" class="layout"/>
+    <text x="114" y="265" class="vertical-label">Layout</text>
+    <rect x="142" y="250" width="50" height="200" class="painting"/>
+    <text x="165" y="265" class="vertical-label">Painting</text>
+  </g>
+  <g class="fragment" data-fragment-index="1">
+    <line x1="233" x2="233" y1="210" y2="250" class="connecting-line" />
+  </g>
+  <g class="fragment" data-fragment-index="0">
+    <rect x="193" y="250" width="80" height="200" class="script"/>
+    <text x="245" y="265" class="vertical-label">Script
+      <tspan dx="-1em" y="265">(onclick)</tspan></text>
+  </g>
+  <g class="fragment" data-fragment-index="3">
+    <line x1="545" x2="545" y1="450" y2="540" class="connecting-line" />
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <rect x="520" y="250" width="50" height="200" class="style"/>
+    <text x="543" y="265" class="vertical-label">Style</text>
+  </g>
+</svg>
+<div class="code-block fragment" data-fragment-index="1">
+  <pre><code class="hljs js" data-trim>
+  button.onclick = () => {
+    const panel = document.createElement('div');
+    ...
+    panel.style.transform = 'scale(0)';
+    panel.style.transition = 'transform .5s';
+    panel.style.transform = 'scale(1)';
+  };
+  </code></pre>
+</div>
+<div class="popup fragment" data-fragment-index="3">
+  <ul>
+    <li><span class="prop-name">transform</span> is <span
+              class="prop-value">scale(1)</span>.
+    <li>Previous <span class="prop-name">transform</span> is... empty.
+  </ul>
+</div>
+<style>
+.frame-timing .script {
+  fill: var(--script-yellow);
+  stroke: var(--script-yellow-dark);
+  stroke-width: 2px;
+}
+#css-transitions-overlay-problem > .code-block {
+  display: flex;
+  position: absolute;
+  top: 20px;
+  width: 100%;
+}
+#css-transitions-overlay-problem > .code-block > pre {
+  font-size: 15px;
+  flex: 0 1 50%;
+}
+</style>
+</section>
+
+<section id="css-transitions-attempt-one" class="panel-example"
+  data-transition="fade-out">
+<div class="side-by-side">
+  <pre><code class="hljs js" data-trim data-noescape>
+button.onclick = () => {
+  // Make the panel
+  const panel = document.createElement('div');
+  ...
+
+  // Stretch it in
+  panel.style.transform = 'scale(0)';
+  panel.style.transition = 'transform .5s';
+<span class="highlight">  requestAnimationFrame(() => {
+    panel.style.transform = 'scale(1)';
+  });</span>
+};
+  </code></pre>
+  <div>
+    <button class="button">Button</button>
+  </div>
+</div>
+<script>
+(() => {
+  const button = document.querySelector(
+    '#css-transitions-attempt-one .button'
+  );
+  const parent = document.querySelector('#css-transitions-attempt-one');
+
+  button.onclick = () => {
+    // If there is an existing panel, remove it
+    const existingPanel = document.querySelector(
+      '#css-transitions-attempt-one .panel'
+    );
+    if (existingPanel) {
+      existingPanel.remove();
+      return;
+    }
+
+    // Create the panel
+    const panel = document.createElement('div');
+    panel.classList.add('panel');
+    panel.textContent = 'Hello!';
+    parent.appendChild(panel);
+
+    // Stretch in
+    panel.style.transform = 'scale(0)';
+    // There is something very buggy with Chrome here. If you move the following
+    // line _inside_ the rAF you actually DO get a transition (but you
+    // shouldn't).
+    panel.style.transition = 'transform .5s';
+    requestAnimationFrame(() => {
+      panel.style.transform = 'scale(1)';
+    });
+  };
+})();
+</script>
+</section>
+
+<section id="css-transitions-attempt-one-explanation"
+  class="frame-explanation" data-transition="fade">
+<svg width="800" viewBox="0 0 960 700" class="frame-timing">
+  <g class="frame-outline">
+    <rect x="40" y="250" width="400" height="200" />
+    <rect x="520" y="250" width="400" height="200" />
+  </g>
+  <g class="frame-label">
+    <text x="240" y="490">Frame 1</text>
+    <text x="720" y="490">Frame 2</text>
+  </g>
+  <g>
+    <rect x="40" y="250" width="50" height="200" class="style"/>
+    <text x="63" y="265" class="vertical-label">Style</text>
+    <rect x="91" y="250" width="50" height="200" class="layout"/>
+    <text x="114" y="265" class="vertical-label">Layout</text>
+    <rect x="142" y="250" width="50" height="200" class="painting"/>
+    <text x="165" y="265" class="vertical-label">Painting</text>
+  </g>
+  <line x1="233" x2="233" y1="210" y2="250" class="connecting-line" />
+  <rect x="193" y="250" width="80" height="200" class="script"/>
+  <text x="245" y="265" class="vertical-label">Script
+    <tspan dx="-1em" y="265">(onclick)</tspan></text>
+  <g class="fragment" data-fragment-index="1">
+    <rect x="520" y="250" width="60" height="200" class="script"/>
+    <text x="560" y="265" class="vertical-label" style="font-size: 22px"
+      >request-<tspan dx="-1em" y="265">AnimationFrame</tspan></text>
+  </g>
+  <g class="fragment" data-fragment-index="2">
+    <line x1="605" x2="605" y1="450" y2="540" class="connecting-line" />
+    <rect x="582" y="250" width="50" height="200" class="style"/>
+    <text x="604" y="265" class="vertical-label">Style</text>
+  </g>
+</svg>
+<div class="code-block">
+  <pre><code class="hljs js" data-trim>
+  button.onclick = () => {
+    const panel = document.createElement('div');
+    ...
+    panel.style.transform = 'scale(0)';
+    requestAnimationFrame(() => {
+      panel.style.transform = 'scale(1)';
+    });
+  };
+  </code></pre>
+</div>
+<div class="popup fragment" data-fragment-index="2">
+  <ul>
+    <li><span class="prop-name">transform</span> is <span
+              class="prop-value">scale(1)</span>.
+    <li>Previous <span class="prop-name">transform</span> is... still empty.
+  </ul>
+</div>
+<style>
+#css-transitions-attempt-one-explanation > .code-block {
+  display: flex;
+  position: absolute;
+  top: 20px;
+  width: 100%;
+}
+#css-transitions-attempt-one-explanation > .code-block > pre {
+  font-size: 15px;
+  flex: 0 1 50%;
+}
+</style>
+</section>
+
+<section id="css-transitions-panel-attempt-two" class="panel-example"
+  data-transition="fade">
+<div class="side-by-side">
+  <pre><code class="hljs js" data-trim data-noescape>
+button.onclick = () => {
+  // Make the panel
+  const panel = document.createElement('div');
+  ...
+
+  // Stretch it in
+  panel.style.transform = 'scale(0)';
+  panel.style.transition = 'transform .5s';
+<span class="highlight">  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      panel.style.transform = 'scale(1)';
+    });
+  });</span>
+};
+  </code></pre>
+  <div>
+    <button class="button">Button</button>
+  </div>
+</div>
+<script>
+(() => {
+  const button = document.querySelector(
+    '#css-transitions-panel-attempt-two .button'
+  );
+  const parent
+    = document.querySelector('#css-transitions-panel-attempt-two');
+
+  button.onclick = () => {
+    // If there is an existing panel, remove it
+    const existingPanel = document.querySelector(
+      '#css-transitions-panel-attempt-two .panel'
+    );
+    if (existingPanel) {
+      existingPanel.remove();
+      return;
+    }
+
+    // Create the panel
+    const panel = document.createElement('div');
+    panel.classList.add('panel');
+    panel.textContent = 'Hello!';
+    parent.appendChild(panel);
+
+    // Stretch in
+    panel.style.transform = 'scale(0)';
+    panel.style.transition = 'transform .5s';
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        panel.style.transform = 'scale(1)';
+      });
+    });
+  };
+})();
+</script>
+</section>
+
+<section id="css-transitions-attempt-two-explanation"
+  class="frame-explanation" data-transition="fade">
+<svg width="800" viewBox="39 100 1362 700" class="frame-timing">
+  <g class="frame-outline">
+    <rect x="40" y="250" width="400" height="200" />
+    <rect x="520" y="250" width="400" height="200" />
+    <rect x="1000" y="250" width="400" height="200" />
+  </g>
+  <g class="frame-label">
+    <text x="240" y="490">Frame 1</text>
+    <text x="720" y="490">Frame 2</text>
+    <text x="1200" y="490">Frame 3</text>
+  </g>
+  <g>
+    <rect x="40" y="250" width="50" height="200" class="style"/>
+    <text x="63" y="265" class="vertical-label">Style</text>
+    <rect x="91" y="250" width="50" height="200" class="layout"/>
+    <text x="114" y="265" class="vertical-label">Layout</text>
+    <rect x="142" y="250" width="50" height="200" class="painting"/>
+    <text x="165" y="265" class="vertical-label">Painting</text>
+  </g>
+  <rect x="193" y="250" width="80" height="200" class="script"/>
+  <text x="245" y="265" class="vertical-label">Script
+    <tspan dx="-1em" y="265">(onclick)</tspan></text>
+  <g class="fragment">
+    <rect x="520" y="250" width="60" height="200" class="script"/>
+    <text x="560" y="265" class="vertical-label" style="font-size: 22px"
+      >request-<tspan dx="-1em" y="265">AnimationFrame</tspan></text>
+  </g>
+  <g class="fragment">
+    <line x1="605" x2="605" y1="450" y2="510" class="connecting-line" />
+    <rect x="582" y="250" width="50" height="200" class="style"/>
+    <text x="604" y="265" class="vertical-label">Style</text>
+    <text x="605" y="530" class="inline-note">Resolve<tspan
+      x="605" dy="1.2em">transform as &lsquo;scale(0)&rsquo;</tspan></text>
+  </g>
+  <g class="fragment">
+    <rect x="1000" y="250" width="60" height="200" class="script"/>
+    <text x="1040" y="265" class="vertical-label" style="font-size: 22px"
+      >request-<tspan dx="-1em" y="265">AnimationFrame</tspan></text>
+  </g>
+  <g class="fragment">
+    <line x1="1084" x2="1084" y1="450" y2="510" class="connecting-line" />
+    <rect x="1062" y="250" width="50" height="200" class="style"/>
+    <text x="1085" y="265" class="vertical-label">Style</text>
+    <text x="1084" y="530" class="inline-note">Resolve<tspan
+      x="1084" dy="1.2em">transform as &lsquo;scale(1)&rsquo;</tspan></text>
+  </g>
+</svg>
+<div class="code-block">
+  <pre><code class="hljs js" data-trim>
+  button.onclick = () => {
+    ...
+    panel.style.transform = 'scale(0)';
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        panel.style.transform = 'scale(1)';
+      });
+    });
+  };
+  </code></pre>
+</div>
+<div class="popup fragment">
+  <ul>
+    <li><span class="prop-name">transform</span> is <span
+              class="prop-value">scale(1)</span>.
+    <li>Previous <span class="prop-name">transform</span> is
+        <span class="prop-value">scale(0)</span>.
+    <li><span class="action">&rArr; Make transition!</span>
+  </ul>
+</div>
+<style>
+.frame-timing .inline-note {
+  text-anchor: middle;
+  fill: var(--neutral-4);
+  font-size: 25px;
+}
+#css-transitions-attempt-two-explanation > svg {
+  margin-top: 180px;
+}
+#css-transitions-attempt-two-explanation > .code-block {
+  display: flex;
+  position: absolute;
+  top: 10px;
+  width: 100%;
+}
+#css-transitions-attempt-two-explanation > .code-block > pre {
+  font-size: 15px;
+  flex: 0 1 50%;
+}
+#css-transitions-attempt-two-explanation > .popup {
+  top: -100px;
+}
+</style>
+</section>
+
+<section id="css-transitions-panel-attempt-three" class="panel-example"
+  data-transition="fade-out">
+<div class="side-by-side">
+  <pre><code class="hljs js" data-trim data-noescape>
+button.onclick = () => {
+  // Make the panel
+  const panel = document.createElement('div');
+  ...
+
+  // Stretch it in
+  panel.style.transform = 'scale(0)';
+<span class="highlight">  getComputedStyle(panel).transform;</span>
+  panel.style.transition = 'transform .5s';
+  panel.style.transform = 'scale(1)';</span>
+};
+  </code></pre>
+  <div>
+    <button class="button">Button</button>
+  </div>
+</div>
+<script>
+(() => {
+  const button = document.querySelector(
+    '#css-transitions-panel-attempt-three .button'
+  );
+  const parent
+    = document.querySelector('#css-transitions-panel-attempt-three');
+
+  button.onclick = () => {
+    // If there is an existing panel, remove it
+    const existingPanel = document.querySelector(
+      '#css-transitions-panel-attempt-three .panel'
+    );
+    if (existingPanel) {
+      existingPanel.remove();
+      return;
+    }
+
+    // Create the panel
+    const panel = document.createElement('div');
+    panel.classList.add('panel');
+    panel.textContent = 'Hello!';
+    parent.appendChild(panel);
+
+    // Stretch in
+    panel.style.transform = 'scale(0)';
+    getComputedStyle(panel).transform;
+    panel.style.transition = 'transform .5s';
+    panel.style.transform = 'scale(1)';
+  };
+})();
+</script>
+</section>
+
+<section id="css-transitions-attempt-three-explanation"
+  class="frame-explanation" data-transition="fade">
+<svg width="800" viewBox="0 0 960 700" class="frame-timing">
+  <g class="frame-outline">
+    <rect x="40" y="250" width="400" height="200" />
+    <rect x="520" y="250" width="400" height="200" />
+  </g>
+  <g class="frame-label">
+    <text x="200" y="490">Frame 1</text>
+    <text x="720" y="490">Frame 2</text>
+  </g>
+  <g>
+    <rect x="40" y="250" width="50" height="200" class="style"/>
+    <text x="63" y="265" class="vertical-label">Style</text>
+    <rect x="91" y="250" width="50" height="200" class="layout"/>
+    <text x="114" y="265" class="vertical-label">Layout</text>
+    <rect x="142" y="250" width="50" height="200" class="painting"/>
+    <text x="165" y="265" class="vertical-label">Painting</text>
+  </g>
+  <line x1="233" x2="233" y1="210" y2="250" class="connecting-line" />
+  <rect x="193" y="250" width="80" height="200" class="script"/>
+  <text x="245" y="265" class="vertical-label">Script
+    <tspan dx="-1em" y="265">(onclick)</tspan></text>
+  <g class="fragment">
+    <rect x="274" y="250" width="50" height="200" class="style"/>
+    <text x="297" y="265" class="vertical-label">Style</text>
+    <g transform="translate(133)">
+      <rect x="193" y="250" width="80" height="200" class="script"/>
+      <text x="245" y="265" class="vertical-label"
+        style="font-size: 25px">Script
+        <tspan dx="-1em" y="265">(onclick) contd.</tspan></text>
+    </g>
+  </g>
+  <g class="fragment">
+    <line x1="299" x2="299" y1="450" y2="510" class="connecting-line" />
+    <text x="299" y="530" class="inline-note smaller">Resolve<tspan
+      x="299" dy="1.2em">transform as &lsquo;scale(0)&rsquo;</tspan></text>
+  </g>
+  <g class="fragment">
+    <line x1="546" x2="546" y1="450" y2="510" class="connecting-line" />
+    <text x="546" y="530" class="inline-note smaller">Resolve<tspan
+      x="546" dy="1.2em">transform as &lsquo;scale(1)&rsquo;</tspan></text>
+    <rect x="520" y="250" width="50" height="200" class="style"/>
+    <text x="545" y="265" class="vertical-label">Style</text>
+  </g>
+</svg>
+<div class="code-block">
+  <pre><code class="hljs js" data-trim data-noescape>
+  button.onclick = () => {
+    const panel = document.createElement('div');
+    ...
+    panel.style.transform = 'scale(0)';
+<span class="highlight">    getComputedStyle(panel).transform;</span>
+    panel.style.transition = 'transform .5s';
+    panel.style.transform = 'scale(1)';
+  };
+  </code></pre>
+</div>
+<div class="popup fragment">
+  <ul>
+    <li><span class="prop-name">transform</span> is <span
+              class="prop-value">scale(1)</span>.
+    <li>Previous <span class="prop-name">transform</span> is <span
+                       class="prop-value">scale(0)</span>.
+    <li><span class="action">&rArr; Make transition</span>
+  </ul>
+</div>
+<style>
+#css-transitions-attempt-three-explanation > .code-block {
+  display: flex;
+  position: absolute;
+  top: 20px;
+  width: 100%;
+}
+#css-transitions-attempt-three-explanation > .code-block > pre {
+  font-size: 15px;
+  flex: 0 1 50%;
+}
+#css-transitions-attempt-three-explanation > .popup {
+  top: -100px;
+}
+.frame-timing .inline-note.smaller {
+  font-size: 22px;
+}
+</style>
+</section>
+
+<section id="css-transitions-style-change-summary" class="summary-slide">
+<h1>
+  <svg width="900px" viewBox="0 0 670 350">
+    <text y=".9em" x="50%" text-anchor="middle"
+      ><tspan class="number">要点 1</tspan><tspan
+      dy="1.5em" x="50%" class="summary">要创建一个 transition,</tspan><tspan
+      dy="1.1em" x="50%" class="summary">浏览器需要看到</tspan><tspan
+      dy="1.1em" x="50%" class="summary">样式的变化</tspan></text></svg>
+</h1>
+<style>
+.summary-slide h1 svg text {
+  stroke: var(--neutral-1);
+  text-anchor: middle;
+}
+.summary-slide svg .number {
+  stroke-width: 4px;
+  fill: var(--pink);
+  font-size: 80px;
+}
+.summary-slide svg .summary {
+  fill: var(--green);
+  font-size: 50px;
+  font-weight: normal;
+  stroke-width: .5px;
+  text-transform: none;
+}
+</style>
+</section>
+
+<section id="style-change-tips">
+<h2 class="svg">
+  <svg><text y="1em" x="3px">提示</svg>
+</h2>
+<ul>
+  <li>注意以下要点：
+    <ul>
+      <li><code>createElement</code>
+      <li>使用框架（如React等）来“渲染”
+      <li><code>display: none</code>
+    </ul>
+  <li><code>getComputedStyle(elem)</code> <span style="-webkit-text-emphasis: dot; -webkit-text-emphasis-position: under right; text-emphasis: dot; text-emphasis-position: under right;">不会</span>更新样式
+    <ul>
+      <li><code>getComputedStyle(elem).<em>&lt;property&gt;</em></code> 会
+    </ul>
+  <li>使用 <code>getComputedStyle</code> 的代价很高
+  <li>请考虑使用 CSS Animations 或 Web Animations
+</ul>
+<style>
+#style-change-tips ul {
+  font-size: 35px;
+}
+#style-change-tips ul code {
+  background: var(--green-light);
+  border-radius: .5em;
+  padding: 1px 15px;
+}
+#style-change-tips > ul > li {
+  margin-top: 1em;
+}
+</style>
+</section>
+
+<section id="css-transitions-hiding" class="panel-example"
+  data-transition="fade-out">
+<div class="side-by-side">
+  <pre><code class="hljs js" data-trim data-noescape>
+button.onclick = () => {
+  // If the panel already exists, remove it.
+<span class="highlight">  panel.remove();</span>
+};
+  </code></pre>
+  <div>
+    <button class="button">Button</button>
+  </div>
+</div>
+<script>
+(() => {
+  const button = document.querySelector('#css-transitions-hiding .button');
+  const parent = document.querySelector('#css-transitions-hiding');
+
+  button.onclick = () => {
+    // If there is an existing panel, remove it
+    const existingPanel = document.querySelector(
+      '#css-transitions-hiding .panel'
+    );
+    if (existingPanel) {
+      existingPanel.remove();
+      return;
+    }
+
+    // Create the panel
+    const panel = document.createElement('div');
+    panel.classList.add('panel');
+    panel.textContent = 'Hello!';
+    parent.appendChild(panel);
+
+    // Stretch in
+    panel.style.transform = 'scale(0)';
+    getComputedStyle(panel).transform;
+    panel.style.transition = 'transform .5s';
+    panel.style.transform = 'scale(1)';
+  };
+})();
+</script>
+</section>
+
+<section id="css-transitions-hiding-with-transition" class="panel-example"
+  data-transition="fade-in">
+<div class="side-by-side">
+  <pre><code class="hljs js" data-trim data-noescape>
+button.onclick = () => {
+  // If the panel already exists, remove it.
+<span class="highlight">  panel.style.transform = 'scale(0)';
+  panel.addEventListener('transitionend', () => {
+    panel.remove();
+  });</span>
+};
+  </code></pre>
+  <div>
+    <button class="button">Button</button>
+  </div>
+</div>
+<script>
+(() => {
+  const button = document.querySelector(
+    '#css-transitions-hiding-with-transition .button'
+  );
+  const parent = document.querySelector(
+    '#css-transitions-hiding-with-transition'
+  );
+
+  button.onclick = () => {
+    // If there is an existing panel, remove it
+    const existingPanel = document.querySelector(
+      '#css-transitions-hiding-with-transition .panel'
+    );
+    if (existingPanel) {
+      existingPanel.style.transform = 'scale(0)';
+      existingPanel.addEventListener('transitionend', () => {
+        existingPanel.remove();
+      });
+      return;
+    }
+
+    // Create the panel
+    const panel = document.createElement('div');
+    panel.classList.add('panel');
+    panel.textContent = 'Hello!';
+    parent.appendChild(panel);
+
+    // Stretch in
+    panel.style.transform = 'scale(0)';
+    getComputedStyle(panel).transform;
+    panel.style.transition = 'transform .5s';
+    panel.style.transform = 'scale(1)';
+  };
+})();
+</script>
+</section>
+
+<section id="transitions-can-be-canceled">
+<h2 class="svg">
+  <!-- <svg><text y="1em" x="3px">But what if&hellip;</svg> -->
+  <svg><text y="1em" x="3px">但是如果……</svg>
+</h2>
+<ul>
+  <li>元素变成了 <code>display:none</code>？
+  <li>元素被重新创建了？被重新“渲染”了？
+  <li><code>transition-property</code> 属性变了？
+  <li>元素被移除了？
+</ul>
+<p class="lookout fragment">
+transition会被<span style="-webkit-text-emphasis: dot; -webkit-text-emphasis-position: under right; text-emphasis: dot; text-emphasis-position: under right;">取消</span><br>
+<code>transitionend</code> 事件不会触发
+</p>
+<style>
+#transitions-can-be-canceled code {
+  background: var(--green-light);
+  border-radius: .5em;
+  padding: 1px 15px;
+}
+#transitions-can-be-canceled .lookout {
+  background: var(--green);
+  padding: 25px;
+  color: white;
+  border-radius: 50px;
+}
+#transitions-can-be-canceled .lookout code {
+  color: var(--pink);
+  font-weight: bold;
+}
+</style>
+</section>
+
+<section id="css-transitions-hiding-with-bug" class="panel-example"
+  data-transition="fade-in">
+<div class="side-by-side">
+  <pre><code class="hljs js" data-trim data-noescape>
+button.onclick = () => {
+  // If the panel already exists, remove it.
+<span class="highlight">  panel.style.transform = 'scale(0)';
+  panel.addEventListener(
+    'transitionend',
+    () => { panel.remove(); }
+  );</span>
+};
+  </code></pre>
+  <div>
+    <button class="button">Button</button>
+  </div>
+</div>
+<script>
+(() => {
+  const button = document.querySelector(
+    '#css-transitions-hiding-with-bug .button'
+  );
+  const parent = document.querySelector('#css-transitions-hiding-with-bug');
+
+  button.onclick = () => {
+    // If there is an existing panel, remove it
+    const existingPanel = document.querySelector(
+      '#css-transitions-hiding-with-bug .panel'
+    );
+    if (existingPanel) {
+      // This is a deliberate bug. However, it's not uncommon for frameworks
+      // and the like to reset things like this.
+      existingPanel.style.transitionProperty = 'none';
+      getComputedStyle(existingPanel).transitionProperty;
+
+      existingPanel.style.transition = 'transform 3s';
+      existingPanel.style.transform = 'scale(0)';
+      existingPanel.addEventListener('transitionend', () => {
+        existingPanel.remove();
+      });
+      return;
+    }
+
+    // Create the panel
+    const panel = document.createElement('div');
+    panel.classList.add('panel');
+    panel.textContent = 'Hello!';
+    parent.appendChild(panel);
+
+    // Stretch in
+    panel.style.transform = 'scale(0)';
+    getComputedStyle(panel).transform;
+    panel.style.transition = 'transform .5s';
+    panel.style.transform = 'scale(1)';
+  };
+})();
+</script>
+</section>
+
+<section id="transitioncancel-to-the-rescue">
+<h2 class="svg smaller multiline">
+  <svg><text y="1em" x="3px">处理取消的<tspan
+    dy="1em" x="3px">transitions</tspan></svg>
+</h2>
+<ul>
+  <li><code>setTimeout</code>
+  <li><code>transitioncancel</code> 事件
+    <ul class="logo-list">
+      <li><img class="little-logo" src="img/firefox-logo.svg"><span>53+</span>
+      <li><img class="little-logo" src="img/chrome-logo.svg"><span>74+ (四月)</span>
+      <li><img class="little-logo" src="img/safari-logo.svg"><span>技术预览版</span>
+      <li><img class="little-logo" src="img/edge-logo.svg"><span class=batsu>x</span>
+    </ul>
+  <li>还有 <code>transitionrun</code> 事件
+    <!-- <ul><li>Make sure there is a transition in the first place!</ul> -->
+    <ul><li>需确保一开始是有 transition 的</ul>
+</ul>
+<style>
+#transitioncancel-to-the-rescue .logo-list {
+  margin-top: .5em;
+  line-height: 1.5;
+  list-style: none;
+  display: flex;
+}
+#transitioncancel-to-the-rescue .logo-list li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 1em;
+}
+#transitioncancel-to-the-rescue .little-logo {
+  width: 1.4em;
+  height: 1.4em;
+  margin: 0;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  vertical-align: text-bottom;
+}
+#transitioncancel-to-the-rescue .batsu {
+  color: hsl(354, 85%, 44%);
+  font-weight: bold;
+}
+#transitioncancel-to-the-rescue code {
+  background: var(--green-light);
+  border-radius: .5em;
+  padding: 1px 15px;
+}
+#transitioncancel-to-the-rescue > ul {
+  font-size: 35px;
+}
+#transitioncancel-to-the-rescue > ul > li {
+  margin-bottom: .5em;
+}
+</style>
+</section>
+
+<section id="css-transitions-hiding-fixed" class="panel-example"
+  data-transition="fade-in">
+<div class="side-by-side">
+  <pre><code class="hljs js" data-trim data-noescape>
+button.onclick = () => {
+  // If the panel already exists, remove it.
+  const dropPanel = () => { panel.remove(); };
+
+  panel.style.transform = 'scale(0)';
+  panel.addEventListener(
+    'transitionend',
+    dropPanel
+  );
+<span class="highlight">  panel.addEventListener(
+    'transitioncancel',
+    dropPanel
+  );</span>
+};
+  </code></pre>
+  <div>
+    <button class="button">Button</button>
+  </div>
+</div>
+<script>
+(() => {
+  const button = document.querySelector(
+    '#css-transitions-hiding-fixed .button'
+  );
+  const parent = document.querySelector('#css-transitions-hiding-fixed');
+
+  button.onclick = () => {
+    // If there is an existing panel, remove it
+    const existingPanel = document.querySelector(
+      '#css-transitions-hiding-fixed .panel'
+    );
+    if (existingPanel) {
+      // This is a deliberate bug. However, it's not uncommon for frameworks
+      // and the like to reset things like this.
+      existingPanel.style.transitionProperty = 'none';
+      getComputedStyle(existingPanel).transitionProperty;
+
+      existingPanel.style.transition = 'transform 3s';
+      existingPanel.style.transform = 'scale(0)';
+      existingPanel.addEventListener('transitionend', () => {
+        existingPanel.remove();
+      });
+      // This is the roundabout way of fixing our deliberate bug.
+      existingPanel.addEventListener('transitioncancel', () => {
+        existingPanel.remove();
+      });
+      return;
+    }
+
+    // Create the panel
+    const panel = document.createElement('div');
+    panel.classList.add('panel');
+    panel.textContent = 'Hello!';
+    parent.appendChild(panel);
+
+    // Stretch in
+    panel.style.transform = 'scale(0)';
+    getComputedStyle(panel).transform;
+    panel.style.transition = 'transform .5s';
+    panel.style.transform = 'scale(1)';
+  };
+})();
+</script>
+</section>
+
+<section id="css-transitions-cancel-summary" class="summary-slide">
+<h1>
+  <svg width="900px" viewBox="0 0 670 350">
+    <text y=".9em" x="50%" text-anchor="middle"
+      ><tspan class="number">要点 2</tspan><tspan
+      dy="1.5em" x="50%" class="summary">Transitions 可以被</tspan><tspan
+      dy="1.1em" x="50%" class="summary">取消</tspan></text></svg>
+</h1>
+</section>
+
+<section id="css-animations-title" class="section-title"
+  data-background="#5ab041">
+<h1 class="svg">
+  <svg><text y="1em" x="50%">CSS Animations</text></svg>
+</h1>
+</section>
+
+<section id="css-animations-intro" data-transition="fade">
+<div class="side-by-side">
+  <pre><code class="css live-code" data-trim contenteditable=true
+  spellcheck=false>
+.pie {
+
+}
+@keyframes spin {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+  </code></pre>
+  <div class="target-content">
+    <svg class="pie" width="200px">
+      <use href="#pie"/>
+    </svg>
+  </div>
+</div>
+</section>
+
+<section id="css-animations-overlay-recap" class="panel-example"
+  data-transition="fade">
+<div class="side-by-side">
+  <pre><code class="hljs js" data-trim data-noescape>
+button.onclick = () => {
+  // Make the panel
+  const panel = document.createElement('div');
+  ...
+
+  // Stretch it in
+  panel.style.transform = 'scale(0)';
+<span class="highlight">  getComputedStyle(panel).transform;</span>
+  panel.style.transition = 'transform .5s';
+  panel.style.transform = 'scale(1)';
+};
+  </code></pre>
+  <div>
+    <button class="button" disabled>Button</button>
+  </div>
+</div>
+</section>
+
+<section id="css-animations-overlay-code" class="panel-example"
+  data-transition="fade">
+<div class="side-by-side">
+  <div>
+    <pre><code class="css live-code" data-trim contenteditable=true
+    spellcheck=false>
+@keyframes stretch-in {
+  from { transform: scale(0); }
+  to { transform: scale(1); }
+}
+    </code></pre>
+    <pre><code class="hljs js" data-trim data-noescape>
+button.onclick = () => {
+  // Make the panel
+  const panel = document.createElement('div');
+  ...
+
+  // Stretch it in
+<span class="highlight">  panel.style.animation = 'stretch-in .5s';</span>
+};
+    </code></pre>
+  </div>
+  <div>
+    <button class="button">Button</button>
+    <div class="target-content"></div>
+  </div>
+</div>
+<script>
+(() => {
+  const button = document.querySelector('#css-animations-overlay-code .button');
+  const parent = document.querySelector('#css-animations-overlay-code');
+
+  button.onclick = () => {
+    // If there is an existing panel, remove it
+    const existingPanel = document.querySelector(
+      '#css-animations-overlay-code .panel'
+    );
+    if (existingPanel) {
+      existingPanel.remove();
+      return;
+    }
+
+    // Create the panel
+    const panel = document.createElement('div');
+    panel.classList.add('panel');
+    panel.textContent = 'Hello!';
+    parent.appendChild(panel);
+
+    // Fade in
+    panel.style.animation = 'stretch-in .5s';
+  };
+})();
+</script>
+<style>
+#css-animations-overlay-code .side-by-side pre {
+  /* Drop the width: 90% declaration since it will make these boxes too narrow
+   */
+  width: auto;
+}
+</style>
+</section>
+
+<section id="css-animations-easing-intro" data-transition="fade">
+<div class="side-by-side">
+  <pre><code class="css live-code" data-trim contenteditable=true
+  spellcheck=false>
+.pie {
+  animation: fancy 2s infinite;
+}
+@keyframes fancy {
+  0%   { transform: none; }
+  50%  { transform: scale(1.5) rotate(0deg); }
+  90%  { transform: scale(1.5) rotate(360deg); }
+  100% { transform: scale(1.5) rotate(360deg); }
+}
+  </code></pre>
+  <div class="target-content">
+    <svg class="pie" width="200px">
+      <use href="#pie"/>
+    </svg>
+  </div>
+</div>
+<style>
+#css-animations-easing-intro pre code {
+  font-size: 20px;
+}
+</style>
+</section>
+
+<section id="css-animations-easing-bug-video">
+<video data-autoplay muted>
+  <source src="video/unlock-animation-stutter.mp4" type="video/mp4">
+</video>
+<style>
+#css-animations-easing-bug-video video {
+  border: 4px solid #222;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+</style>
+</section>
+
+<section id="css-animations-easing-bug-video-slow-mo">
+<video data-autoplay muted loop>
+  <source src="video/unlock-animation-slow-motion.mp4" type="video/mp4">
+</video>
+<style>
+#css-animations-easing-bug-video-slow-mo video {
+  border: 4px solid #222;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+</style>
+</section>
+
+<section id="css-animations-easing-bug-reproduced" data-transition="fade">
+<div class="side-by-side">
+  <pre><code class="css live-code" data-trim contenteditable=true
+  spellcheck=false>
+.pie {
+  animation: fade-out 3s forwards infinite
+             cubic-bezier(0.7, 0.0, 1.0, 1.0);
+}
+@keyframes fade-out {
+  0%   { transform: scale(1.0); opacity: 1.0; }
+  50%  { transform: scale(1.5); opacity: 0.5; }
+  100% { transform: scale(2);   opacity: 0.0; }
+}
+  </code></pre>
+  <div class="target-content">
+    <svg class="pie" width="200px">
+      <use href="#pie"/>
+    </svg>
+  </div>
+</div>
+<style>
+#css-animations-easing-bug-reproduced pre code {
+  font-size: 20px;
+}
+</style>
+</section>
+
+<section id="css-animations-easing-bug-in-devtools" data-transition="fade">
+  <img src="img/easing-bug-firefox-devtools.png">
+</section>
+
+<section id="css-animations-easing-bug-explained" data-transition="fade">
+<div class="side-by-side">
+  <pre><code class="css" data-trim data-noescape>
+.pie {
+  animation: fade-out 3s forwards infinite;
+<span class=highlight>  animation-timing-function: ease;</span>
+}
+@keyframes fade-out {
+  0%   { transform: scale(1.0); opacity: 1.0; }
+  50%  { transform: scale(1.5); opacity: 0.5; }
+  100% { transform: scale(2);   opacity: 0.0; }
+}
+  </code></pre>
+  <pre><code class="css" data-trim data-noescape>
+.pie {
+  animation: fade-out 3s forwards infinite;
+}
+@keyframes fade-out {
+  0%   { transform: scale(1.0); opacity: 1.0;
+<span class=highlight>         animation-timing-function: ease; }</span>
+  50%  { transform: scale(1.5); opacity: 0.5;
+<span class=highlight>         animation-timing-function: ease; }</span>
+  100% { transform: scale(2);   opacity: 0.0;
+<span class=highlight>         animation-timing-function: ease; }</span>
+}
+  </code></pre>
+</div>
+<style>
+#css-animations-easing-bug-explained pre code {
+  line-height: 20px;
+  font-size: 14px;
+}
+</style>
+</section>
+
+<section id="css-animations-easing-bug-fixed" data-transition="fade">
+<div class="side-by-side">
+  <pre><code class="css" data-trim data-noescape>
+.pie {
+  animation: fade-out 3s forwards infinite
+             cubic-bezier(0.7, 0.0, 1.0, 1.0);
+}
+@keyframes fade-out {
+  0%   { transform: scale(1.0); opacity: 1.0; }
+<span class="strike">  50%  { transform: scale(1.5); opacity: 0.5; }</span>
+  100% { transform: scale(2);   opacity: 0.0; }
+}
+  </code></pre>
+  <div class="target-content">
+    <svg class="pie" width="200px">
+      <use href="#pie"/>
+    </svg>
+  </div>
+</div>
+<style>
+#css-animations-easing-bug-fixed pre code {
+  font-size: 20px;
+}
+#css-animations-easing-bug-fixed code .strike {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+#css-animations-easing-bug-fixed .pie {
+  animation: fade-out-fixed 3s forwards infinite
+             cubic-bezier(0.7, 0.0, 1.0, 1.0);
+}
+@keyframes fade-out-fixed {
+  0%   { transform: scale(1.0); opacity: 1.0; }
+  100% { transform: scale(2);   opacity: 0.0; }
+}
+</style>
+</section>
+
+<section id="css-animations-easing-summary" class="summary-slide">
+<h1>
+  <svg width="900px" viewBox="0 0 670 350">
+    <text y=".9em" x="50%" text-anchor="middle"
+      ><tspan class="number">要点 3</tspan><tspan
+      dy="1.5em" x="50%" class="summary">animation-timing-function</tspan><tspan
+      dy="1.1em" x="50%" class="summary">只在关键帧</tspan><tspan
+      dy="1.1em" x="50%" class="summary"><tspan
+        class="emphasis">之间</tspan> 适用</tspan></text></svg>
+</h1>
+</section>
+
+<style>
+.summary-slide svg text .emphasis {
+  font-style: italic;
+  fill: var(--pink);
+}
+</style>
+
+<section id="web-animations-title" class="section-title"
+  data-background="#5ab041">
+<h1 class="svg">
+  <svg><text y="1em" x="50%">Web Animations</text></svg>
+</h1>
+</section>
+
+<section id="web-animations-intro" data-transition="fade-out">
+<div class="side-by-side">
+  <pre><code class="js" data-trim>
+pie.animate(
+  {
+    transform: ['scale(1)', 'scale(2)'],
+    opacity: [1, 0],
+  },
+  {
+    duration: 3000,
+    iterations: Infinity,
+    easing: 'cubic-bezier(0.7, 0.0, 1.0, 1.0)',
+  }
+);
+  </code></pre>
+  <div class="target-content">
+    <svg class="pie" width="200px">
+      <use href="#pie"/>
+    </svg>
+  </div>
+</div>
+<style>
+#web-animations-intro pre code {
+  font-size: 20px;
+}
+</style>
+<script>
+let pieAnimation;
+
+function startWebAnimationsIntro() {
+  if (pieAnimation) {
+    return;
+  }
+
+  const pie = document.querySelector('#web-animations-intro .pie');
+
+  pieAnimation = pie.animate(
+    {
+      transform: ['scale(1)', 'scale(2)'],
+      opacity: [1, 0],
+    },
+    {
+      duration: 3000,
+      iterations: Infinity,
+      easing: 'cubic-bezier(0.7, 0.0, 1.0, 1.0)',
+    }
+  );
+}
+
+function stopWebAnimationsIntro() {
+  if (pieAnimation) {
+    pieAnimation.cancel();
+    pieAnimation = null;
+  }
+}
+</script>
+</section>
+
+<section id="why-web-animations" data-transition="fade-out">
+<h2 class="svg">
+  <svg><text y="1em" x="3px">为什么？</svg>
+</h2>
+<div class="side-by-side">
+  <ul>
+    <li>和其他 JS 方案相比
+      <ul>
+        <li>性能
+        <li>无需添加库
+        <li>可以和 CSS 共同使用
+      </ul>
+    <li>和 CSS 相比
+      <ul>
+        <li>面向过程
+        <li>（在将来）使用 CSS 创建，使用 JS 控制
+      </ul>
+  </ul>
+  <div>
+    <figure>
+      <a href="https://hacks.mozilla.org/2016/08/animating-like-you-just-dont-care-with-element-animate/" target="_blank"><img src="img/jank-example-400.gif" width="400"></a>
+      <figcaption>
+        <a href="https://hacks.mozilla.org/2016/08/animating-like-you-just-dont-care-with-element-animate/" target="_blank">https://hacks.mozilla.org/2016/08/animating-like-you-just-dont-care-with-element-animate/</a>
+      </figcaption>
+    </figure>
+  </div>
+</div>
+<style>
+#why-web-animations .side-by-side {
+  align-items: start;
+}
+#why-web-animations ul {
+  margin-bottom: 1em;
+}
+#why-web-animations figcaption {
+  font-size: 15px;
+}
+</style>
+</section>
+
+<section id="web-animations-browser-support" data-transition="fade">
+<h2 class="svg">
+  <svg><text y="1em" x="3px">浏览器支持</svg>
+</h2>
+<ul class="logo-list">
+  <li><img class="logo" src="img/firefox-logo.svg"><span>48+</span>
+  <li><img class="logo" src="img/chrome-logo.svg"><span>36+</span>
+  <li><img class="logo" src="img/safari-logo.svg"><span>技术预览版</span>
+  <li><img class="logo" src="img/edge-logo.svg"><span class=batsu>x</span>
+</ul>
+<style>
+#web-animations-browser-support .logo-list {
+  margin: 100px 50px;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+#web-animations-browser-support .logo-list li {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-right: 1em;
+  line-height: 1;
+}
+#web-animations-browser-support .logo {
+  width: 3em;
+  height: 3em;
+  margin: 0;
+  margin-bottom: 30px;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  vertical-align: text-bottom;
+}
+#web-animations-browser-support .batsu {
+  color: hsl(354, 85%, 44%);
+  font-weight: bold;
+}
+</style>
+</section>
+
+<section id="who-web-animations" data-transition=fade>
+<h2 class="svg">
+  <svg><text y="1em" x="3px">谁在用？</svg>
+</h2>
+<figure>
+  <img src="img/element-animate-usage-counter.png" width="600">
+  <figcaption>来源：
+    <a
+       href="https://www.chromestatus.com/metrics/feature/timeline/popularity/773">Chrome use counter for Element.animate()</a></figcaption>
+</figure>
+<p>
+    <a href="https://2018.stateofjs.com/other-tools/#browser_apis">2018年JS状态调查</a>中第5受欢迎的API
+</p>
+<style>
+#who-web-animations h2 {
+  margin-bottom: 0;
+}
+#who-web-animations figcaption {
+  font-size: 20px;
+}
+</style>
+</section>
+
+<section id="web-animations-feature-detection" data-transition=fade>
+<h2 class="svg">
+  <svg><text y="1em" x="3px">特性检测</svg>
+</h2>
+<pre><code class="hljs js" data-trim>
+// Check for browser support.
+//
+// TODO: Check for _user_ support too (see point 9)
+if ('animate' in elem) {
+  // ... Animate away...
+}
+</code></pre>
+<p class="explanation">
+你也许不需要 <a href="https://github.com/web-animations/web-animations-js">polyfill (web-animations-js)</a>
+</p>
+<style>
+#web-animations-feature-detection .explanation {
+  font-size: 30px;
+}
+</style>
+</section>
+
+<section id="web-animations-support-summary" class="summary-slide">
+<h1>
+  <svg width="900px" viewBox="0 0 670 350">
+    <text y=".9em" x="50%" text-anchor="middle"
+      ><tspan class="number">要点 4</tspan><tspan
+      dy="1.5em" x="50%" class="summary">你现在已经可以使用</tspan><tspan
+      dy="1.1em" x="50%" class="summary">Web Animations</tspan
+      ></text></svg>
+</h1>
+</section>
+
+<section id="web-animations-vs-css">
+<table>
+  <thead>
+    <tr>
+      <th>CSS transitions/animations</th>
+      <th>Web Animations</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>
+        <span class=prop-name>animation-iteration-count</span>
+      </td>
+      <td>
+        <span class=prop-name>iterations</span></td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <span class=prop-name>transition-timing-function</span>,
+        <span class=prop-name>animation-timing-function</span>
+      </td>
+      <td>
+        <span class=prop-name>easing</span></td>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        默认过渡为 <span class=prop-value>ease</span>
+      </td>
+      <td>
+        默认过渡为 <span class=prop-value>linear</span>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<style>
+#web-animations-vs-css table {
+  font-size: 30px;
+  table-layout: fixed;
+  width: 100%;
+}
+#web-animations-vs-css th,
+#web-animations-vs-css td {
+  text-align: center;
+  vertical-align: middle;
+}
+#web-animations-vs-css .prop-name {
+  color: var(--green-dark);
+}
+#web-animations-vs-css .prop-value {
+  color: var(--pink);
+}
+</style>
+</section>
+
+<section id="web-animations-two-easings" data-transition="fade-out">
+<div class="side-by-side">
+  <pre><code class="js" data-trim data-noescape>
+pieOne.animate(
+  {
+    transform: ['scale(1)', 'scale(1.5)', 'scale(2)'],
+    opacity: [1, 0.5, 0],
+<span class=highlight>    easing: 'ease',</span>
+  },
+  {
+    duration: 2000,
+    iterations: Infinity,
+  }
+);
+
+pieTwo.animate(
+  {
+    transform: ['scale(1)', 'scale(1.5)', 'scale(2)'],
+    opacity: [1, 0.5, 0],
+  },
+  {
+    duration: 2000,
+    iterations: Infinity,
+<span class=highlight>    easing: 'ease',</span>
+  }
+);
+  </code></pre>
+  <div class="target-content">
+    <svg class="pie pie-one" width="200px">
+      <use href="#pie"/>
+    </svg>
+    <svg class="pie pie-two" width="200px">
+      <use href="#pie"/>
+    </svg>
+  </div>
+</div>
+<style>
+#web-animations-two-easings pre code {
+  font-size: 15px;
+  line-height: 18px;
+}
+#web-animations-two-easings .pie {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+</style>
+<script>
+let pieEasingAnimations;
+
+function startWebAnimationsEasing() {
+  if (pieEasingAnimations) {
+    return;
+  }
+
+  pieEasingAnimations = [];
+
+  const pieOne = document.querySelector('#web-animations-two-easings .pie-one');
+  pieEasingAnimations.push(pieOne.animate(
+    {
+      transform: ['scale(1)', 'scale(1.5)', 'scale(2)'],
+      opacity: [1, 0.5, 0],
+      easing: 'ease',
+    },
+    {
+      duration: 2000,
+      iterations: Infinity,
+    }
+  ));
+
+  const pieTwo = document.querySelector('#web-animations-two-easings .pie-two');
+  pieEasingAnimations.push(pieTwo.animate(
+    {
+      transform: ['scale(1)', 'scale(1.5)', 'scale(2)'],
+      opacity: [1, 0.5, 0],
+    },
+    {
+      duration: 2000,
+      iterations: Infinity,
+      easing: 'ease',
+    }
+  ));
+}
+
+function stopWebAnimationsEasing() {
+  if (!pieEasingAnimations) {
+    return;
+  }
+
+  for (const anim of pieEasingAnimations) {
+    anim.cancel();
+  }
+  pieEasingAnimations = null;
+}
+</script>
+</section>
+
+<section id="web-animations-easings-in-devtools" data-transition="fade">
+<div class="stack">
+  <img src="img/web-animations-two-easings.png">
+  <img src="img/web-animations-easing-keyframe.png">
+  <img src="img/web-animations-easing-effect.png">
+</div>
+<style>
+#web-animations-easings-in-devtools img {
+  height: 180px;
+}
+</style>
+</section>
+
+<section id="web-animations-differences-summary" class="summary-slide">
+<h1>
+  <svg width="900px" viewBox="0 0 670 350">
+    <text y=".9em" x="50%" text-anchor="middle"
+      ><tspan class="number">要点 5</tspan><tspan
+      dy="1.5em" x="50%" class="summary">Web Animations 与</tspan><tspan
+      dy="1.1em" x="50%" class="summary">CSS 有不同之处，</tspan><tspan
+      dy="1.1em" x="50%" class="summary">尤其是过渡（easing）</tspan
+      ></text></svg>
+</h1>
+</section>
+
+<section id="performance-title" class="section-title"
+  data-background="#5ab041">
+<h1 class="svg">
+  <svg><text y="1em" x="50%">性能</text></svg>
+</h1>
+</section>
+
+<section id="performance-boring">
+<img src="img/boring.jpg">
+<!-- Source: ぱくたそ -->
+</section>
+
+<section id="transform-and-opacity">
+<h2 class="svg smaller">
+  <svg><text y="1em" x="3px">transform 和 opacity</svg>
+</h2>
+<div class=demo-grid>
+<figure class="fragment move">
+  <svg class=pie><use href="#pie"></svg>
+  <figcaption>移动</figcaption>
+</figure>
+<figure class="fragment grow-anim">
+  <svg class=pie><use href="#pie"></svg>
+  <figcaption>大小变化</figcaption>
+</figure>
+<figure class="fragment spin">
+  <svg class=pie><use href="#pie"></svg>
+  <figcaption>转动</figcaption>
+</figure>
+<figure class="fragment three-d">
+  <svg class=pie><use href="#pie"></svg>
+  <figcaption>3D</figcaption>
+</figure>
+<figure class="fragment fade">
+  <svg class=pie><use href="#pie"></svg>
+  <figcaption>淡入淡出</figcaption>
+</figure>
+<figure class="fragment combo">
+  <svg class=pie><use href="#pie"></svg>
+  <figcaption>大小变化 + 转动 + 淡入淡出</figcaption>
+</figure>
+<figure class="fragment colour-change">
+  <div class=stack>
+    <svg class=pie><use href="#pie"></svg>
+    <svg class=pink-pie><use href="#pink-pie"></svg>
+  </div>
+  <figcaption>颜色变化</figcaption>
+</figure>
+<figure class="fragment shadow-effect">
+  <div class=stack>
+    <svg class=pie><use href="#pie"></svg>
+    <svg class=pie-shadow><use href="#pie"></svg>
+  </div>
+  <figcaption>阴影效果</figcaption>
+</figure>
+<figure class="fragment split">
+  <div class=stack>
+    <svg class=pie-left><use href="#split-pie-left"></svg>
+    <svg class=pie-right><use href="#split-pie-right"></svg>
+  </div>
+  <figcaption>裂开</figcaption>
+</figure>
+</div>
+<svg width="0" height="0" style="visibility: hidden">
+  <defs>
+    <svg id="pink-pie" viewBox="2 15 60 33">
+      <path fill="#bdc1c6" d="M8.9 37.9L12.1 48H52l2.9-10.1-3.6-2.2-2.7 3.2-4.7-.2-4.5-3-2.7 3.2-4.2 1.2-4.9-1.1-3.1-2.7-2.4 1.8-2.7 1-5-1.1-1.8-2.3z"/>
+      <path d="M8.1 37.9s-3.4-.6-3.6-1-1.9-4.6-1.9-4.6l3.3-4 3-.7 3.9-5.4
+      8.9-4.9 8.6-1 9.9.6 7.1 3.1 4.8 4.1 2.4 3.1.4 1.2 4.6.8 1.8 4.2-2.4 3.9-4
+      .6-3.6-2.2-1.5 1.4-3.8 1.6h-3.6l-3-3.1-2.8 3.3-5.3 1-3.7-.9-2.6-3.3-2.3
+      1.9-4.7 1.5-2-.7-3.4-2.7-2.5 2-2 .2z" style="fill: var(--pink)"/>
+      <path d="M12 48.6c-.3 0-.5-.2-.6-.4l-2.9-9.6H8a5.6 5.6 0 1 1 0-11.2h.5l.1-.2C11.8 20 21 15.4 32 15.4S52.2 20 55.4 27.2l.1.2h.5a5.6 5.6 0 1 1 0 11.2h-.5l-2.9 9.6c-.1.3-.3.4-.6.4H12zm.1-11.8c-.6.6-1.3 1.1-2.1 1.4l-.3.1 2.8 9.1h39.1l2.7-9.1-.3-.1c-.8-.3-1.5-.8-2.1-1.4l-.3-.3-.3.4c-.3.3-.6.7-.9.9a7.5 7.5 0 0 1-10.5-.7l-.3-.4-.3.4c-.5.6-1 1.1-1.6 1.6a9.99 9.99 0 0 1-5.7 1.9c-2.9 0-5.5-1.3-7.3-3.5l-.3-.4-.3.3-.9.9a7.06 7.06 0 0 1-4.7 1.6c-2.3 0-4.4-1-5.8-2.8l-.3-.4-.3.5zm12.4-2c.2 0 .4.2.5.4a7.5 7.5 0 0 0 6.7 4.3h.5c2.9 0 5.5-1.7 6.7-4.3.1-.2.3-.4.5-.4s.5.1.6.3a5.89 5.89 0 0 0 5.4 3.3c2.3 0 4.4-1.3 5.5-3.4.1-.2.3-.4.5-.4s.4.1.5.3a4.7 4.7 0 0 0 3.1 2.4c.3.1.5.1.8.1 2.4 0 4.4-2 4.4-4.4 0-2.4-2-4.4-4.4-4.4-.3 0-.5 0-.8.1h-.1c-.2 0-.5-.2-.6-.4C51.8 21.2 43 16.6 32 16.6S12.2 21.2 9.5 28.3c-.1.2-.3.4-.6.4h-.1c-.3-.1-.5-.1-.8-.1-2.4 0-4.4 2-4.4 4.4 0 2.4 2 4.4 4.4 4.4.3 0 .5 0 .8-.1 1.3-.3 2.5-1.1 3.1-2.4.1-.2.3-.3.5-.3s.5.2.5.4c1 2.1 3.1 3.4 5.3 3.4h.3c2.3 0 4.3-1.3 5.3-3.3.3-.2.5-.3.7-.3z"/>
+      <path d="M32 26.6c-.3 0-.6-.3-.6-.6v-4c0-.3.3-.6.6-.6s.6.3.6.6v4c0 .3-.3.6-.6.6zM24 26.6c-.1 0-.2 0-.3-.1-.3-.2-.4-.5-.3-.8l2-4c.1-.2.3-.3.5-.3.1 0 .2 0 .3.1.3.1.4.5.3.8l-2 4c-.1.2-.3.3-.5.3zM40 26.6c-.2 0-.4-.1-.5-.3l-2-4c-.1-.3 0-.6.3-.7.1-.1.2-.1.3-.1.2 0 .4.1.5.3l2 4c.1.3 0 .7-.3.8H40zM15 44.6c-.3 0-.6-.3-.6-.6s.3-.6.6-.6h2c.3 0 .6.3.6.6s-.3.6-.6.6h-2zM21 44.6c-.3 0-.6-.3-.6-.6s.3-.6.6-.6h8c.3 0 .6.3.6.6s-.3.6-.6.6h-8z"/>
+    </svg>
+    <svg id="split-pie-left" viewBox="0 0 61.173 34.307">
+      <path fill="#BDC1C6" d="M23.043 22.424l-.31-.414-.31.311-.93.93c-1.365 1.121-3.091 1.709-4.857 1.653-2.376 0-4.546-1.033-5.993-2.894l-.31-.413-.31.517c-.62.62-1.343 1.137-2.17 1.447l-.31.104 2.894 9.402h21.12l3.901-6.149-1.274-1.594c-1.142.448-2.357.696-3.597.717-2.997-.001-5.684-1.344-7.544-3.617zm-7.956 7.75H13.02c-.31 0-.62-.311-.62-.621 0-.309.31-.619.62-.619h2.067c.31 0 .62.311.62.619 0 .31-.31.621-.62.621zm12.4 0H19.22c-.31 0-.62-.311-.62-.621 0-.309.31-.619.62-.619h8.267c.31 0 .62.311.62.619 0 .31-.31.621-.62.621z"/>
+      <path fill="#B56F1C" d="M33.75 9.333L29.038 1.28C18.402 1.694 9.999 6.332 7.337 13.33c-.104.207-.31.414-.62.414h-.103c-.31-.104-.517-.104-.827-.104-2.48 0-4.547 2.066-4.547 4.546s2.066 4.547 4.547 4.547c.31 0 .517 0 .827-.104 1.343-.31 2.583-1.136 3.203-2.479.104-.207.31-.311.517-.311s.517.207.517.414c1.034 2.17 3.204 3.513 5.477 3.513h.31c2.377 0 4.443-1.343 5.477-3.409.31-.207.517-.311.723-.311s.413.207.517.413c1.267 2.685 3.955 4.411 6.923 4.443h.518c.929 0 1.819-.187 2.654-.499l-6.657-8.321 6.957-6.749zM29.967 6.82c0-.311.31-.62.62-.62s.62.31.62.62v4.133c0 .311-.31.62-.62.62s-.62-.31-.62-.62V6.82zm-5.064.31l-2.066 4.134c-.104.207-.31.31-.517.31-.104 0-.207 0-.31-.103-.31-.207-.414-.518-.31-.827l2.067-4.134c.103-.207.31-.31.517-.31.103 0 .207 0 .31.103.309.103.413.517.309.827z"/>
+      <path d="M33.74 24.77l-.128-.161-3.575.675 1.067.239zM20.357 23.457l2.48-1.86 3.203 2.79-2.686-3.41-2.377 1.962-4.267 1.363.857.188z"/>
+      <path d="M10.023 33.687L6.717 23.25l.167-.1-.994.1s-3.513-.62-3.72-1.033c-.207-.414-1.963-4.754-1.963-4.754l3.41-4.133 3.1-.723 4.03-5.58 9.196-5.064L28.83.93h.002l-.505-.863C17.974.653 9.492 5.253 6.407 12.193l-.103.207h-.517C2.591 12.4 0 14.99 0 18.187s2.591 5.786 5.787 5.786h.517L9.3 33.894c.103.206.31.413.62.413h20.85l.393-.62h-21.14z"/>
+      <path d="M13.968 23.698l-3.428-2.721 1.86 2.377z"/>
+      <path d="M10.437 33.066l-2.894-9.402.31-.104c.827-.311 1.55-.827 2.17-1.447l.31-.517.31.413c1.447 1.86 3.617 2.894 5.993 2.894 1.766.056 3.492-.532 4.857-1.653l.93-.93.31-.311.31.414c1.86 2.273 4.547 3.616 7.543 3.616 1.239-.021 2.455-.269 3.597-.717l-.443-.552-2.637.754-1.067-.239-.172.032-3.824-.93-3.203-2.79-2.48 1.86-2.79 1.033-.856-.188-.59.188-2.066-.724-.086-.068-1.569-.344-1.86-2.377-2.583 2.066-1.073.107-.167.1 3.307 10.437h21.14l.393-.62h-21.12z"/>
+      <path d="M19.943 1.963l-9.196 5.064-4.03 5.58-3.1.723-3.41 4.133s1.756 4.34 1.963 4.754c.207.413 3.72 1.033 3.72 1.033l.994-.1 3.656-2.174 3.428 2.722 2.743.604 4.267-1.362 2.376-1.963 2.687 3.41 3.997.897 3.576-.675-.164-.205c-.835.313-1.726.499-2.654.499h-.518c-2.968-.032-5.656-1.759-6.923-4.443-.104-.206-.31-.413-.517-.413s-.414.104-.723.311c-1.034 2.066-3.1 3.409-5.477 3.409h-.31c-2.273 0-4.443-1.343-5.477-3.513 0-.207-.31-.414-.517-.414s-.414.103-.517.31c-.62 1.344-1.86 2.17-3.203 2.479-.31.104-.517.104-.827.104-2.48 0-4.547-2.067-4.547-4.547s2.066-4.546 4.547-4.546c.31 0 .517 0 .827.104h.103c.31 0 .517-.207.62-.414C9.999 6.332 18.402 1.694 29.038 1.281L28.833.93h-.003l-8.887 1.033z"/>
+      <path d="M16.12 24.49l.59-.188-2.742-.604.086.069zM30.037 25.284l-3.997-.897 3.824.929zM10.54 20.977L6.884 23.15l1.073-.107zM15.087 28.934H13.02c-.31 0-.62.311-.62.619 0 .311.31.621.62.621h2.067c.31 0 .62-.311.62-.621 0-.309-.31-.619-.62-.619zM27.487 28.934H19.22c-.31 0-.62.311-.62.619 0 .311.31.621.62.621h8.267c.31 0 .62-.311.62-.621 0-.309-.31-.619-.62-.619zM30.587 11.573c.311 0 .62-.31.62-.62V6.82c0-.311-.31-.62-.62-.62s-.62.31-.62.62v4.133c0 .311.309.62.62.62zM24.594 6.303c-.104-.103-.207-.103-.31-.103-.207 0-.414.103-.517.31L21.7 10.644c-.104.31 0 .62.31.827.104.103.207.103.31.103.207 0 .413-.103.517-.31l2.066-4.134c.104-.31 0-.724-.309-.827z"/>
+    </svg>
+    <svg id="split-pie-right" viewBox="0 0 61.173 34.307">
+      <path fill="none" d="M48.122 6.228l1.927 1.646c-.593-.58-1.229-1.134-1.927-1.646zM55.821 13.707l.399.07c-.13-.032-.264-.05-.399-.07z"/>
+      <path fill="#BDC1C6" d="M31.557 33.066h19.284l2.789-9.402-.31-.104c-.827-.311-1.55-.827-2.17-1.447l-.31-.311-.311.414c-.311.311-.62.723-.93.93-3.207 2.763-8.038 2.44-10.851-.723l-.31-.414-.311.414c-.516.619-1.033 1.137-1.652 1.652-.712.517-1.485.931-2.294 1.247l1.274 1.594-3.898 6.15z"/>
+      <path fill="#B56F1C" d="M29.038 1.281l4.712 8.053-6.958 6.75 6.657 8.321c1.86-.696 3.413-2.09 4.269-3.944.104-.206.31-.413.517-.413s.517.104.62.311c1.04 2.123 3.216 3.453 5.58 3.409 2.376 0 4.547-1.343 5.683-3.513.104-.207.311-.414.518-.414s.413.104.517.311c.655 1.254 1.825 2.159 3.203 2.479.31.104.517.104.827.104 2.479 0 4.547-2.067 4.547-4.547 0-2.121-1.518-3.929-3.507-4.41l-.399-.07c-.211-.031-.422-.066-.641-.066-.311 0-.518 0-.827.103h-.106c-.206 0-.517-.206-.62-.413-.717-2.037-1.951-3.865-3.581-5.457l-1.927-1.646C43.831 3.078 37.649 1.24 30.587 1.24c-.524 0-1.036.021-1.549.041zm7.542 5.125c.104-.104.207-.104.31-.104.207 0 .414.104.518.311l2.066 4.133c.104.311 0 .725-.311.827h-.31c-.206 0-.413-.103-.517-.31L36.271 7.13c-.104-.31 0-.62.309-.724z"/>
+      <path d="M50.53 20.977l-1.55 1.447-3.926 1.652h-2.17l4.856.207zM35.443 24.283l2.79-3.306.283.188-.283-.292-2.892 3.41-1.729.326.128.161z"/>
+      <path d="M55.387 12.4h-.517l-.104-.207C51.46 4.754 41.954 0 30.587 0c-.763 0-1.515.025-2.26.067l.505.863 10.228.62 7.338 3.204 1.725 1.474c.698.512 1.334 1.066 1.927 1.646l1.308 1.117 2.48 3.203.413 1.24 1.571.273c.135.02.269.038.399.07l2.782.483 1.861 4.34-2.48 4.03-4.134.62-2.997 10.437H31.164l-.393.62h20.482c.311 0 .518-.104.621-.413l2.996-9.921h.517c3.196 0 5.786-2.59 5.786-5.786s-2.59-5.787-5.786-5.787z"/>
+      <path d="M47.74 24.283l-4.856-.207h-1.551l-2.817-2.912-.282-.188-2.79 3.307-1.704.487.443.554c.809-.316 1.582-.73 2.294-1.247.619-.516 1.137-1.033 1.652-1.652l.311-.414.31.414c2.813 3.163 7.644 3.485 10.851.723.31-.207.619-.619.93-.93l.311-.414.31.311c.62.62 1.343 1.137 2.17 1.447l.31.104-2.789 9.402H31.557l-.393.62h20.089L54.25 23.25l-3.72-2.273-2.79 3.306z"/>
+      <path d="M59.728 18.187c0 2.479-2.067 4.547-4.547 4.547-.311 0-.518 0-.827-.104-1.378-.32-2.548-1.226-3.203-2.479-.104-.207-.31-.311-.517-.311s-.414.207-.518.414c-1.136 2.17-3.307 3.513-5.683 3.513-2.364.044-4.54-1.286-5.58-3.409-.104-.207-.413-.311-.62-.311s-.413.207-.517.413c-.855 1.854-2.408 3.248-4.269 3.944l.164.205 1.729-.326 2.893-3.41.282.292 4.368 2.912h2.17l3.927-1.652 1.55-1.447 3.72 2.273 4.134-.62 2.48-4.03-1.861-4.34-2.782-.483c1.989.48 3.507 2.287 3.507 4.409zM53.63 13.33c.104.207.414.413.62.413h.104c.31-.103.517-.103.827-.103.219 0 .43.035.641.066l-1.571-.273-.413-1.24-2.48-3.203-1.308-1.117c1.629 1.592 2.863 3.42 3.58 5.457zM30.587 1.24c7.063 0 13.244 1.837 17.535 4.987l-1.725-1.474L39.06 1.55 28.833.93l.205.351c.513-.02 1.025-.041 1.549-.041z"/>
+      <path d="M42.884 24.076l-4.368-2.911 2.817 2.911zM38.337 11.264c.104.207.311.31.517.31h.31c.311-.103.414-.517.311-.827l-2.066-4.133c-.104-.207-.311-.311-.518-.311-.103 0-.206 0-.31.104-.31.104-.413.414-.31.724l2.066 4.133z"/>
+      </g>
+    </svg>
+  </defs>
+</svg>
+<style>
+#transform-and-opacity h2 {
+  margin-bottom: 0px;
+}
+#transform-and-opacity h2 svg {
+  height: 65px;
+}
+#transform-and-opacity .demo-grid {
+  display: grid;
+  grid-gap: 10px 30px;
+  justify-content: center;
+  grid-template-columns: repeat(3, 250px);
+}
+#transform-and-opacity .demo-grid figure svg {
+  width: 130px;
+  overflow: visible;
+}
+#transform-and-opacity .demo-grid figure figcaption {
+  margin-top: -20px;
+  font-size: 25px;
+}
+
+#transform-and-opacity figure.move .pie {
+  animation: demo-move 1.2s -.3s infinite ease-in-out;
+}
+@keyframes demo-move {
+  from { transform: translate(-40px); }
+  50% { transform: translate(40px); }
+  to { transform: translate(-40px); }
+}
+
+#transform-and-opacity figure.grow-anim .pie {
+  animation: demo-grow 1.2s -.3s infinite ease-in-out;
+}
+@keyframes demo-grow {
+  from { transform: scale(.5); }
+  50% { transform: scale(2); }
+  to { transform: scale(.5); }
+}
+
+#transform-and-opacity figure.spin .pie {
+  animation: demo-spin 1.2s infinite ease-in-out;
+}
+@keyframes demo-spin {
+  from { transform: none; }
+  50% { transform: rotate(360deg); }
+  to { transform: none; }
+}
+
+#transform-and-opacity figure.three-d .pie {
+  animation: demo-three-d 3s infinite ease-in-out;
+}
+@keyframes demo-three-d {
+  from { transform: none; }
+  25% { transform: rotateY(180deg) rotateX(180deg); }
+  50% { transform: rotateY(360deg) rotateX(180deg); }
+  to { transform: none; }
+}
+
+#transform-and-opacity figure.fade .pie {
+  animation: demo-fade .8s infinite ease-in;
+}
+@keyframes demo-fade {
+  70% { opacity: 0; animation-timing-function: ease }
+}
+
+#transform-and-opacity figure.combo .pie {
+  animation: demo-combo 2s infinite;
+}
+@keyframes demo-combo {
+  from { opacity: 1; animation-timing-function: ease-out }
+  to { transform: scale(2) rotate(720deg); opacity: 0 }
+}
+
+#transform-and-opacity figure.colour-change .stack {
+  display: inline-block;
+  position: relative;
+}
+#transform-and-opacity figure.colour-change .pink-pie {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  animation: demo-colour-change 2.5s infinite ease-in-out;
+}
+@keyframes demo-colour-change {
+  50% { opacity: 1; }
+}
+
+#transform-and-opacity figure.shadow-effect .stack {
+  display: inline-block;
+  position: relative;
+}
+#transform-and-opacity figure.shadow-effect .pie {
+  animation: demo-shadow-effect-grow 2s infinite;
+}
+@keyframes demo-shadow-effect-grow {
+  50% { transform: scale(1.5); }
+}
+#transform-and-opacity figure.shadow-effect .pie-shadow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  filter: brightness(0) blur(6px);
+  z-index: -1;
+  animation: demo-shadow-effect-grow-shadow 2s infinite;
+}
+@keyframes demo-shadow-effect-grow-shadow {
+  0% { transform: scale(.8) translateY(0px); }
+  50% { transform: scale(1.4) translateY(4px); opacity: 0.3 }
+  100% { transform: scale(.8) translateY(0px); }
+}
+
+#transform-and-opacity figure.split .stack {
+  display: inline-block;
+  position: relative;
+}
+#transform-and-opacity figure.split .pie-right {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 50% 110px;
+  animation: demo-split 4s infinite;
+}
+@keyframes demo-split {
+  20% { transform: translate(-2px, 0px) rotate(0deg);
+       animation-timing-function: cubic-bezier(.5,0,.64,1.6); }
+  45% { transform: translate(-2px, 0px) rotate(20deg); }
+  50% { transform: translate(-2px, 0px) rotate(20deg); }
+  80% { transform: translate(-2px, 0px) rotate(30deg); }
+  100% { transform: translate(-2px, 300px) rotate(180deg); }
+}
+</style>
+</section>
+
+<section id="tab-bar-explained" data-background="#5ab041"
+  class="app-frame">
+  <iframe width="400" height="600" src="meetpie/index.html"></iframe>
+</section>
+
+<section id="gmail-example" data-transition="fade-out">
+<video data-autoplay loop>
+  <source src="video/gmail.mp4" type="video/mp4">
+</video>
+<img src="img/gmail-devtools.png">
+<style>
+#gmail-example video {
+  border: 4px solid #222;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+</style>
+</section>
+
+<section id="taketori" data-transition=fade>
+<video data-autoplay>
+  <source src="video/taketori-sped-up.mp4" type="video/mp4">
+</video>
+<div class="url">
+  <a href="https://mozanime.github.io/taketori/">mozanime.github.io/taketori/</a>
+</div>
+<style>
+#taketori video {
+  border: 4px solid #222;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+}
+#taketori .url {
+  background: var(--green-light);
+  border-radius: 30px;
+  text-align: center;
+}
+#taketori .url a,
+#taketori .url a:visited {
+  color: var(--green-dark);
+  font-weight: 500;
+}
+</style>
+</section>
+
+<section id="transform-and-opacity-summary" class="summary-slide">
+<h1>
+  <svg width="900px" viewBox="0 0 670 350">
+    <text y=".9em" x="50%" text-anchor="middle"
+      ><tspan class="number">要点 6</tspan><tspan
+      dy="1.5em" x="50%" class="summary">尽量只动画化</tspan><tspan
+      dy="1.1em" x="50%" class="summary">transform 和 opacity</tspan></text></svg>
+</h1>
+</section>
+
+<section id="perf-inspection" data-transition=fade-out>
+<div class="lineup">
+  <div class=some-ok>
+    <svg class=pie><use href="#pie"></svg>
+  </div>
+  <div class=conflict>
+    <svg class=pie><use href="#pie"></svg>
+  </div>
+</div>
+<style>
+#perf-inspection .lineup {
+  display: flex;
+  justify-content: space-between;
+}
+#perf-inspection .lineup .pie {
+  width: 300px;
+  height: 300px;
+}
+
+#perf-inspection .some-ok .pie {
+  animation: some-on-compositor 2s 3s infinite;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: var(--green-light);
+}
+@keyframes some-on-compositor {
+  0% { background-color: var(--green-light); }
+  50% { background-color: var(--green); opacity: 1 }
+  to { opacity: 0; background-color: var(--green-light); }
+}
+
+#perf-inspection .conflict .pie {
+  animation: synced-animation 2s 3s infinite;
+}
+@keyframes synced-animation {
+  50% { transform: translateY(10px); width: 400px; height: 400px; }
+}
+</style>
+</section>
+
+<section id="perf-inspection-devtools" data-transition=fade>
+<div class="side-by-side">
+  <img src="img/some-on-compositor.png">
+  <img src="img/synced-animation.png">
+</div>
+<style>
+#perf-inspection-devtools img {
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  padding: .5em;
+  width: 400px;
+  filter: drop-shadow(1px 4px 3px var(--neutral-8));
+}
+#perf-inspection-devtools img:nth-child(2) {
+  width: 500px;
+}
+</style>
+</section>
+
+<section id="animation-inspector-summary" class="summary-slide">
+<h1>
+  <svg width="900px" viewBox="0 0 670 350">
+    <text y=".9em" x="50%" text-anchor="middle"
+      ><tspan class="number">要点 7</tspan><tspan
+      dy="1.5em" x="50%" class="summary">你可以使用</tspan><tspan
+      dy="1.1em" x="50%" class="summary">动画检查器来</tspan><tspan
+      dy="1.1em" x="50%" class="summary">检查动画性能</tspan></text></svg>
+</h1>
+</section>
+
+<section id="single-page-apps" data-transition="fade-out">
+<h2 class="svg smaller">
+  <svg><text y="1em" x="3px">单页 Web 应用</svg>
+</h2>
+<pre><code class="hljs js" data-trim data-noescape>
+react.render(
+  &lt;Router&gt;
+    &lt;Route <span class=hljs-attr>exact</span> <span
+                    class=hljs-attr>path</span>=<span
+                    class=hljs-string>"/"</span> <span
+                    class=hljs-attr>component</span>={<span
+                    class=hljs-literal>Photos</span>} /&gt;
+    &lt;Route <span class=hljs-attr>path</span>=<span
+                    class=hljs-string>"/polls"</span> <span
+                    class=hljs-attr>component</span>={<span
+                    class=hljs-literal>Polls</span>} /&gt;
+    &lt;Route <span class=hljs-attr>path</span>=<span
+                    class=hljs-string>"/finder"</span> <span
+                    class=hljs-attr>component</span>={<span
+                    class=hljs-literal>Finder</span>} /&gt;
+  &lt;/Router&gt;
+);
+</code></pre>
+</section>
+
+<section id="single-page-apps-animated" data-transition="fade-in">
+<h2 class="svg smaller">
+  <svg><text y="1em" x="3px">单页 Web 应用</svg>
+</h2>
+<pre><code class="hljs js" data-trim data-noescape>
+&lt;Router&gt;
+  &lt;Route <span class=hljs-attr>render</span>={({ <span
+                  class=hljs-variable>location</span> }) =&gt; (
+<span class=highlight>    &lt;TransitionGroup&gt;
+      &lt;CSSTransition <span
+          class=hljs-attr>key</span>={<span
+          class=hljs-variable>location.pathname</span>}
+        <span class=hljs-attr>timeout</span>={<span
+              class=hljs-literal>400</span>} <span
+              class=hljs-attr>classNames</span>=<span
+              class=hljs-string>"slide"</span>&gt;</span>
+        &lt;Switch <span class=hljs-attr>location</span>={<span
+                         class=hljs-variable>location</span>}&gt;
+          &lt;Route exact <span class=hljs-attr>path</span>="/" <span
+                                class=hljs-attr>component</span>={<span
+                                class=hljs-literal>Photos</span>} /&gt;
+          &lt;Route <span class=hljs-attr>path</span>=<span
+                          class=hljs-string>"/polls"</span> <span
+                          class=hljs-attr>component</span>={<span
+                          class=hljs-literal>Polls</span>} /&gt;
+          &lt;Route <span class=hljs-attr>path</span>=<span
+                          class=hljs-string>"/finder"</span> <span
+                          class=hljs-attr>component</span>={<span
+                          class=hljs-literal>Finder</span>} /&gt;
+        &lt;/Switch&gt;
+<span class=highlight>      &lt;/CSSTransition&gt;
+    &lt;/TransitionGroup&gt;</span>
+  )}/&gt;
+&lt;/Router&gt;
+</code></pre>
+<style>
+#single-page-apps-animated code {
+  font-size: 20px;
+}
+</style>
+</section>
+
+<section id="naive-single-page-app" data-background="#5ab041"
+  class="app-frame">
+  <iframe width="400" height="600" src="meetpie/index-bad-router.html"></iframe>
+</section>
+
+<section id="naive-single-page-app-explained">
+<h2 class="svg smaller">
+  <svg><text y="1em" x="3px">当你点击时……</svg>
+</h2>
+<div class=side-by-side>
+  <ol>
+    <li>处理点击事件
+    <li>创建 DOM 元素
+    <li>解析样式
+      <ul style="font-size: smaller">
+        <li>(<code>&lt;CSSTransition&gt;</code> 多次解析样式和布局)
+      </ul>
+    <li>计算布局
+    <li>绘制每个新元素
+    <li>运行动画
+  </ol>
+  <img src="img/bad-router-profile.png">
+</div>
+<style>
+#naive-single-page-app-explained .side-by-side ol {
+  font-size: 25px;
+}
+#naive-single-page-app-explained .side-by-side img {
+  width: 700px;
+  margin-left: 50px;
+}
+</style>
+</section>
+
+<section id="fixed-single-page-app-proposal" data-transition=fade-out>
+<h2 class="svg smaller">
+  <svg><text y="1em" x="3px">如果……</svg>
+</h2>
+<pre><code class="hljs js" data-trim data-noescape>
+&lt;Router&gt;
+  &lt;Route <span class=hljs-attr>render</span>={({ <span
+                  class=hljs-variable>location</span> }) =&gt; (
+<span class=highlight>    &lt;Photos <span
+      class=hljs-attr>active</span>={<span
+      class=hljs-variable>location.pathname</span> === <span
+      class=hljs-string>'/'</span>}/&gt;
+    &lt;Polls <span class=hljs-attr>active</span>={<span
+                    class=hljs-variable>location.pathname</span> === <span
+                    class=hljs-string>'/stories'</span>}/&gt;
+    &lt;Finder <span class=hljs-attr>active</span>={<span
+                    class=hljs-variable>location.pathname</span> === <span
+                    class=hljs-string>'/notes'</span>}/&gt;</span>
+  )}/&gt;
+&lt;/Router&gt;
+</code></pre>
+</section>
+
+<section id="fixed-single-page-app-explained" data-transition=fade>
+<h2 class="svg smaller">
+  <svg><text y="1em" x="3px">当你点击时……</svg>
+</h2>
+<ol>
+  <li>处理点击事件
+  <li class=strike>创建 DOM 元素
+  <li>解析样式
+    <ul style="font-size: smaller" class=strike>
+      <li>(<code>&lt;CSSTransition&gt;</code> 多次解析样式和布局)
+    </ul>
+  <li class=strike>计算布局
+    <li class=strike>绘制每个新元素
+    <li>运行动画
+</ol>
+<style>
+#fixed-single-page-app-explained .side-by-side ol {
+  font-size: 25px;
+}
+#fixed-single-page-app-explained .side-by-side img {
+  width: 700px;
+  margin-left: 50px;
+}
+#fixed-single-page-app-explained .strike {
+  text-decoration: line-through;
+  opacity: .5;
+}
+</style>
+</section>
+
+<section id="fixed-single-page-app" data-background="#5ab041"
+  class="app-frame">
+  <iframe width="400" height="600" src="meetpie/index.html"></iframe>
+</section>
+
+<section id="single-page-app-comparison">
+<div class="side-by-side">
+  <figure>
+    <img src="img/bad-router-profile.png">
+    <figcaption>之前 (~100ms)</figcaption>
+  </figure>
+  <figure>
+    <img src="img/better-router-profile.png">
+    <figcaption>之后 (~30ms)</figcaption>
+  </figure>
+</div>
+<style>
+#single-page-app-comparison > * {
+  margin: 0 .5em;
+}
+</style>
+</section>
+
+<section id="spinner-idea" data-background="#5ab041"
+  class="app-frame">
+  <iframe width="400" height="600"
+    src="meetpie/finder-only-with-spinner.html"></iframe>
+</section>
+
+<section id="router-example-summary" class="summary-slide">
+<h1>
+  <svg width="900px" viewBox="0 0 670 350">
+    <text y=".9em" x="50%" text-anchor="middle"
+      ><tspan class="number">要点 8</tspan><tspan
+              dy="1.5em" x="50%" class="summary">在页面完全准备好之前</tspan><tspan
+      dy="1.1em" x="50%" class="summary">试着先准备</tspan><tspan
+      dy="1.1em" x="50%" class="summary">需要动画化的部分</text></svg>
+</h1>
+</section>
+
+<section id="accessibility-title" class="section-title"
+  data-background="#5ab041">
+<h1 class="svg">
+  <svg><text y="1em" x="50%">信息无障碍</text></svg>
+</h1>
+</section>
+
+<section id="vestibular-disorders" data-transition=fade-out>
+<h2 class="svg smaller">
+  <svg><text y="1em" x="3px">对动画感到不舒服</svg>
+</h2>
+<img src="img/headache-city-1.jpg">
+<div class=callout>
+    头痛、头晕、癫痫等疾病
+</div>
+<style>
+#vestibular-disorders h2 {
+  margin-bottom: 0px;
+}
+#vestibular-disorders h2 svg {
+  height: 65px;
+}
+#vestibular-disorders img {
+  max-height: 400px;
+}
+</style>
+</section>
+
+<section id="motion-settings" data-transition=fade>
+<div class=side-by-side>
+  <figure>
+    <img src="img/reduce-motion-windows.png">
+    <figcaption>Windows</figcaption>
+  </figure>
+  <figure>
+    <img src="img/reduce-motion-mac.png">
+    <figcaption>Mac</figcaption>
+  </figure>
+</div>
+<style>
+#motion-settings .side-by-side img {
+  height: 300px;
+  margin: 20px;
+}
+</style>
+</section>
+
+<section id="prefers-reduced-motion" data-transition="fade-out">
+<code class=css-prod>prefers-reduced-motion: reduce | no-preference</code>
+<pre><code class="hljs css" data-trim>
+div {
+  animation: ...
+  transition: ...
+}
+
+@media (prefers-reduced-motion: reduce) {
+  animation-name: none;
+  transition-property: none;
+}
+</code></pre>
+<ul class="logo-list">
+  <li><img class="little-logo" src="img/firefox-logo.svg"><span>64+</span>
+  <li><img class="little-logo" src="img/chrome-logo.svg"><span>74+ (四月)</span>
+  <li><img class="little-logo" src="img/safari-logo.svg"><span>10.1</span>
+  <li><img class="little-logo" src="img/edge-logo.svg"><span class=batsu>x</span>
+</ul>
+<style>
+#prefers-reduced-motion .css-prod {
+  font-family: "Courier New", monospace;
+  font-weight: bold;
+  font-size: 30px;
+  color: var(--pink);
+
+  display: block;
+  margin-bottom: 1em;
+}
+#prefers-reduced-motion .logo-list {
+  margin: .5em 3em;
+  line-height: 1.5;
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+}
+#prefers-reduced-motion .logo-list li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 1em;
+}
+#prefers-reduced-motion .little-logo {
+  width: 1.4em;
+  height: 1.4em;
+  margin: 0;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+  vertical-align: text-bottom;
+}
+#prefers-reduced-motion .batsu {
+  color: hsl(354, 85%, 44%);
+  font-weight: bold;
+}
+</style>
+</section>
+
+<section id="prefers-reduced-motion-js" data-transition="fade-in">
+<pre><code class="hljs js" data-trim>
+// Check for browser support
+if (!('animate' in elem)) {
+  return;
+}
+
+// Check for user support
+if (matchMedia('(prefers-reduced-motion)').matches) {
+  return;
+}
+
+// Animate away...
+</code></pre>
+</section>
+
+<section id="accessibility-summary" class="summary-slide">
+<h1>
+  <svg width="900px" viewBox="0 0 670 350">
+    <text y=".9em" x="50%" text-anchor="middle"
+      ><tspan class="number">要点 9</tspan><tspan
+      dy="1.5em" x="50%" class="summary">你可以（可能也</tspan><tspan
+      dy="1.1em" x="50%" class="summary">应该）检查用户是否</tspan><tspan
+      dy="1.1em" x="50%" class="summary">更喜欢减少动画</tspan></text></svg>
+</h1>
+</section>
+
+<section id="summary-summary" class="summary-slide" data-transition="fade">
+<h2 class="svg pink center">
+  <svg><text y="1em" x="50%">10件事</svg>
+</h2>
+<div class=summary-table>
+<h3>Transitions</h3>
+<ol>
+  <li>transition 仅在样式发生<span style="-webkit-text-emphasis: dot; -webkit-text-emphasis-position: under right; text-emphasis: dot; text-emphasis-position: under right;">变化</span>时才会运行
+  <li>transition 可以被取消
+</ol>
+<h3>CSS Animations</h3>
+<ol start=3>
+  <li>对于 CSS 动画，过渡（easing）始终适用于关键帧<span style="-webkit-text-emphasis: dot; -webkit-text-emphasis-position: under right; text-emphasis: dot; text-emphasis-position: under right;">之间</span>
+</ol>
+<h3>Web Animations</h3>
+<!-- This extra margin is super-high tech manual layout because I'm on a plane
+  and can't look up MDN to work out which breaking properties are supported -->
+<ol start=4 style="margin-bottom: 1em">
+  <li>你现在已经可以使用 Web Animations
+  <li>&hellip; 但和 CSS 动画有不同之处
+</ol>
+<h3>性能</h3>
+<ol start=6>
+  <li>尽量只动画化 <span class=prop-name>transform</span> 和 <span
+      class=prop-name>opacity</span>
+  <li>你可以在开发者工具中检查动画性能
+  <li>在页面完全准备好之前试着先准备好需要动画化的部分
+</ol>
+<h3>信息无障碍</h3>
+<ol start=9>
+  <li>根据用户的偏好，禁用复杂动画
+</ol>
+<h3 class=fragment data-fragment-index=1>不要忘记……</h3>
+<ol start=10 class=fragment data-fragment-index=1>
+  <li>玩得开心！</li>
+</ol>
+</div>
+<style>
+#summary-summary .summary-table {
+  font-size: 25px;
+  padding: 1em;
+  border-radius: 1em;
+  column-count: 2;
+  column-gap: 50px;
+  background: var(--green-light);
+  color: var(--green-dark);
+}
+#summary-summary .summary-table h3 {
+  font-size: 25px;
+  color: var(--green-dark);
+  margin-bottom: .4em;
+}
+#summary-summary .summary-table ol {
+  /* Revert reveal styles */
+  display: block;
+}
+#summary-summary .summary-table ol li {
+  margin-bottom: .5em;
+}
+</style>
+</section>
+
+<section id="thankyou" data-transition="fade">
+<h2 class="svg center">
+  <svg><text y="1em" x="50%">Thank you!</svg>
+</h2>
+<div class=slides-link>
+  <a href="https://birtles.github.io/cssconf2019/"
+    target="_blank">birtles.github.io/cssconf2019/</a>
+</div>
+<div class=twitter>
+  <a href="https://twitter.com/brianskold" target="_blank">@brianskold</a>
+</div>
+<style>
+#thankyou .slides-link,
+#thankyou .twitter {
+  margin: 1em 0;
+}
+
+#thankyou .slides-link a,
+#thankyou .twitter a {
+  color: var(--green-dark);
+}
+
+#thankyou .twitter::before {
+  content: "";
+  display: inline-block;
+  width: 1.4em;
+  height: 1.4em;
+  vertical-align: top;
+  background: url(img/twitter.svg);
+  background-size: 1.4em 1.4em;
+}
+</style>
+</section>
+
+</div> <!-- end slides -->
+</div> <!-- end reveal -->
+
+<script src="lib/js/head.min.js"></script>
+<script src="js/reveal.js"></script>
+
+<!-- Live code sections -->
+<script>
+for (const block of Array.from(document.querySelectorAll('.live-code'))) {
+  block.addEventListener('input', scheduleCodeUpdate);
+  // Initial application
+  window.addEventListener('load', () => updateCode(block));
+}
+
+function scheduleCodeUpdate(evt) {
+  let block = evt.target;
+
+  // Edge adds extra divs when editing. It's weird.
+  while (block && !block.classList.contains('live-code')) {
+    block = block.parentNode;
+  }
+  if (!block) {
+    console.log('Couldn\'t get root of block');
+    return;
+  }
+
+  if (block.updateTimeout) {
+    clearTimeout(block.updateTimeout);
+  }
+  if (block.highlightTimeout) {
+    clearTimeout(block.highlightTimeout);
+  }
+  block.updateTimeout = setTimeout(() => { updateCode(block) }, 500);
+  block.highlightTimeout = setTimeout(() => {
+    block.highlightTimeout = null;
+    hljs.highlightBlock(block);
+  }, 3000);
+}
+
+function updateCode(block) {
+  block.updateTimeout = null;
+
+  // Get target content
+  let ancestor = block;
+  let target = null;
+  while (ancestor && !target) {
+    // Check we don't start targeting another slide
+    if (ancestor.classList.contains('slides')) {
+      break;
+    }
+    target = ancestor.querySelector('.target-content');
+    ancestor = ancestor.parentNode;
+  }
+
+  if (!target) {
+    console.log('Target content to update not found');
+  }
+
+  // Create a "unique" ID. We really should test to see if the ID is unique but
+  // this way I have a 1 in 10,000 chance of the presentation going pear-shaped
+  // which could never happen. Definitely not.
+  if (!target.id) {
+    target.setAttribute('id', 'id-' + Date.now()
+                               + '-' + Math.floor((Math.random() * 100000)));
+  }
+
+  // Create style element
+  let styleBlock = target.querySelector('style');
+  if (!styleBlock) {
+    styleBlock = document.createElement('style');
+    target.appendChild(styleBlock);
+  }
+
+  // Update result
+  styleBlock.textContent = localizeCSS(block.textContent, target.id);
+}
+
+function localizeCSS(css, id) {
+  //
+  // We're just going to do something super hacky here that will work for
+  // this presentation. Basically, just add an ID to the start of any line
+  // that doesn't start with a space or an @
+  //
+  return css.replace(/^([^@ \n].*{)\s*/mg, '#' + id + ' $1');
+}
+</script>
+
+<script>
+Reveal.initialize({
+  dependencies: [
+    { src: 'plugin/notes/notes.js', async: true },
+    {
+      src: 'plugin/highlight/highlight.js',
+      async: true,
+      callback: function() {
+        hljs.initHighlightingOnLoad();
+      },
+    },
+  ],
+  history: true,
+});
+
+function startStopScriptedAnimations(slideId) {
+  if (slideId == 'web-animations-intro') {
+    startWebAnimationsIntro();
+  } else {
+    stopWebAnimationsIntro();
+  }
+
+  if (slideId == 'web-animations-two-easings') {
+    startWebAnimationsEasing();
+  } else {
+    stopWebAnimationsEasing();
+  }
+}
+
+Reveal.addEventListener('slidechanged', evt => {
+  startStopScriptedAnimations(evt.currentSlide.id);
+});
+
+Reveal.addEventListener('ready', evt => {
+  startStopScriptedAnimations(evt.currentSlide.id);
+});
+</script>
+</body>
+</html>
