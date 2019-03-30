@@ -104,16 +104,73 @@ document.getElementsByTagName('head')[0].appendChild(link);
   <svg><text y="1em" x="3px">A few things about me&hellip;</text></svg>
 </h2>
 <ul class="grid">
-  <li class="fragment fade-in"><figure><span
-            class="emoji">🐨</span><figcaption></figcaption></figure></li>
-  <li class="fragment fade-in"><figure><span
-            class="emoji">🗼</span><figcaption></figcaption></figure></li>
+  <li class="fragment fade-in"><img src="img/koala.svg"></li>
+  <li class="fragment fade-in"><img src="img/tokyo-tower.svg"></li>
   <li class="fragment fade-in"><figure><img
       src="img/firefox-logo.svg"><figcaption>2004~</figcaption></figure></li>
-  <li class="fragment fade-in"><figure><img src="img/csswg-2.jpg"><figcaption>W3C CSS Working Group 2015~</figcaption></figure></li>
-  <li class="fragment fade-in" style="font-size: 90px">🏊 🏄</li>
-  <li class="fragment fade-in"><span class="emoji">🍣</span></li>
+  <li class="fragment fade-in"><figure><img
+      src="img/w3c-member.svg"><figcaption class=smaller>SVG WG 2011~<br>
+        CSS WG 2015~</figcaption></figure></li>
+  <li class="fragment fade-in"><img src="img/surfing.svg"></li>
+  <li class="fragment fade-in"><img class=shrink src="img/noodles.svg"></li>
 </ul>
+<style>
+#about-me ul.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(160px, auto);
+  width: 100%;
+  margin: 0;
+}
+#about-me ul.grid li {
+  list-style: none;
+
+  width: 240px;
+  height: 240px;
+  border-radius: 120px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+#about-me ul.grid li.fragment.current-fragment {
+  background: var(--green-light);
+}
+#about-me ul.grid li > img {
+  width: 200px;
+  border: none;
+  box-shadow: none;
+  background: transparent;
+}
+#about-me ul.grid li > img.shrink {
+  width: 150px;
+}
+#about-me ul.grid li > figure {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: center;
+}
+#about-me ul.grid li > figure > img {
+  /* If I use flex: 1, Chrome does something awful */
+  flex: 0 1 auto;
+  border: none;
+  margin: 0;
+  width: 140px;
+  box-shadow: none;
+  background: transparent;
+}
+#about-me ul.grid li > figure > figcaption {
+  font-size: 25px;
+  margin-top: 15px;
+}
+#about-me ul.grid li > figure > figcaption.smaller {
+  font-size: 20px;
+}
+</style>
 </section>
 
 <section id="about-meat-pie" data-background-image="img/punk-doily-1.jpg"
@@ -1988,7 +2045,7 @@ function stopWebAnimationsIntro() {
 <pre><code class="hljs js" data-trim>
 // Check for browser support.
 //
-// TODO: Check for _user_ support too (see point 10)
+// TODO: Check for _user_ support too (see point 9)
 if ('animate' in elem) {
   // ... Animate away...
 }
@@ -2632,7 +2689,6 @@ react.render(
         <li>(<code>&lt;CSSTransition&gt;</code> resolves style and layout
           multiple times)
       </ul>
-    <li>Trigger transition
     <li>Calculate layout
     <li>Paint each new element
     <li>Run the transition
@@ -2685,7 +2741,6 @@ react.render(
       <li>(<code>&lt;CSSTransition&gt;</code> resolves style and layout
         multiple times)
     </ul>
-  <li>Trigger transition
   <li class=strike>Calculate layout
   <li class=strike>Paint each new element
   <li>Run the transition
@@ -2714,11 +2769,11 @@ react.render(
 <div class="side-by-side">
   <figure>
     <img src="img/bad-router-profile.png">
-    <figcaption>Before</figcaption>
+    <figcaption>Before (~100ms)</figcaption>
   </figure>
   <figure>
     <img src="img/better-router-profile.png">
-    <figcaption>After</figcaption>
+    <figcaption>After (~30ms)</figcaption>
   </figure>
 </div>
 <style>

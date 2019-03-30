@@ -478,57 +478,6 @@ h2.pink svg text {
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.55); }
 
 /*********************************************
- * LIST GRID
- *********************************************/
-.reveal ul.grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
-  grid-auto-rows: minmax(160px, auto);
-  width: 100%;
-  margin: 0;
-}
-
-.reveal ul.grid li {
-  list-style: none;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  border-radius: 40px;
-  padding: 10px;
-}
-.reveal ul.grid li.fragment.current-fragment {
-  background: var(--green-light);
-}
-
-.reveal ul.grid li .emoji {
-  font-size: 160px;
-}
-
-.reveal ul.grid li > figure {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
-}
-
-.reveal ul.grid li > figure > img {
-  /* If I use flex: 1, Chrome does something awful */
-  flex: 1 0 auto;
-  border: none;
-  margin: 0;
-  height: 140px;
-  box-shadow: none;
-  background: transparent;
-}
-
-.reveal ul.grid li > figure > figcaption {
-  font-size: 25px;
-  margin-top: 15px;
-}
-
-/*********************************************
  * ATTRIBUTION
  *********************************************/
 .reveal .full-page-source {
